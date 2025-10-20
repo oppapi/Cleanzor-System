@@ -12,71 +12,44 @@
     <h2 class="centered-title">CLEANZOR</h2> <!--DONE-->
   </div>
 
-  <div class="centered-div"> 
-    <form class="login-form">
-      <div class="form-group">
-        <label for="email" class="labelBox">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" class="inputBox" required autocomplete="email" />
+  <div class="centered-div"> <!--DONE-->
+    <form class="login-form"> <!--DONE-->
+      <div class="form-group"> <!--DONE-->
+        <label for="email" class="labelBox">Email</label> <!--DONE-->
+        <input type="email" id="email" placeholder="Enter your email" class="inputBox" required autocomplete="email" /> <!--DONE-->
       </div>
 
-      <div class="form-group">
-        <label for="password" class="labelBox">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" class="inputBox" required autocomplete="off" />
+      <div class="form-group"> <!--DONE-->
+        <label for="password" class="labelBox">Password</label> <!--DONE-->
+        <input type="password" id="password" placeholder="Enter your password" class="inputBox" required autocomplete="off" /> <!--DONE-->
       </div>
 
-      <div class="form-group show-password-group">
-        <div class="show-password-left">
-          <input type="checkbox" class="checkbox" id="showPassword" />
-          <label for="showPassword">Show Password</label>
+      <div class="form-group show-password-group"> <!--DONE-->
+        <div class="show-password-left"> <!--DONE-->
+          <input type="checkbox" class="checkbox" id="showPassword" /> <!--DONE-->
+          <label for="showPassword">Show Password</label> <!--DONE-->
         </div>
         <a href="forgot.html" class="forgot-password" onclick="if (typeof showLoadingAndRedirect === 'function') showLoadingAndRedirect('forgot.html'); else window.location.href = 'forgot.html'; return false;">Forgot Password?</a>
       </div>
 
-      <button type="submit" id="submit" class="btn-login">LOGIN</button>
+      <button type="submit" id="submit" class="btn-login">LOGIN</button> <!--DONE-->
       <p class="text-center-white">
         Don’t have an account?
-        <a href="signup.html" id="signupBtn">Signup</a>
+        <a href="signup.html" class="signupButton" id="signupBtn">Signup</a>
       </p>
     </form>
-  </div> 
+  </div>
 </body>
 
 <style>
 
 .body {
-  display: flex;            /* enable flex */
-  flex-direction: column;   /* stack content vertically */
-  align-items: center;      /* horizontal centering */
-  margin: 0;                /* remove default margin */
-}
-
-.landing-header {
-    text-align: center;
-    margin-top: 20vh;
-    font-size: 3rem;
-    color: #fff;
-}
-
-.landing-main {
-    display: flex;
-    justify-content: center;
-    margin-top: 5vh;
-}
-
-.landing-main button {
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background-color: #fff;
-    color: #3498db;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.landing-main button:hover {
-    background-color: #2980b9;
-    color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  /* vertical centering */
+  margin: 0;
+  min-height: 100vh;        /* make it fill full screen height */
 }
 
 .title {
@@ -107,7 +80,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #B9DA65;
+  background-color: #fbd197;
   gap: 0.1rem;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
   z-index: 5;
@@ -163,5 +136,131 @@
   flex-direction: column;
   margin: 2rem auto 0 auto;
   align-items: center;         /* horizontally center content inside the div */
+}
+
+.labelBox {
+  display: block;
+  color: #603b2f;
+  font-family: Montserrat;
+  font-weight: 600;
+  line-height: 1.25;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  margin-bottom: 0.2rem;
+}
+
+.inputBox {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1rem;
+  width: 100%;
+  padding: clamp(0.75rem, 4vw, 1rem);
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-height: 40px;
+}
+
+.inputBox:focus {
+  outline: none;
+  border-color: #B9DA65;
+  box-shadow: 0 0 0 2px rgba(185, 218, 101, 0.3);
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.show-password-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.show-password-left {
+  color: #603b2f;
+  display: flex;
+  font-weight: 500;
+  font-family: Montserrat;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.checkbox {
+  margin: 0;
+  width: 1rem;
+  height: 1rem;
+  min-width: 18px;
+}
+
+.forgot-password {
+  color: #603b2f;
+  font-weight: 500;
+  font-family: Montserrat;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  color: #d1d5db;
+}
+
+.btn-login {
+  width: 100%;
+  background-color: #fbd197;
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 650;
+  padding: clamp(0.7rem, 4vw, 1rem) 0;
+  border-radius: 9999px;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  transition: background-color 0.3s, transform 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  background-color: #fbd197;
+  transform: scale(1.02);
+}
+
+.btn-login:active {
+  transform: scale(0.98);
+}
+
+.text-center-white {
+  margin-top: 0.75rem;
+  text-align: center;
+  color: #603b2f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.text-center-white a {
+  text-decoration: underline;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.text-center-white a:hover {
+  color: #d1d5db;
+}
+
+.signupButton {
+  color: #603b2f;
 }
 </style>
