@@ -1,16 +1,18 @@
 @page "/"
-
+<body class="body">
   <div class="login-header">
     <span class="title">Welcome Back!</span> <!--DONE-->
     <span class="subtitle">Login to your account.</span> <!--DONE-->
   </div>
 
-  <div class="logo-container">
-    <img src="Cleanzor_logo.png" alt="Cleanzor Logo" />
-  </div>  
-  <h2 class="centered-title">CLEANZOR</h2>
+  <div class="center-screen">
+    <div class="logo-container"> <!--DONE-->
+        <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" /> <!--DONE-->
+    </div>  
+    <h2 class="centered-title">CLEANZOR</h2> <!--DONE-->
+  </div>
 
-  <div class="centered-div">
+  <div class="centered-div"> 
     <form class="login-form">
       <div class="form-group">
         <label for="email" class="labelBox">Email</label>
@@ -37,14 +39,16 @@
       </p>
     </form>
   </div> 
-
-  <div id="loadingOverlay" class="loading-overlay">
-    <div class="loader">LOADING...</div>
-  </div>
-
-  <ul class="notifications" aria-live="polite" aria-atomic="true" role="status"></ul>
+</body>
 
 <style>
+
+.body {
+  display: flex;            /* enable flex */
+  flex-direction: column;   /* stack content vertically */
+  align-items: center;      /* horizontal centering */
+  margin: 0;                /* remove default margin */
+}
 
 .landing-header {
     text-align: center;
@@ -112,22 +116,52 @@
 }
 
 .logo-container {
-  position: relative;
   display: flex;
-  justify-content: center;
-  width: 50%;
-  margin-top: clamp(7rem, 8vw, 5rem);
-  animation: moveImage 0.5s linear;
-  z-index: 1;
-  flex-shrink: 0;
-  padding: 0 clamp(0.5rem, 2vw, 0.5rem);
-  padding-bottom: 0.25rem;
+  justify-content: center; 
+  width: 100%;
+  margin-top: clamp(8rem, 8vw, 5rem);
 }
 
 .logo-container img {
-  width: clamp(120px, 45vw, 160px);
+  width: clamp(120px, 40vw, 160px);
   height: auto;
   object-fit: contain;
+  top
   max-height: clamp(100px, 25vh, 140px);
+}
+
+.centered-title {
+  position: relative;
+  text-align: center;
+  font-family: 'Toonish', sans-serif;
+  font-size: clamp(3rem, 10vw, 3rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: clamp(1px, 0.5vw, 2px);
+  text-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  margin: clamp(0.75rem, 3vw, 1.25rem) 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  width: 100%;
+  z-index: 1;
+  flex-shrink: 0;
+  padding: 0 clamp(0.5rem, 2vw, 1rem);
+  line-height: 1.1;
+  hyphens: auto;
+  word-break: break-word;
+}
+
+.centered-div {
+  position: relative;           /* keeps it in normal flow */
+  width: 100%;
+  max-width: clamp(450px, 95vw, 600px);
+  padding: 0 clamp(1rem, 4vw, 1.5rem) clamp(1rem, 3.5vw, 1.5rem);
+  margin-top: clamp(3rem, 5vw, 5rem);  /* space below title/logo */
+  z-index: 1;
+  min-height: clamp(350px, 48vh, 450px);
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto 0 auto;
+  align-items: center;         /* horizontally center content inside the div */
 }
 </style>
