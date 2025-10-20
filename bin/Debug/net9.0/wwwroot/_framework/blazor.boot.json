@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CleanzorApp",
   "resources": {
-    "hash": "sha256-YMV5f5FGgNO22Lu31MC3jS7ruVvaBLP/r7T62ejt5GE=",
+    "hash": "sha256-tiezwUZ2nLwWqozW6eiolwXOMJ+Kf6zkvozvk9NJkio=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.tnyc7xpluy.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.t32damlu4o.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -201,8 +201,8 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "CleanzorApp.wo7m5rt1ed.wasm": "CleanzorApp.wasm",
-      "CleanzorApp.uimojvojko.pdb": "CleanzorApp.pdb"
+      "CleanzorApp.shimjhzumr.wasm": "CleanzorApp.wasm",
+      "CleanzorApp.4hurlhi8p0.pdb": "CleanzorApp.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.50iqa8w3ys.js": "sha256-pQdXuxfVeqYHOwd5HUM2ERd7OnXirj9JTF37b6OdTAc="
@@ -412,10 +412,10 @@
       "WindowsBase.361km0836k.wasm": "sha256-FacUCEIJYTnbOWgX/R9QP2QnurqRZwRIkDAH0N9z69s=",
       "mscorlib.qiu3j3msqk.wasm": "sha256-QvztpxTOEw4aMIl7zP3QtsPLNv/IWaK5wq22J4ReGrA=",
       "netstandard.lp03u0xxi4.wasm": "sha256-WVQsxULiAiEbyXLKolS7txnWVT82SsvsuMe4jJ+SqqI=",
-      "CleanzorApp.wo7m5rt1ed.wasm": "sha256-cFFUX3HnyaVpvV5hbZFmbMn009u+5Fw3lheJM0AWn2g="
+      "CleanzorApp.shimjhzumr.wasm": "sha256-II44RVMx8nZW+rfPPiChv9UcxuzZv5YoA3BjhIVrBsA="
     },
     "pdb": {
-      "CleanzorApp.uimojvojko.pdb": "sha256-+mgxN97j1M6Po43gbwmufprEdR+KXVMf9RMBkZ2dqgI="
+      "CleanzorApp.4hurlhi8p0.pdb": "sha256-CAw9Fnkbqm52wbr/fM5yVac3HY2auLc/09fny8VF+Yw="
     }
   },
   "cacheBootResources": true,
