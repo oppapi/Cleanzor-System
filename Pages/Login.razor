@@ -1,55 +1,58 @@
 @page "/"
+
 <body class="body">
   <div class="login-header">
-    <span class="title">Welcome Back!</span> <!--DONE-->
-    <span class="subtitle">Login to your account.</span> <!--DONE-->
+    <span class="title">Welcome Back!</span>
+    <span class="subtitle">Login to your account.</span>
   </div>
 
   <div class="center-screen">
-    <div class="logo-container"> <!--DONE-->
-        <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" /> <!--DONE-->
-    </div>  
-    <h2 class="centered-title">CLEANZOR</h2> <!--DONE-->
+    <div class="logo-container">
+      <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" />
+    </div>
+    <h2 class="centered-title">CLEANZOR</h2>
   </div>
 
-  <div class="centered-div"> <!--DONE-->
-    <form class="login-form"> <!--DONE-->
-      <div class="form-group"> <!--DONE-->
-        <label for="email" class="labelBox">Email</label> <!--DONE-->
-        <input type="email" id="email" placeholder="Enter your email" class="inputBox" required autocomplete="email" /> <!--DONE-->
+  <div class="centered-div">
+    <form class="login-form">
+      <div class="form-group">
+        <label for="username" class="labelBox">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" class="inputBox" required autocomplete="username" />
       </div>
 
-      <div class="form-group"> <!--DONE-->
-        <label for="password" class="labelBox">Password</label> <!--DONE-->
-        <input type="password" id="password" placeholder="Enter your password" class="inputBox" required autocomplete="off" /> <!--DONE-->
+      <div class="form-group">
+        <label for="password" class="labelBox">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" class="inputBox" required autocomplete="off" />
       </div>
 
-      <div class="form-group show-password-group"> <!--DONE-->
-        <div class="show-password-left"> <!--DONE-->
-          <input type="checkbox" class="checkbox" id="showPassword" /> <!--DONE-->
-          <label for="showPassword">Show Password</label> <!--DONE-->
+      <div class="form-group show-password-group">
+        <div class="show-password-left">
+          <input type="checkbox" class="checkbox" id="showPassword" />
+          <label for="showPassword">Show Password</label>
         </div>
-        <a href="forgot.html" class="forgot-password" onclick="if (typeof showLoadingAndRedirect === 'function') showLoadingAndRedirect('forgot.html'); else window.location.href = 'forgot.html'; return false;">Forgot Password?</a>
+        <a href="forgot.html" class="forgot-password" 
+           onclick="if (typeof showLoadingAndRedirect === 'function') showLoadingAndRedirect('forgot.html'); else window.location.href = 'forgot.html'; return false;">
+           Forgot Password?
+        </a>
       </div>
 
-      <button type="submit" id="submit" class="btn-login">LOGIN</button> <!--DONE-->
+      <button type="submit" id="submit" class="btn-login">LOGIN</button>
       <p class="text-center-white">
         Don’t have an account?
-        <a href="signup.html" class="signupButton" id="signupBtn">Signup</a>
+        <a @onclick="GoToSignup" class="signupButton" id="signupBtn">Signup</a>
       </p>
     </form>
   </div>
 </body>
 
 <style>
-
 .body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;  /* vertical centering */
+  justify-content: center;
   margin: 0;
-  min-height: 100vh;        /* make it fill full screen height */
+  min-height: 100vh;
 }
 
 .title {
@@ -125,17 +128,17 @@
 }
 
 .centered-div {
-  position: relative;           /* keeps it in normal flow */
+  position: relative;
   width: 100%;
   max-width: clamp(450px, 95vw, 600px);
   padding: 0 clamp(1rem, 4vw, 1.5rem) clamp(1rem, 3.5vw, 1.5rem);
-  margin-top: clamp(3rem, 5vw, 5rem);  /* space below title/logo */
+  margin-top: clamp(3rem, 5vw, 5rem);
   z-index: 1;
   min-height: clamp(350px, 48vh, 450px);
   display: flex;
   flex-direction: column;
   margin: 2rem auto 0 auto;
-  align-items: center;         /* horizontally center content inside the div */
+  align-items: center;
 }
 
 .labelBox {
@@ -264,3 +267,12 @@
   color: #603b2f;
 }
 </style>
+
+@code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+
+    private void GoToSignup()
+    {
+        NavManager.NavigateTo("/signup");
+    }
+}
