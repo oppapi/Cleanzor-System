@@ -16,7 +16,8 @@ namespace CleanzorApp.Pages
         private string txtmessage { get; set; } = ""; //to return message
 
         private async Task SubmitSignup()
-        {
+        {   
+            // TODO: CHANGE THIS INTO TOAST LATER
             if (string.IsNullOrWhiteSpace(txtfullname) ||
                 string.IsNullOrWhiteSpace(txtemail) ||
                 string.IsNullOrWhiteSpace(txtusername) ||
