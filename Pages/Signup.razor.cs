@@ -13,7 +13,7 @@ namespace CleanzorApp.Pages
         private string txtpassword { get; set; } = "";
         private string txtcpassword { get; set; } = "";
 
-        private string Message { get; set; } = ""; //to return message
+        private string txtmessage { get; set; } = ""; //to return message
 
         private async Task SubmitSignup()
         {
@@ -23,7 +23,7 @@ namespace CleanzorApp.Pages
                 string.IsNullOrWhiteSpace(txtpassword) ||
                 string.IsNullOrWhiteSpace(txtcpassword))
             {
-                Message = "Please fill in all fields!";
+                txtmessage = "Please fill in all fields!";
             }
             await JS.InvokeVoidAsync("alert", txtmessage); 
         }
