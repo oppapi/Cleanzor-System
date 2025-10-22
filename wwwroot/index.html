@@ -1,36 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CleanzorApp</title>
-    <base href="/" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CleanzorApp</title>
+  <base href="/" />
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+
+  <!-- ✅ Background Style -->
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-image: url('images/OrangeBackground.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      overflow: hidden;
+      height: 100vh;
+    }
+  </style>
+
+  <!-- ✅ Firebase Initialization -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCiBFlPxGa3tlLwPQJSssl3Bai2psbqwJY",
+      authDomain: "cleanzorv6.firebaseapp.com",
+      projectId: "cleanzorv6",
+      storageBucket: "cleanzorv6.firebasestorage.app",
+      messagingSenderId: "466216817805",
+      appId: "1:466216817805:web:a04b203b55e9b609c97ec4",
+      measurementId: "G-T83KMEBWE2"
+    };
+
+    // Make Firebase available globally
+    window.firebaseApp = initializeApp(firebaseConfig);
+  </script>
+
+  <!-- ✅ Custom JS that uses Firebase -->
+  <script type="module" src="js/interOperation.js"></script>
 </head>
 
 <body>
-    <div id="app">
-    </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+  <div id="app"></div>
 
-    <style> 
-
-    html, body {
-        height: 100%;
-        margin: 0;
-    }
-        body {
-            background-image: url('images/OrangeBackground.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            overflow: hidden;
-            height: 100vh;
-        }
-    </style>
+  <!-- Blazor Runtime -->
+  <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>
