@@ -18,9 +18,7 @@
 
       <h2 class="main-title">Sign Up</h2>
 
-      <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="main-form">  <!-- Added class="main-form" to match styles -->
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+      <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="main-form"> <DataAnnotationsValidator /> <ValidationSummary />
 
         <div class="main-form-group">
           <label class="labelBox" for="full-name">Full Name</label>
@@ -61,11 +59,6 @@
         <button type="submit" class="main-button">Create Account</button>
       </EditForm>
 
-      @if (!string.IsNullOrEmpty(txtmessage))
-      {
-        <p class="text-danger">@txtmessage</p>  <!-- Display success/error messages here -->
-      }
-
       <p class="main-text">
         Already have an account?
         <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a>  <!-- Added @onclick back for navigation -->
@@ -74,71 +67,136 @@
   </main>
 </body>
 
+<script>
+    function showAlert(message) {
+        if (message && message.trim() !== "") {
+            window.alert(message);
+        }
+    }
+</script>
+
 @code {
     public class JsAuthResponse
     {
         public bool Success { get; set; }
-        public string? Uid { get; set; }
         public string? ErrorCode { get; set; }
-        public string? ErrorMessage { get; set; }
     }
 
     private string txtfullname { get; set; } = "";
     private string txtemail { get; set; } = "";
     private string txtusername { get; set; } = "";
     private string txtpassword { get; set; } = "";
-    private string txtcpassword { get; set; } = ""; // Confirm Password
-    private string txtmessage { get; set; } = ""; // For displaying messages
+    private string txtcpassword { get; set; } = "";
 
     private async Task HandleValidSubmit()
     {
-        // 1. Local C# Validation
-        if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword) || string.IsNullOrWhiteSpace(txtcpassword))
-        {
-            txtmessage = "Error: All fields are required.";
-            return;
-        }
-        if (txtpassword != txtcpassword)
-        {
-            txtmessage = "Error: Passwords do not match.";
-            return;
-        }
-        if (txtpassword.Length < 6) // Firebase requires at least 6 characters
-        {
-            txtmessage = "Error: Password must be at least 6 characters.";
-            return;
-        }
-
-        try
-        {
-            var result = await JS.InvokeAsync<JsAuthResponse>(  // Now 'JS' is defined
-                "signupUser",
-                txtemail,
-                txtpassword
-            );
-
-            if (result.Success)
+        if (inputValidation())
+        {  
+            try
             {
-                txtmessage = $"Success! User registered. UID: {result.Uid}";
-                // Optional: Redirect to login or clear form
-                // Navigation.NavigateTo("/login");
+                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(
+                    identifier: "signupUser", txtemail, txtpassword
+                );
+
+                if (result.Success)
+                {
+                    callToaster("success", "Account Created Successfully!");
+                }
+                else if (result.ErrorCode == "auth/email-already-in-use")
+                {
+                    callToaster("error", "Error: The email address is already in use by another account.");
+                }
+                else if (result.ErrorCode == "auth/invalid-email")
+                {
+                    callToaster("error", "Error: The email address is not valid.");
+                }
+                else
+                {
+                    callToaster("error", $"Error: Signup Failed. {result.ErrorCode}");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                txtmessage = $"Signup Failed: {result.ErrorMessage} ({result.ErrorCode})";
+                callToaster("error", $"Error: An unexpected error occurred during signup. {ex.Message}");
             }
         }
-        catch (Exception ex)
-        {
-            txtmessage = "A critical system error occurred during signup.";
-            // Log for debugging (remove in production)
-            Console.Error.WriteLine($"Critical Error during JS Interop: {ex.Message}");
-        }
+    }
+    //Requirements
+private bool inputValidation()
+{
+    //general
+    if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword) || string.IsNullOrWhiteSpace(txtcpassword))
+    {
+        callToaster("error", "Error: All fields are required.");
+        return false;
+    }
+    //fullname
+    
+    if (!Regex.IsMatch(txtfullname, @"^[A-Za-z ]+$"))
+    {
+        callToaster("error", "Error: Full Name must only contain letters and spaces.");
+        return false;
+    }
+
+    if (txtfullname.Length < 8 || txtfullname.Length > 15)
+    {
+        callToaster("error", "Error: Full Name must be between 8 and 15 characters long.");
+        return false;
+    }
+
+    //username
+    if (txtusername.Length < 8 || txtusername.Length > 15)
+    {
+        callToaster("error", "Error: Username must be between 8 and 15 characters long.");
+        return false;
+    }
+
+    //password
+    if (txtpassword != txtcpassword)
+    {
+        callToaster("error", "Error: Passwords do not match.");
+        return false;
+    }
+
+    if (txtpassword.Length < 12)
+    {
+        callToaster("error", "Error: Password must be at least 12 characters.");
+        return false;
+    }
+
+    if (!txtpassword.Any(char.IsUpper))
+    {
+        callToaster("error", "Error: Password must contain at least one uppercase letter.");
+        return false;
+    }
+
+    if (!txtpassword.Any(char.IsLower))
+    {
+        callToaster("error", "Error: Password must contain at least one lowercase letter.");
+        return false;
+    }
+
+    if (!txtpassword.Any(char.IsDigit))
+    {
+        callToaster("error", "Error: Password must contain at least one numeric digit.");
+        return false;
+    }
+
+    if (Regex.IsMatch(txtpassword, @"^[A-Za-z ]+$"))
+    {
+        callToaster("error", "Error: Password must contain at least one special character.");
+        return false;
+    }
+    return true;
+}
+    private void callToaster(string type, string message)
+    {
+        JS.InvokeVoidAsync("showAlert", message);
     }
 
     private void GoToLogin()
     {
-        Navigation.NavigateTo("/login");
+        Navigation.NavigateTo("/");
     }
 }
 
