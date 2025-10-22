@@ -209,6 +209,8 @@ C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.gp4t4df0f1.wasm
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.iurngy9o6o.pdb
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.webassembly.js.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\FirebaseAdmin.v2pq779ba2.wasm.gz
@@ -421,6 +423,8 @@ C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.gp4t4df0f1.wasm.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.iurngy9o6o.pdb.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\CleanzorApp.staticwebassets.runtime.json
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\CleanzorApp.staticwebassets.endpoints.json
@@ -853,6 +857,7 @@ C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\scopedcss
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\blazor.build.boot-extension.json
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\blazor.boot.json
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\h7cfo4sx5s-m5rvotjbym.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\yiiuufhcvk-51tlqxgzfv.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\o4xfcaky1e-t1cqhe9u97.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\fkv0d8eyia-c2jlpeoesf.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\mh8ua1guf0-sejl45xvog.gz
@@ -1108,6 +1113,9 @@ C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compresse
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\auf5402n58-tjcz0u77k5.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\6siv4skv0g-tptq2av103.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\uvsvrk1bep-lfu7j35m59.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-gp4t4df0f1.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-iurngy9o6o.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-dfukgqw8n2.gz
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\staticwebassets.development.json
@@ -1117,12 +1125,4 @@ C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\CleanzorA
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\refint\CleanzorApp.dll
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\bs0k186akq-yg6jiwb1a7.gz
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\yiiuufhcvk-51tlqxgzfv.gz
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.sas1e8t6o2.wasm
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.llth8askok.pdb
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.sas1e8t6o2.wasm.gz
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.llth8askok.pdb.gz
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-sas1e8t6o2.gz
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-llth8askok.gz
-C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-4e91j9k397.gz
+C:\Users\John Carl\Downloads\CLEANZOR\Cleanzor-System\obj\Debug\net9.0\compressed\bs0k186akq-026mlza7cr.gz

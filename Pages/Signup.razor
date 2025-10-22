@@ -1,8 +1,9 @@
 @page "/signup"
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JS  
+@inject NavigationManager Navigation
 
-<body class="body"> <!--DONE-->
-  <header class="main-header"> <!--DONE-->
+<body class="body">
+  <header class="main-header">
     <div class="flex">
       <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" />
       <span>Cleanzor</span>
@@ -10,60 +11,137 @@
   </header>
 
   <main>
-    <section class="rounded-rectangle"> <!--DONE-->
-      <div class="main-logo-container"> <!--DONE-->
-        <img src="images/Cleanzorlogo.png" alt="Cleanzor Logo" class="main-logo" /> <!--DONE-->
+    <section class="rounded-rectangle">
+      <div class="main-logo-container">
+        <img src="images/Cleanzorlogo.png" alt="Cleanzor Logo" class="main-logo" />
       </div>
 
-      <h2 class="main-title">Sign Up</h2> <!--DONE-->
+      <h2 class="main-title">Sign Up</h2>
 
-      <form class="main-form" id="signupForm"> <!--DONE-->
-      <div class="main-form-group"> <!--DONE-->
-        <label class="labelBox" for="full-name">Full Name</label> <!--DONE-->
-        <input type="text" @bind="txtfullname" id="full-name" class="inputBox" placeholder="Enter your full name" required /> <!--DONE-->
-      </div>
+      <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="main-form-group">
+          <label class="labelBox" for="full-name">Full Name</label>
+          <InputText @bind-Value="txtfullname" id="full-name" class="inputBox" placeholder="Enter your full name" />
+        </div>
 
         <div class="main-form-group">
           <label class="labelBox" for="email">Email</label>
-          <input type="email" @bind="txtemail" id="email" class="inputBox" placeholder="Enter your email" required />
+          <InputText @bind-Value="txtemail" id="email" class="inputBox" placeholder="Enter your email" />
         </div>
 
         <div class="main-form-group">
           <label class="labelBox" for="username">Username</label>
-          <input type="text" @bind="txtusername" id="username" class="inputBox" placeholder="Enter your username" />
+          <InputText @bind-Value="txtusername" id="username" class="inputBox" placeholder="Enter your username" />
         </div>
 
         <div class="main-form-group">
-        <label class="labelBox" for="password">Password</label>
-        <div class="password-wrapper">
-            <input type="password" @bind="txtpassword" id="password" class="inputBox" placeholder="Create a password" required />
+          <label class="labelBox" for="password">Password</label>
+          <div class="password-wrapper">
+            <InputText @bind-Value="txtpassword" type="password" id="password" class="inputBox" placeholder="Create a password" />
             <button type="button" onclick="toggler1(this)" class="toggle-btn">Show</button>
-        </div>
+          </div>
         </div>
 
         <div class="main-form-group">
-        <label class="labelBox" for="confirmPassword">Confirm Password</label>
-        <div class="password-wrapper">
-            <input type="password" @bind="txtcpassword" id="confirmPassword" class="inputBox" placeholder="Re-enter your password" required />
+          <label class="labelBox" for="confirmPassword">Confirm Password</label>
+          <div class="password-wrapper">
+            <InputText @bind-Value="txtcpassword" type="password" id="confirmPassword" class="inputBox" placeholder="Re-enter your password" />
             <button type="button" onclick="toggler2(this)" class="toggle-btn">Show</button>
+          </div>
         </div>
+
+        <div class="remember-me-container">
+          <input type="checkbox" id="remember_me" name="remember_me">
+          <label for="remember_me">Remember me</label>
         </div>
 
-            <div class="remember-me-container">
-        <input type="checkbox" id="remember_me" name="remember_me">
-        <label for="remember_me">Remember me</label>
-    </div>
+        <button type="submit" class="main-button">Create Account</button>
+      </EditForm>
 
-        <button type="submit" id="submit" class="main-button">Create Account</button> <!--DONE-->
-      </form>
+      @if (!string.IsNullOrEmpty(txtmessage))
+      {
+        <p class="text-danger">@txtmessage</p>  <!-- Display success/error messages here -->
+      }
 
-      <p class="main-text">  <!--DONE-->
+      <p class="main-text">
         Already have an account?
-        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a>
+        <a id="loginBtn" class="login-link">Login</a>
       </p>
     </section>
   </main>
 </body>
+
+@code {
+    public class JsAuthResponse
+    {
+        public bool Success { get; set; }
+        public string? Uid { get; set; }
+        public string? ErrorCode { get; set; }
+        public string? ErrorMessage { get; set; }
+    }
+
+    // Properties bound to form inputs
+    private string txtfullname { get; set; } = "";
+    private string txtemail { get; set; } = "";
+    private string txtusername { get; set; } = "";
+    private string txtpassword { get; set; } = "";
+    private string txtcpassword { get; set; } = ""; // Confirm Password
+    private string txtmessage { get; set; } = ""; // For displaying messages
+
+    private async Task HandleValidSubmit()
+    {
+        // 1. Local C# Validation
+        if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword) || string.IsNullOrWhiteSpace(txtcpassword))
+        {
+            txtmessage = "Error: All fields are required.";
+            return;
+        }
+        if (txtpassword != txtcpassword)
+        {
+            txtmessage = "Error: Passwords do not match.";
+            return;
+        }
+        if (txtpassword.Length < 6) // Firebase requires at least 6 characters
+        {
+            txtmessage = "Error: Password must be at least 6 characters.";
+            return;
+        }
+
+        try
+        {
+            var result = await JS.InvokeAsync<JsAuthResponse>(  // Now 'JS' is defined
+                "signupUser",
+                txtemail,
+                txtpassword
+            );
+
+            if (result.Success)
+            {
+                txtmessage = $"Success! User registered. UID: {result.Uid}";
+                // Optional: Redirect to login or clear form
+                // Navigation.NavigateTo("/login");
+            }
+            else
+            {
+                txtmessage = $"Signup Failed: {result.ErrorMessage} ({result.ErrorCode})";
+            }
+        }
+        catch (Exception ex)
+        {
+            txtmessage = "A critical system error occurred during signup.";
+            // Log for debugging (remove in production)
+            Console.Error.WriteLine($"Critical Error during JS Interop: {ex.Message}");
+        }
+    }
+
+    private void GoToLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}
 
 <style>
 html, body {
@@ -343,8 +421,5 @@ function toggler2(e) {
 @code {
     [Inject] NavigationManager NavManager { get; set; } = default!;
 
-    private void GoToLogin()
-    {
-        NavManager.NavigateTo("/");
-    }
+
 }
