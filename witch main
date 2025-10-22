@@ -1,0 +1,7 @@
+[33mf4d6c17[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: checkout: moving from main to main
+[33mf4d6c17[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: checkout: moving from 60e7b324c0dee4140a195c0ac585a8b719608186 to main
+[33m60e7b32[m HEAD@{2}: commit: done with firebase connection
+[33mdbee411[m HEAD@{3}: commit: local checkpoint
+[33mb731583[m HEAD@{4}: commit: check point before backend
+[33m4590cf3[m HEAD@{5}: checkout: moving from main to 4590cf3
+[33mf4d6c17[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{6}: clone: from https://github.com/oppapi/Cleanzor-System.git

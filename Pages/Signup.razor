@@ -18,7 +18,7 @@
 
       <h2 class="main-title">Sign Up</h2>
 
-      <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
+      <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="main-form">  <!-- Added class="main-form" to match styles -->
         <DataAnnotationsValidator />
         <ValidationSummary />
 
@@ -68,7 +68,7 @@
 
       <p class="main-text">
         Already have an account?
-        <a id="loginBtn" class="login-link">Login</a>
+        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a>  <!-- Added @onclick back for navigation -->
       </p>
     </section>
   </main>
@@ -83,7 +83,6 @@
         public string? ErrorMessage { get; set; }
     }
 
-    // Properties bound to form inputs
     private string txtfullname { get; set; } = "";
     private string txtemail { get; set; } = "";
     private string txtusername { get; set; } = "";
@@ -224,11 +223,8 @@ main {
   overflow-y: auto;
 }
 
-
-
-.main-section img,
 .main-logo-container img,
-.main-section h2 {
+.main-logo {
   width: clamp(80px, 20vw, 110px);
   max-width: 100%;
   height: auto;
@@ -237,7 +233,6 @@ main {
   padding: 0;
 }
 
-.main-section h2,
 .main-title {
   font-size: clamp(1.5rem, 5vw, 1.875rem);
   font-weight: 700;
@@ -253,7 +248,6 @@ main {
   gap: clamp(0.5rem, 1.5vw, 0.75rem);
   width: 100%;
   margin: 0 auto;
-  width: 100%;
   margin-bottom: clamp(1rem, 3vw, 1.5rem);
 }
 
@@ -284,7 +278,7 @@ main {
   box-shadow: 0 0 0 2px rgba(0, 168, 135, 0.3);
 }
 
-.main-form-group{
+.main-form-group {
     width: 100%;
     gap: 1rem;
     margin-bottom: 0.25rem;
@@ -340,6 +334,25 @@ main {
   text-decoration: underline;
 }
 
+.remember-me-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.remember-me-container input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.remember-me-container label {
+  margin: 0;
+  color: #374151;
+  font-weight: 600;
+}
+
 .main-button {
   width: 100%;
   background-color: #00A887;
@@ -374,13 +387,13 @@ main {
   padding: 0;
 }
 
-.main-text a {
+.login-link {
   color: #00A887;
   text-decoration: none;
   font-weight: 600;
 }
 
-.main-text a:hover {
+.login-link:hover {
   text-decoration: underline;
   font-weight: 600;
 }
