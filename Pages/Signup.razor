@@ -63,7 +63,7 @@
 
       <p class="main-text">
         Already have an account?
-        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a>  <!-- Added @onclick back for navigation -->
+        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a> 
       </p>
     </section>
   </main>
@@ -140,9 +140,9 @@ private bool inputValidation()
         return false;
     }
 
-    if (txtfullname.Length < 8 || txtfullname.Length > 15)
+    if (txtfullname.Length < 8 || txtfullname.Length > 36)
     {
-        callToaster("error", "Error: Full Name must be between 8 and 15 characters long.");
+        callToaster("error", "Error: Full Name must be between 8 and 36 characters long.");
         return false;
     }
 
@@ -160,9 +160,9 @@ private bool inputValidation()
         return false;
     }
 
-    if (txtpassword.Length < 12)
+    if (txtpassword.Length < 8)
     {
-        callToaster("error", "Error: Password must be at least 12 characters.");
+        callToaster("error", "Error: Password must be at least 8 characters.");
         return false;
     }
 

@@ -51,23 +51,23 @@
 @code {
     public class JsAuthResponse
     {
-        public bool Success { get; set; }
-        public string? ErrorCode { get; set; }
+      public bool Success { get; set; }
+      public string? ErrorCode { get; set; }
     }
 
     private string txtemail { get; set; } = "";
     private string txtpassword { get; set; } = "";
-    private bool ShowPassword { get; set; } = false;  // Added for show password toggle
+    private bool ShowPassword { get; set; } = false;
 
 private async Task HandleValidSubmit()
 {
-    if (inputValidation())
+  if (inputValidation())
+  {
+    try
     {
-        try
-        {
-            JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(
-                "loginUser", txtemail, txtpassword
-            );
+    JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(
+      "loginUser", txtemail, txtpassword
+        );
 
             if (result.Success)
             {
@@ -102,25 +102,31 @@ private async Task HandleValidSubmit()
     }
 }
 
-    private bool inputValidation()
+private bool inputValidation()
+{
+    if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword))
     {
-        // General checks
-        if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword))
-        {
-            callToaster("error", "Error: All fields are required.");
-            return false;
-        }
-
-        // Basic email validation
-        if (!Regex.IsMatch(txtemail, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-        {
-            callToaster("error", "Error: Please enter a valid email.");
-            return false;
-        }
-
-        // Removed overly strict password rules (e.g., length, uppercase) for login
-        return true;
+        callToaster("error", "Error: All fields are required.");
+        return false;
     }
+
+    if (!Regex.IsMatch(txtemail, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+    {
+        callToaster("error", "Error: Please enter a valid email address.");
+        return false;
+    }
+    if (txtemail.Length > 50)
+    {
+        callToaster("error", "Error: Email address is too long.");
+        return false;
+    }
+    if (txtpassword.Length < 8)
+    {
+        callToaster("error", $"Error: Password must be at least 8 characters long.");
+        return false;
+    }
+    return true;
+}
 
     private void callToaster(string type, string message)
     {

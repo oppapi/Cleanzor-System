@@ -35,7 +35,5 @@ export async function loginUser(email, password) {
   }
 }
 
-
-// Expose functions to C# (for JS interop)
 window.signupUser = signupUser;
 window.loginUser = loginUser;
