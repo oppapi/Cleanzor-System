@@ -1,4 +1,7 @@
 @page "/"
+@inject IJSRuntime JS
+
+@using System.Text.RegularExpressions
 
 <body class="body">
   <div class="login-header">
@@ -14,36 +17,123 @@
   </div>
 
   <div class="centered-div">
-    <form class="login-form">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="login-form">
+      <DataAnnotationsValidator />
+      <ValidationSummary />
+
       <div class="form-group">
-        <label for="username" class="labelBox">Username</label>
-        <input type="text" id="username" @bind="txtusername" placeholder="Enter your username" class="inputBox" required autocomplete="username" />
+        <label for="email" class="labelBox">Email</label>
+        <InputText @bind-Value="txtemail" id="email" class="inputBox" placeholder="Enter your email" />
       </div>
 
       <div class="form-group">
         <label for="password" class="labelBox">Password</label>
-        <input type="password" id="password" @bind="txtpassword" placeholder="Enter your password" class="inputBox" required autocomplete="off" />
+        <InputText @bind-Value="txtpassword" type="@(ShowPassword ? "text" : "password")" id="password" class="inputBox" placeholder="Enter your password" />
       </div>
 
       <div class="form-group show-password-group">
         <div class="show-password-left">
-          <input type="checkbox" class="checkbox" id="showPassword" />
+          <input type="checkbox" @bind="ShowPassword" class="checkbox" id="showPassword" />
           <label for="showPassword">Show Password</label>
         </div>
-        <a href="forgot.html" class="forgot-password" 
-           onclick="if (typeof showLoadingAndRedirect === 'function') showLoadingAndRedirect('forgot.html'); else window.location.href = 'forgot.html'; return false;">
-           Forgot Password?
-        </a>
+        <a class="forgot-password">Forgot Password?</a>
       </div>
 
-      <button type="submit" id="submit" class="btn-login">LOGIN</button>
+      <button type="submit" class="btn-login">LOGIN</button>
       <p class="text-center-white">
         Don’t have an account?
         <a @onclick="GoToSignup" class="signupButton" id="signupBtn">Signup</a>
       </p>
-    </form>
+    </EditForm>
   </div>
 </body>
+
+@code {
+    public class JsAuthResponse
+    {
+        public bool Success { get; set; }
+        public string? ErrorCode { get; set; }
+    }
+
+    private string txtemail { get; set; } = "";
+    private string txtpassword { get; set; } = "";
+    private bool ShowPassword { get; set; } = false;  // Added for show password toggle
+
+private async Task HandleValidSubmit()
+{
+    if (inputValidation())
+    {
+        try
+        {
+            JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(
+                "loginUser", txtemail, txtpassword
+            );
+
+            if (result.Success)
+            {
+                callToaster("success", "User Logged In Successfully!");
+                NavManager.NavigateTo("/dashboard");
+            }
+            else if (result.ErrorCode == "auth/user-not-found")
+            {
+                callToaster("error", "Error: No account found with that email.");
+            }
+            else if (result.ErrorCode == "auth/wrong-password")
+            {
+                callToaster("error", "Error: Incorrect password.");
+            }
+            else if (result.ErrorCode == "auth/invalid-email")
+            {
+                callToaster("error", "Error: The email address is not valid.");
+            }
+            else if (result.ErrorCode == "auth/email-not-verified")
+            {
+                callToaster("error", "Please verify your email before logging in.");
+            }
+            else
+            {
+                callToaster("error", "Error: Login failed. Please try again.");
+            }
+        }
+        catch (Exception ex)
+        {
+            callToaster("error", $"Error: An unexpected error occurred during login. {ex.Message}");
+        }
+    }
+}
+
+    private bool inputValidation()
+    {
+        // General checks
+        if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword))
+        {
+            callToaster("error", "Error: All fields are required.");
+            return false;
+        }
+
+        // Basic email validation
+        if (!Regex.IsMatch(txtemail, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+        {
+            callToaster("error", "Error: Please enter a valid email.");
+            return false;
+        }
+
+        // Removed overly strict password rules (e.g., length, uppercase) for login
+        return true;
+    }
+
+    private void callToaster(string type, string message)
+    {
+        JS.InvokeVoidAsync("showAlert", message);
+    }
+
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+
+    private void GoToSignup()
+    {
+        NavManager.NavigateTo("/signup");
+    }
+}
 
 <style>
 .body {
@@ -102,8 +192,7 @@
   width: clamp(120px, 40vw, 160px);
   height: auto;
   object-fit: contain;
-  top
-  max-height: clamp(100px, 25vh, 140px);
+  max-height: clamp(100px, 25vh, 140px);  // Fixed: Removed invalid "top"
 }
 
 .centered-title {
@@ -266,13 +355,4 @@
 .signupButton {
   color: #603b2f;
 }
-</style>
-
-@code {
-    [Inject] NavigationManager NavManager { get; set; } = default!;
-
-    private void GoToSignup()
-    {
-        NavManager.NavigateTo("/signup");
-    }
-}
+  </style>

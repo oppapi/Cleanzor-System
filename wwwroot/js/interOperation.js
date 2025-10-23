@@ -1,59 +1,41 @@
-import { getAuth, sendSignInLinkToEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-const actionCodeSettings = {
-  url: 'http://localhost:5209',
-  handleCodeInApp: true,
-  iOS: {
-    bundleId: 'com.example.ios'
-  },
-  android: {
-    packageName: 'com.example.android',
-    installApp: true,
-    minimumVersion: '12'
-  }
-};
+import { 
+  getAuth, 
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword, 
+  sendEmailVerification 
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 export async function signupUser(email, password) {
-    const auth = getAuth();
+  const auth = getAuth(window.firebaseApp);
 
-    try {
-        await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-
-        window.localStorage.setItem('emailForSignIn', email);
-
-        return {
-            Success: true,
-            Message: "Verification link sent to your email. Please check your inbox to complete registration.",
-            Uid: null,
-            ErrorCode: null,
-            ErrorMessage: null
-        };
-
-    } catch (error) {
-        return {
-            Success: false,
-            Message: null,
-            Uid: null,
-            ErrorCode: error.code,
-            ErrorMessage: error.message
-        };
-    }
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    await sendEmailVerification(user);
+    return { Success: true, ErrorCode: null };
+  } catch (error) {
+    return { Success: false, ErrorCode: error.code || "unknown-error" };
+  }
 }
+
 
 export async function loginUser(email, password) {
-    const auth = getAuth();
+  const auth = getAuth(window.firebaseApp);
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        return {
-            Success: true, Uid: user.uid, ErrorCode: null, ErrorMessage: null
-        };
-    } catch (error) {
-        return {
-            Success: false, Uid: null, ErrorCode: error.code, ErrorMessage: error.message
-        };
+    if (!user.emailVerified) {
+      return { Success: false, ErrorCode: "auth/invalid-email-verified" };
     }
+
+    return { Success: true, ErrorCode: null };
+  } catch (error) {
+    return { Success: false, ErrorCode: error.code || "unknown-error" };
+  }
 }
 
+
+// Expose functions to C# (for JS interop)
 window.signupUser = signupUser;
+window.loginUser = loginUser;

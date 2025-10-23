@@ -1,6 +1,8 @@
 @page "/signup"
 @inject IJSRuntime JS  
 @inject NavigationManager Navigation
+<!--kill local -->
+<!--netstat -ano | findstr :5209 | ForEach-Object { taskkill /PID ($_.Split()[4]) /F }-->
 
 <body class="body">
   <header class="main-header">
@@ -100,7 +102,7 @@
 
                 if (result.Success)
                 {
-                    callToaster("success", "Account Created Successfully!");
+                    callToaster("success", "Email already sent! Please verify your email to complete signup.");
                 }
                 else if (result.ErrorCode == "auth/email-already-in-use")
                 {
