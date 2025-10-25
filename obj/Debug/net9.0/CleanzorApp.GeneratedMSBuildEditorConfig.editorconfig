@@ -13,29 +13,29 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = CleanzorApp
 build_property.RootNamespace = CleanzorApp
-build_property.ProjectDir = C:\Users\John Carl\f\Cleanzor-System\
+build_property.ProjectDir = C:\Users\John Carl\Cleanzor-System\Cleanzor-System\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\John Carl\f\Cleanzor-System
+build_property.MSBuildProjectDirectory = C:\Users\John Carl\Cleanzor-System\Cleanzor-System
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/John Carl/f/Cleanzor-System/App.razor]
+[C:/Users/John Carl/Cleanzor-System/Cleanzor-System/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/f/Cleanzor-System/Pages/Login.razor]
+[C:/Users/John Carl/Cleanzor-System/Cleanzor-System/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/f/Cleanzor-System/Pages/Signup.razor]
+[C:/Users/John Carl/Cleanzor-System/Cleanzor-System/Pages/Signup.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnbnVwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/f/Cleanzor-System/_Imports.razor]
+[C:/Users/John Carl/Cleanzor-System/Cleanzor-System/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

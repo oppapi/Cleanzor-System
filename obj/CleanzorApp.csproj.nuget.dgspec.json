@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\John Carl\\f\\Cleanzor-System\\CleanzorApp.csproj": {}
+    "C:\\Users\\John Carl\\Cleanzor-System\\Cleanzor-System\\CleanzorApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\John Carl\\f\\Cleanzor-System\\CleanzorApp.csproj": {
+    "C:\\Users\\John Carl\\Cleanzor-System\\Cleanzor-System\\CleanzorApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\John Carl\\f\\Cleanzor-System\\CleanzorApp.csproj",
+        "projectUniqueName": "C:\\Users\\John Carl\\Cleanzor-System\\Cleanzor-System\\CleanzorApp.csproj",
         "projectName": "CleanzorApp",
-        "projectPath": "C:\\Users\\John Carl\\f\\Cleanzor-System\\CleanzorApp.csproj",
+        "projectPath": "C:\\Users\\John Carl\\Cleanzor-System\\Cleanzor-System\\CleanzorApp.csproj",
         "packagesPath": "C:\\Users\\John Carl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\John Carl\\f\\Cleanzor-System\\obj\\",
+        "outputPath": "C:\\Users\\John Carl\\Cleanzor-System\\Cleanzor-System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

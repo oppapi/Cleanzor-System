@@ -2,7 +2,9 @@ import {
   getAuth, 
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword, 
-  sendEmailVerification 
+  sendEmailVerification,
+  setPersistence,
+  browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 export async function signupUser(email, password) {
@@ -18,10 +20,12 @@ export async function signupUser(email, password) {
   }
 }
 
-
 export async function loginUser(email, password) {
   const auth = getAuth(window.firebaseApp);
+
   try {
+    await setPersistence(auth, browserSessionPersistence);
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
