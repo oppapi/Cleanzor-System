@@ -10,29 +10,30 @@
 <button @onclick="Logout" class="btn btn-danger">Logout</button>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        // Redirect unauthorized users to login
-        var authStateTask = AuthProvider.GetAuthenticationStateAsync();
-        authStateTask.ContinueWith(t =>
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (!user.Identity?.IsAuthenticated ?? true)
         {
-            var user = t.Result.User;
-            if (!user.Identity?.IsAuthenticated ?? true)
-            {
-                NavManager.NavigateTo("/", true);
-            }
-        });
+            NavManager.NavigateTo("/", true);
+        }
     }
 
-    private async Task Logout()
-    {
-        // Call Firebase sign-out JS function
-        await JS.InvokeVoidAsync("signOutFirebase");
+private async Task Logout()
+{
+    // 1️⃣ Sign out of Firebase
+    await JS.InvokeVoidAsync("signOutFirebase");
 
-        // Update Blazor authentication state
-        AuthProvider.NotifyUserChanged(null);
+    // 2️⃣ Immediately navigate away to prevent 403 render
+    NavManager.NavigateTo("/", true);
 
-        // Redirect to login
-        NavManager.NavigateTo("/", true);
-    }
+    // 3️⃣ Small delay (optional for visual polish)
+    await Task.Delay(300);
+
+    // 4️⃣ Then tell Blazor the user is logged out
+    AuthProvider.NotifyUserChanged(null);
+}
+
 }
