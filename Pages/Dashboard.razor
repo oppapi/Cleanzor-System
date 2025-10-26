@@ -1,0 +1,36 @@
+@page "/dashboard"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavManager
+@inject CustomAuthStateProvider AuthProvider
+@inject IJSRuntime JS
+
+<h3>Dashboard</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Redirect unauthorized users to login
+        var authStateTask = AuthProvider.GetAuthenticationStateAsync();
+        authStateTask.ContinueWith(t =>
+        {
+            var user = t.Result.User;
+            if (!user.Identity?.IsAuthenticated ?? true)
+            {
+                NavManager.NavigateTo("/login", true);
+            }
+        });
+    }
+
+    private async Task Logout()
+    {
+        // Call Firebase sign-out JS function
+        await JS.InvokeVoidAsync("signOutFirebase");
+
+        // Update Blazor authentication state
+        AuthProvider.NotifyUserChanged(null!); // null! suppresses nullable warning
+
+        // Redirect to login
+        NavManager.NavigateTo("/login", true);
+    }
+}

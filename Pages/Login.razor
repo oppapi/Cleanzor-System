@@ -1,5 +1,6 @@
 @page "/"
 @inject IJSRuntime JS
+@inject CustomAuthStateProvider AuthProvider
 
 @using System.Text.RegularExpressions
 <html>
@@ -72,6 +73,7 @@ private async Task HandleValidSubmit()
 
             if (result.Success)
             {
+                AuthProvider.NotifyUserChanged(txtemail);
                 callToaster("success", "User Logged In Successfully!");
                 NavManager.NavigateTo("/dashboard");
             }

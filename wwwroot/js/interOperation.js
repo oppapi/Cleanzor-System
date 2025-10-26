@@ -39,5 +39,23 @@ export async function loginUser(email, password) {
   }
 }
 
+//login
+window.getFirebaseUserEmail = function() {
+    const auth = getAuth(window.firebaseApp);
+    const user = auth.currentUser;
+    return user ? user.email : null;
+}
+
+window.signOutFirebase = async function () {
+    const auth = getAuth(window.firebaseApp);
+    await signOut(auth);
+}
+
+window.getFirebaseUserEmail = function() {
+    const auth = getAuth(window.firebaseApp);
+    const user = auth.currentUser;
+    return user ? user.email : null;
+}
+
 window.signupUser = signupUser;
 window.loginUser = loginUser;

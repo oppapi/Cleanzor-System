@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CleanzorApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be5fec1c51a521ed996ddaa826c87f85f51915dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84ceeca9be9b5af26c2048e7d228bfc3f1b22bcd")]
 [assembly: System.Reflection.AssemblyProductAttribute("CleanzorApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CleanzorApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
