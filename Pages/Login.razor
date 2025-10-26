@@ -116,7 +116,6 @@ private bool inputValidation()
     if (!Regex.IsMatch(txtemail, @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
     {
         callToaster("error", "Error: Please enter a valid email address.");
-        return false;
     }
     if (txtemail.Length > 50)
     {
@@ -133,7 +132,7 @@ private bool inputValidation()
 
     private void callToaster(string type, string message)
     {
-        JS.InvokeVoidAsync("showAlert", message);
+        Console.WriteLine(message);
     }
 
     [Inject] NavigationManager NavManager { get; set; } = default!;
@@ -201,7 +200,7 @@ private bool inputValidation()
   width: clamp(120px, 40vw, 160px);
   height: auto;
   object-fit: contain;
-  max-height: clamp(100px, 25vh, 140px);  // Fixed: Removed invalid "top"
+  max-height: clamp(100px, 25vh, 140px);
 }
 
 .centered-title {
@@ -364,4 +363,4 @@ private bool inputValidation()
 .signupButton {
   color: #603b2f;
 }
-  </style>
+</style>
