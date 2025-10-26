@@ -13,37 +13,30 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         _js = js;
     }
 
-    public override Task<AuthenticationState> GetAuthenticationStateAsync()
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        // Return anonymous immediately to prevent Loading...
-        var state = new AuthenticationState(_anonymous);
-
-        // Run Firebase check in background
-        _ = Task.Run(async () =>
+        try
         {
-            try
+            // Wait for the JS interop to return the current Firebase user email (or null).
+            var email = await _js.InvokeAsync<string>("getFirebaseUserEmail");
+
+            if (!string.IsNullOrEmpty(email))
             {
-                var email = await _js.InvokeAsync<string>("getFirebaseUserEmail");
-                if (!string.IsNullOrEmpty(email))
+                var identity = new ClaimsIdentity(new[]
                 {
-                    var identity = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Name, email)
-                    }, "Firebase");
+                    new Claim(ClaimTypes.Name, email)
+                }, "Firebase");
 
-                    var user = new ClaimsPrincipal(identity);
-
-                    // Notify Blazor of updated authentication state
-                    NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
-                }
+                var user = new ClaimsPrincipal(identity);
+                return new AuthenticationState(user);
             }
-            catch
-            {
-                // ignore errors, stay anonymous
-            }
-        });
+        }
+        catch
+        {
+            // ignore errors and fall through to anonymous
+        }
 
-        return Task.FromResult(state);
+        return new AuthenticationState(_anonymous);
     }
 
     public void NotifyUserChanged(string? email)

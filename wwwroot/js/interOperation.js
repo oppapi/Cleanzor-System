@@ -4,7 +4,8 @@ import {
   createUserWithEmailAndPassword, 
   sendEmailVerification,
   setPersistence,
-  browserSessionPersistence
+  browserSessionPersistence,
+  signOut
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 export async function signupUser(email, password) {
