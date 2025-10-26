@@ -96,13 +96,12 @@
         {  
             try
             {
-                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(
-                    identifier: "signupUser", txtemail, txtpassword
-                );
-
+                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(identifier: "signupUser", txtemail, txtpassword);
                 if (result.Success)
                 {
                     callToaster("success", "Email already sent! Please verify your email to complete signup.");
+                    //Register users
+                    await JS.InvokeAsync<JsAuthResponse>(identifier: "registerUser", txtfullname, txtemail, txtusername, txtpassword, null);
                 }
                 else if (result.ErrorCode == "auth/email-already-in-use")
                 {
