@@ -113,7 +113,7 @@ private bool inputValidation()
         return false;
     }
 
-    if (!Regex.IsMatch(txtemail, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+    if (!Regex.IsMatch(txtemail, @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
     {
         callToaster("error", "Error: Please enter a valid email address.");
         return false;

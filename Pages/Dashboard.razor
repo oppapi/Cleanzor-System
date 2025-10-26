@@ -5,9 +5,138 @@
 @inject CustomAuthStateProvider AuthProvider
 @inject IJSRuntime JS
 
-<h3>Dashboard</h3>
+<div class="page-container">
+    <div class="header">Header</div>
+    <div class="info">Information</div>
+    <div class="line-graph">Line Graph</div>
+    <div class="pie-graph">Pie Graph</div>
+</div>
 
-<button @onclick="Logout" class="btn btn-danger">Logout</button>
+<style>
+/* ---------- DESKTOP LAYOUT ---------- */
+.page-container {
+    display: grid;
+    height: 100vh;           /* full viewport height */
+    width: 100vw;            /* full viewport width */
+    gap: 2px;
+
+    /* Desktop grid */
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 60px auto 2fr; /* header fixed, info auto, graphs proportional */
+}
+
+/* Header */
+.header {
+    grid-column: span 6;
+    height: 60px;            /* fixed height */
+    background-color: #00A887;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Info (can maximize by adjusting height or using fr) */
+.info {
+    grid-column: span 6;
+    background-color: #2196F3;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    height: 300px;            /* you can adjust this freely */
+}
+
+/* Line graph */
+.line-graph {
+    grid-column: span 4;
+    background-color: #FF9800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Pie graph */
+.pie-graph {
+    grid-column: span 2;
+    background-color: #9C27B0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+@@media (max-width: 768px) {
+    .page-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 200px 300px 250px; /* header fixed, info + graphs adjustable */
+        min-height: 100vh;       /* at least full viewport */
+        overflow-y: auto;        /* enable vertical scroll */
+    }
+
+    .header {
+        grid-column: span 1;
+        height: 60px;            /* fixed header height */
+    }
+
+    .info {
+        grid-column: span 1;
+        height: 200px;           /* adjust as you want */
+    }
+
+    .line-graph {
+        grid-column: span 1;
+        height: 300px;           /* adjust as you want */
+    }
+
+    .pie-graph {
+        grid-column: span 1;
+        height: 250px;           /* adjust as you want */
+    }
+}
+
+/* ---------- MOBILE LAYOUT ---------- */
+@@media (max-width: 768px) {
+    .page-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 200px 300px 250px; /* header fixed, info + graphs adjustable */
+        min-height: 100vh;       /* at least full viewport */
+        overflow-y: auto;        /* enable vertical scroll */
+    }
+
+    .header {
+        grid-column: span 1;
+        height: 60px;            /* fixed header height */
+    }
+
+    .info {
+        grid-column: span 1;
+        height: 200px;           /* adjust as you want */
+    }
+
+    .line-graph {
+        grid-column: span 1;
+        height: 300px;           /* adjust as you want */
+    }
+
+    .pie-graph {
+        grid-column: span 1;
+        height: 250px;           /* adjust as you want */
+    }
+}
+
+/* Hide scrollbar on mobile */
+::-webkit-scrollbar {
+    display: none;
+}
+</style>
+
 
 @code {
     protected override async Task OnInitializedAsync()
@@ -21,19 +150,11 @@
         }
     }
 
-private async Task Logout()
-{
-    // 1️⃣ Sign out of Firebase
-    await JS.InvokeVoidAsync("signOutFirebase");
-
-    // 2️⃣ Immediately navigate away to prevent 403 render
-    NavManager.NavigateTo("/", true);
-
-    // 3️⃣ Small delay (optional for visual polish)
-    await Task.Delay(300);
-
-    // 4️⃣ Then tell Blazor the user is logged out
-    AuthProvider.NotifyUserChanged(null);
-}
-
+    private async Task Logout()
+    {
+        await JS.InvokeVoidAsync("signOutFirebase");
+        NavManager.NavigateTo("/", true);
+        await Task.Delay(300);
+        AuthProvider.NotifyUserChanged(null);
+    }
 }
