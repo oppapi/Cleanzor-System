@@ -17,7 +17,6 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         try
         {
-            // Wait for the JS interop to return the current Firebase user email (or null).
             var email = await _js.InvokeAsync<string>("getFirebaseUserEmail");
 
             if (!string.IsNullOrEmpty(email))
@@ -33,7 +32,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         }
         catch
         {
-            // ignore errors and fall through to anonymous
+
         }
 
         return new AuthenticationState(_anonymous);

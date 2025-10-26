@@ -23,16 +23,9 @@
 
 private async Task Logout()
 {
-    // 1️⃣ Sign out of Firebase
     await JS.InvokeVoidAsync("signOutFirebase");
-
-    // 2️⃣ Immediately navigate away to prevent 403 render
     NavManager.NavigateTo("/", true);
-
-    // 3️⃣ Small delay (optional for visual polish)
     await Task.Delay(300);
-
-    // 4️⃣ Then tell Blazor the user is logged out
     AuthProvider.NotifyUserChanged(null);
 }
 
