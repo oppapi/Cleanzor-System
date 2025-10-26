@@ -4513,10 +4513,10 @@ C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.dll
 C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\refint\CleanzorApp.dll
 C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
-C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.x7steioxb1.wasm
-C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.aqv0wf6y73.pdb
-C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.x7steioxb1.wasm.gz
-C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.aqv0wf6y73.pdb.gz
-C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-x7steioxb1.gz
-C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-aqv0wf6y73.gz
-C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-fshx943r8p.gz
+C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.ly4ynzz238.wasm
+C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.gtepopvfjb.pdb
+C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.ly4ynzz238.wasm.gz
+C:\Users\John Carl\Desktop\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.gtepopvfjb.pdb.gz
+C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-ly4ynzz238.gz
+C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-gtepopvfjb.gz
+C:\Users\John Carl\Desktop\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-nic190r7n3.gz
