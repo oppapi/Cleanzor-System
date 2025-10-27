@@ -99,9 +99,10 @@
                 JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(identifier: "signupUser", txtemail, txtpassword);
                 if (result.Success)
                 {
-                    callToaster("success", "Email already sent! Please verify your email to complete signup.");
-                    //Register users
-                    await JS.InvokeAsync<JsAuthResponse>(identifier: "registerUser", txtfullname, txtemail, txtusername, txtpassword, null);
+                    await JS.InvokeVoidAsync("storeSignupData", txtfullname, txtemail, txtusername, null);
+                    callToaster("success", "Account created! Please verify your email and then log in.");
+                    await JS.InvokeVoidAsync("signOutFirebase");
+                    Navigation.NavigateTo("/"); 
                 }
                 else if (result.ErrorCode == "auth/email-already-in-use")
                 {

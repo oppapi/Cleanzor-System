@@ -55,7 +55,6 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         {
             user = _anonymous;
         }
-
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
     }
 }
