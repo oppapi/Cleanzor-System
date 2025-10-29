@@ -101,6 +101,12 @@
 
         <div class="main-content">
             <div class="info">
+                <div class="info-box">Box 1</div>
+                <div class="info-box">Box 2</div>
+                <div class="info-box">Box 3</div>
+                <div class="info-box">Box 4</div>
+                <div class="info-box">Box 5</div>
+                <div class="info-box">Box 6</div>
             </div>
 
             <div class="line-graph"></div>
@@ -521,16 +527,40 @@
 
     .info {
         grid-column: span 6;
-        background-color: white;
-        color: white;
-        display: flex;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 15px;
+        background-color: transparent;
+        height: auto;
         margin-left: 10px;
-        align-items: center;
-        font-size: 1.2rem;
-        height: 300px;
-        padding: 20px 20px 20px 20px;
+    }
+
+    .info-box {
+        background-color: white;
+        color: black;
         border-radius: 10px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.2rem;
+        transition: 0.3s ease;
+    }
+
+    .info-box:hover {
+        transform: translateY(-5px);
+        background-color: #f1f1f1;
+    }
+
+    body.dark .info-box {
+        background-color: var(--sidebar-color);
+        color: var(--text-color);
+    }
+
+    body.dark .info-box:hover {
+        background-color: var(--primary-color-light);
     }
 
     .line-graph {
@@ -556,6 +586,12 @@
         color: white;
         padding: 20px;
         border-radius: 10px;
+    }
+
+    body.dark .line-graph,
+    body.dark .pie-graph {
+        background-color: var(--sidebar-color);
+        color: var(--text-color);
     }
 
     @@media (max-width: 1100px) {
@@ -589,28 +625,28 @@
         .main-content {
             grid-column: span 1;
             display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 200px 300px 250px;
-            gap: 15px;          /* Spacing between containers */
-            padding: 15px;      /* Spacing between containers */
+            grid-template-columns: 1fr; /* Single column for mobile */
+            grid-template-rows: auto 250px 250px; /* Three rows: info, line-graph, pie-graph */
+            gap: 15px;
+            padding: 15px;
             overflow-y: auto;
         }
 
         .info {
-            grid-column: span 1;
-            height: 200px;
-            border-radius: 10px;
+            grid-column: span 1; /* Spans the single column */
+            grid-template-columns: repeat(2, 1fr); /* 2 per row (3 rows) on smaller screens */
+            grid-template-rows: repeat(3, 1fr); /* Explicit 3 rows on smaller screens */
             margin-left: 0px;
         }
 
         .line-graph {
-            grid-column: span 1;
-            height: 300px;
+            grid-column: span 1; /* Spans the single column */
+            height: 250px;
             margin-left: 0px;
         }
 
         .pie-graph {
-            grid-column: span 1;
+            grid-column: span 1; /* Spans the single column */
             height: 250px;
         }
 
@@ -624,7 +660,73 @@
             width: 100%;
         }
     }
+
+    @@media (max-width: 450px) {
+        .sidebar header .toggle {
+            right: 10px;
+            background-color: transparent;
+            color: var(--text-color);
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .sidebar.close {
+            display: none;
+        }
+
+        .menu-icon {
+            display: block;
+        }
+
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 60px 1fr;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            height: 60px;
+        }
+
+            .main-content {
+                display: grid;
+                grid-template-columns: 1fr; /* One column layout */
+                grid-auto-rows: auto;
+                gap: 15px;
+                padding: 15px;
+                overflow-y: auto;
+            }
+
+            .info,
+            .line-graph,
+            .pie-graph {
+                grid-column: 1 / -1;
+                margin-left: 0;
+                height: auto;
+            }
+
+            .info {
+                display: grid;
+                grid-template-columns: 1fr; /* Stack items vertically */
+                grid-auto-rows: auto;
+            }
+
+            .home {
+                left: 0;
+                width: 100%;
+            }
+
+            .sidebar.close ~ .home {
+                left: 0;
+                width: 100%;
+            }
+        }
+    }
     ::-webkit-scrollbar {
     display: none;
+
+    
 }
 </style>

@@ -5646,10 +5646,10 @@ C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\refint\CleanzorApp
 C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
 C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\bs0k186akq-vuaiv1d7zx.gz
-C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.lweypy3b59.wasm
-C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.bif4joiej0.pdb
-C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.lweypy3b59.wasm.gz
-C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.bif4joiej0.pdb.gz
-C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-lweypy3b59.gz
-C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-bif4joiej0.gz
-C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-dqzbqhpp1q.gz
+C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.1cbh3qmqsu.wasm
+C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.g329p9jid6.pdb
+C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.1cbh3qmqsu.wasm.gz
+C:\Users\John Carl\sana last\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.g329p9jid6.pdb.gz
+C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-1cbh3qmqsu.gz
+C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-g329p9jid6.gz
+C:\Users\John Carl\sana last\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-t93r23w6fi.gz
