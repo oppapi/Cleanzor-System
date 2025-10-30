@@ -1,8 +1,9 @@
 {
   "mainAssemblyName": "CleanzorApp",
   "resources": {
-    "hash": "sha256-iB+MN8Razko7pFQJsxSus4iCH5RdyM7za62jHlYH9dk=",
+    "hash": "sha256-1AOWVZc6XsiYrWUoLP7CgdMbd2e/9GiZdWZnxYa0GEs=",
     "fingerprinting": {
+      "Blazor-ApexCharts.kem0c92the.wasm": "Blazor-ApexCharts.wasm",
       "FirebaseAdmin.v2pq779ba2.wasm": "FirebaseAdmin.wasm",
       "Google.Api.Gax.pv4v4cqh7i.wasm": "Google.Api.Gax.wasm",
       "Google.Api.Gax.Rest.zypcek3c31.wasm": "Google.Api.Gax.Rest.wasm",
@@ -24,12 +25,16 @@
       "Microsoft.Extensions.Configuration.Json.5goloas6bj.wasm": "Microsoft.Extensions.Configuration.Json.wasm",
       "Microsoft.Extensions.DependencyInjection.6epwuw9flx.wasm": "Microsoft.Extensions.DependencyInjection.wasm",
       "Microsoft.Extensions.DependencyInjection.Abstractions.3bbrnxm7sg.wasm": "Microsoft.Extensions.DependencyInjection.Abstractions.wasm",
+      "Microsoft.Extensions.Diagnostics.lse40y6o5n.wasm": "Microsoft.Extensions.Diagnostics.wasm",
+      "Microsoft.Extensions.Diagnostics.Abstractions.lhcpeuzonu.wasm": "Microsoft.Extensions.Diagnostics.Abstractions.wasm",
       "Microsoft.Extensions.FileProviders.Abstractions.f6m2kkjm8i.wasm": "Microsoft.Extensions.FileProviders.Abstractions.wasm",
       "Microsoft.Extensions.FileProviders.Physical.pwje2iqgsz.wasm": "Microsoft.Extensions.FileProviders.Physical.wasm",
       "Microsoft.Extensions.FileSystemGlobbing.fw6n3iiewj.wasm": "Microsoft.Extensions.FileSystemGlobbing.wasm",
+      "Microsoft.Extensions.Http.jmxtshryzr.wasm": "Microsoft.Extensions.Http.wasm",
       "Microsoft.Extensions.Logging.9y6pcj4d20.wasm": "Microsoft.Extensions.Logging.wasm",
       "Microsoft.Extensions.Logging.Abstractions.7og7zl867u.wasm": "Microsoft.Extensions.Logging.Abstractions.wasm",
       "Microsoft.Extensions.Options.8smb4p45bs.wasm": "Microsoft.Extensions.Options.wasm",
+      "Microsoft.Extensions.Options.ConfigurationExtensions.pgg9uv7c4y.wasm": "Microsoft.Extensions.Options.ConfigurationExtensions.wasm",
       "Microsoft.Extensions.Primitives.xtp97am9lf.wasm": "Microsoft.Extensions.Primitives.wasm",
       "Microsoft.JSInterop.oafygsa2yv.wasm": "Microsoft.JSInterop.wasm",
       "Microsoft.JSInterop.WebAssembly.c5whsk6cyh.wasm": "Microsoft.JSInterop.WebAssembly.wasm",
@@ -212,8 +217,8 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "CleanzorApp.dviz1uewam.wasm": "CleanzorApp.wasm",
-      "CleanzorApp.osqcqb8ucv.pdb": "CleanzorApp.pdb"
+      "CleanzorApp.sfx4fxkby7.wasm": "CleanzorApp.wasm",
+      "CleanzorApp.5klljy7pqq.pdb": "CleanzorApp.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.50iqa8w3ys.js": "sha256-pQdXuxfVeqYHOwd5HUM2ERd7OnXirj9JTF37b6OdTAc="
@@ -234,6 +239,7 @@
       "System.Private.CoreLib.9ecf2cskpd.wasm": "sha256-gZ4N2viBl8UaZNFjyUL6/MRwpaGRuF+3crosHiLx2EA="
     },
     "assembly": {
+      "Blazor-ApexCharts.kem0c92the.wasm": "sha256-lN5nS4iVdKzeWsKuXYOGS6AyUc3u1m6Ur0WWiC0OgQ0=",
       "FirebaseAdmin.v2pq779ba2.wasm": "sha256-dzSXuYtcEKdtfwG8OZkkSFguecLjqG+2Zwcxd15vpcY=",
       "Google.Api.Gax.pv4v4cqh7i.wasm": "sha256-dT6lTdXpeSN8UJ0KsLh5QP4H7rBa0NRwSza3K01NZcE=",
       "Google.Api.Gax.Rest.zypcek3c31.wasm": "sha256-hSOsXyFfX7a/EoIOXdyFxY3kcfjjIrJ34QVvO7yFXKc=",
@@ -255,12 +261,16 @@
       "Microsoft.Extensions.Configuration.Json.5goloas6bj.wasm": "sha256-BS9j7ySwg+tF6JWEwBlXKkHexM4FMzuzCvSI1M6DPWc=",
       "Microsoft.Extensions.DependencyInjection.6epwuw9flx.wasm": "sha256-jvaipHw61+4HriYJufCdZBXJB/gIRUpw/Fbdei1E6uI=",
       "Microsoft.Extensions.DependencyInjection.Abstractions.3bbrnxm7sg.wasm": "sha256-AdNUfaUzAO74cwhiNUTtR4QaVzjc8pfQGkSwzoVFfnA=",
+      "Microsoft.Extensions.Diagnostics.lse40y6o5n.wasm": "sha256-5UtOJd++YCAbN+YVNJdWzD6uontiHb8L3wPBoxfyT5M=",
+      "Microsoft.Extensions.Diagnostics.Abstractions.lhcpeuzonu.wasm": "sha256-eUH89CWR/tsf7NSOGeqZoaGhdcYAx3yvGukdiP8PWCc=",
       "Microsoft.Extensions.FileProviders.Abstractions.f6m2kkjm8i.wasm": "sha256-x/CuPEnQghJZjvCoNM5EeSCbJmL15vo69CKIuDOZFPE=",
       "Microsoft.Extensions.FileProviders.Physical.pwje2iqgsz.wasm": "sha256-tzn/o5v06hK2rtONV2cONytvI9iIwXkV/v+YzhNfgFs=",
       "Microsoft.Extensions.FileSystemGlobbing.fw6n3iiewj.wasm": "sha256-r41/JeKa5jEf6LWlsMhzQi8XEzGTVv3gpBIzZ5gmb9k=",
+      "Microsoft.Extensions.Http.jmxtshryzr.wasm": "sha256-hQBuZqm9oDerqzwTZsIu6tnlGi2Lhu6YbjKcXXlP/3g=",
       "Microsoft.Extensions.Logging.9y6pcj4d20.wasm": "sha256-j9i4Xe9suFGLFqWXzJGAeHxExSzCNS9FtfYHXVpTfHQ=",
       "Microsoft.Extensions.Logging.Abstractions.7og7zl867u.wasm": "sha256-J8eiHzpK9eVrn1CTBWjieq94wtYtW1DTXod7A3IcZ/k=",
       "Microsoft.Extensions.Options.8smb4p45bs.wasm": "sha256-6K+4B1GEf5Gt32XBHniGt3r3Fn28PPQFeNn1KYSOtn8=",
+      "Microsoft.Extensions.Options.ConfigurationExtensions.pgg9uv7c4y.wasm": "sha256-meVx/z3UlKVjnnma5v/ZX7EctFgGScSoqLOhqhXMxa4=",
       "Microsoft.Extensions.Primitives.xtp97am9lf.wasm": "sha256-+6WuKokS33+LxRRsQK8HjiOppzZD5+UCJuOWSPChjBc=",
       "Microsoft.JSInterop.oafygsa2yv.wasm": "sha256-8KHde87s03YXh21jjvaLX0OAjPTeWpKn1jV7kf9GrvM=",
       "Microsoft.JSInterop.WebAssembly.c5whsk6cyh.wasm": "sha256-AHeFn5IBMJC1tI8hRNTBa4lyLko5J8AK64JFjeO/vVw=",
@@ -434,10 +444,10 @@
       "WindowsBase.361km0836k.wasm": "sha256-FacUCEIJYTnbOWgX/R9QP2QnurqRZwRIkDAH0N9z69s=",
       "mscorlib.qiu3j3msqk.wasm": "sha256-QvztpxTOEw4aMIl7zP3QtsPLNv/IWaK5wq22J4ReGrA=",
       "netstandard.lp03u0xxi4.wasm": "sha256-WVQsxULiAiEbyXLKolS7txnWVT82SsvsuMe4jJ+SqqI=",
-      "CleanzorApp.dviz1uewam.wasm": "sha256-SQP/PHHpZW162cBV2MXefSzDeAy8QUp5IvbJzYe56Xs="
+      "CleanzorApp.sfx4fxkby7.wasm": "sha256-uOrUk63MeqP9YLK0kANPQoEeKRBEdJN1chbCS6i45zI="
     },
     "pdb": {
-      "CleanzorApp.osqcqb8ucv.pdb": "sha256-WIdrfGM563D6wPQ15F86gd4rzSbJEkIIl1MI4SjWvO8="
+      "CleanzorApp.5klljy7pqq.pdb": "sha256-Zctvum70tJFa15zDgG+JtTfOVE47LRoT6fz20u5Gzr4="
     }
   },
   "cacheBootResources": true,

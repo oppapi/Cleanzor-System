@@ -100,142 +100,80 @@
         </div>
 
         <div class="main-content">
-            <div class="info">
+<div class="info">
 
-                <div class="small-box text-bg-primary">
-                    <div class="inner">
-                        <h3>@status</h3>
-                        <p>Status</p>
-                    </div>
-                    <svg
-                        class="small-box-icon"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                        d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-                        ></path>
-                    </svg>
-                    <div class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                        More info <i class="bi bi-link-45deg"></i>
-                    </div>
-                </div>
+    <!-- Status Box -->
+<!-- Status Box -->
+<!-- Status Box -->
+<div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+    <div class="inner">
+        <h3>@(status)</h3>
+        <p>Status</p>
+    </div>
+    <img src="images/status.svg" alt="Status Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+    <div class="small-box-footer" style="height: 7px;"></div>
+</div>
 
-                <div class="small-box text-bg-primary">
-                    <div class="inner">
-                        <h3>@load</h3>
-                        <p>Load</p>
-                    </div>
-                    <svg
-                        class="small-box-icon"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                        d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-                        ></path>
-                    </svg>
-                    <div class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                        More info <i class="bi bi-link-45deg"></i>
-                    </div>
-                </div>
+<!-- Load Box -->
+<div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+    <div class="inner">
+        <h3>@(load + " gram/s")</h3>
+        <p>Load</p>
+    </div>
+    <img src="images/load.svg" alt="Load Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+    <div class="small-box-footer" style="height: 7px;"></div>
+</div>
 
-                <div class="small-box text-bg-primary">
-                    <div class="inner">
-                        <h3>@schedule</h3>
-                        <p>Schedule</p>
-                    </div>
-                    <svg
-                        class="small-box-icon"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                        d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-                        ></path>
-                    </svg>
-                    <div class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                        More info <i class="bi bi-link-45deg"></i>
-                    </div>
-                </div>
+<!-- Schedule Box -->
+<div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+    <div class="inner">
+        <h3>@(schedule)</h3>
+        <p>Schedule</p>
+    </div>
+    <img src="images/time.svg" alt="Schedule Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+    <div class="small-box-footer" style="height: 7px;"></div>
+</div>
 
-                <div class="small-box text-bg-primary">
-                    <div class="inner">
-                        <h3>@battery</h3>
-                        <p>Battery</p>
-                    </div>
-                    <svg
-                        class="small-box-icon"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                        d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-                        ></path>
-                    </svg>
-                    <div class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                        More info <i class="bi bi-link-45deg"></i>
-                    </div>
-                </div>
+<!-- Battery Box -->
+<div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+    <div class="inner">
+        <h3>@(battery)</h3>
+        <p>Battery</p>
+    </div>
+    <img src="images/battery.svg" alt="Battery Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+    <div class="small-box-footer" style="height: 7px;"></div>
+</div>
 
-                <div class="small-box text-bg-primary">
-                    <div class="inner">
-                        <h3>@(wheelSpeed + "%")</h3>
-                        <p>Wheel Speed</p>
-                    </div>
-                    <svg
-                        class="small-box-icon"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                        d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z"
-                        ></path>
-                    </svg>
-                    <div class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                        More info <i class="bi bi-link-45deg"></i>
-                    </div>
-                </div>
+<!-- Wheel Speed Box -->
+<div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+    <div class="inner">
+        <h3>@(wheelSpeed + "%")</h3>
+        <p>Wheel Speed</p>
+    </div>
+    <img src="images/wheel.svg" alt="Wheel Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+    <div class="small-box-footer" style="height: 7px;"></div>
+</div>
 
-                <div class="small-box text-bg-primary">
-                    <div class="inner">
-                        <h3>@(sweeperSpeed + "%")</h3>
-                        <p>Sweeper speed</p>
-                    </div>
-                    <svg
-                        class="small-box-icon"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                    >
-                        <path
-                        d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
-                        ></path>
-                    </svg>
-                    <div class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                        More info <i class="bi bi-link-45deg"></i>
-                    </div>
-                </div>
-            </div>
+<!-- Sweeper Speed Box -->
+<div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+    <div class="inner">
+        <h3>@(sweeperSpeed + "%")</h3>
+        <p>Sweeper Speed</p>
+    </div>
+    <img src="images/sweeper.svg" alt="Sweeper Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+    <div class="small-box-footer" style="height: 7px;"></div>
+</div>
 
-            <div class="line-graph"></div>
-            <div class="pie-graph"></div>
+
+
+</div>
+
+<div class="line-graph"></div>
+<div class="pie-graph"></div>
+
         </div>
     </div>
 </section>
-
-
 </div>
 
 @code {
@@ -719,28 +657,31 @@
         color: var(--text-color);
     }
 
-    .small-box {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        background-color: #007bff;
-        color: white;
-        height: 150px;
-        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
-        transition: 0.3s ease;
-        overflow: hidden;
-    }
+.small-box {
+    position: relative;
+    display: flex; /* Keep flex */
+    align-items: center; /* Keep center alignment vertically */
+    justify-content: flex-start; /* Aligns content to the start (left) */
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    height: 150px;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    transition: 0.3s ease;
+    overflow: hidden;
+    padding-right: 100px;
+}
 
     .small-box:hover {
         transform: translateY(-5px);
     }
 
-    .inner {
-        padding: 10px;
-        text-align: center;
-    }
+.inner {
+    padding: 30px; /* Add more left/right padding */
+    text-align: left; /* Aligns text within the inner box to the left */
+    flex-grow: 1; /* Allows it to take up available space before the icon */
+    z-index: 10; /* Make sure text is above the icon if they overlap */
+}
 
     .inner h3 {
         font-size: 2rem;
@@ -753,13 +694,21 @@
         margin: 5px 0 0 0;
     }
 
-    .small-box-icon {
-        position: absolute;
-        top: px;
-        right: 10px;
-        font-size: 3rem;
-        color: rgba(255,255,255,.3);
-    }
+.small-box-icon {
+    position: absolute;
+    right: 35px; /* original 15px + 20px padding */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none; /* prevents accidental overlap interaction */
+}
+
+
 
     .small-box-footer {
         position: absolute;
@@ -767,7 +716,7 @@
         left: 0;
         right: 0;
         text-align: center;
-        padding: 3px 0;
+        padding: px 0;
         color: rgba(255,255,255,.8);
         display: block;
         z-index: 5;
@@ -783,7 +732,14 @@
    
 
     @@media (max-width: 1100px) {
-        .sidebar header .toggle {
+        .small-box {
+            justify-content: center;
+            text-align: center;
+            padding-right: 20px;
+            height: 110px;
+        }
+
+        .sidebar header .toggle {   
             right: 10px;
             background-color: transparent;
             color: var(--text-color);
