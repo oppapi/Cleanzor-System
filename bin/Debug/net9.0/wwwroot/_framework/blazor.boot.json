@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "CleanzorApp",
   "resources": {
-    "hash": "sha256-1AOWVZc6XsiYrWUoLP7CgdMbd2e/9GiZdWZnxYa0GEs=",
+    "hash": "sha256-YeVMzwEyHiYYMNf3OyzSIZ7QqweQXEflDLrBI8D7rjw=",
     "fingerprinting": {
       "Blazor-ApexCharts.kem0c92the.wasm": "Blazor-ApexCharts.wasm",
       "FirebaseAdmin.v2pq779ba2.wasm": "FirebaseAdmin.wasm",
@@ -217,8 +217,8 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "CleanzorApp.sfx4fxkby7.wasm": "CleanzorApp.wasm",
-      "CleanzorApp.5klljy7pqq.pdb": "CleanzorApp.pdb"
+      "CleanzorApp.iq4b9z3w23.wasm": "CleanzorApp.wasm",
+      "CleanzorApp.4kfcqhpfle.pdb": "CleanzorApp.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.50iqa8w3ys.js": "sha256-pQdXuxfVeqYHOwd5HUM2ERd7OnXirj9JTF37b6OdTAc="
@@ -444,10 +444,10 @@
       "WindowsBase.361km0836k.wasm": "sha256-FacUCEIJYTnbOWgX/R9QP2QnurqRZwRIkDAH0N9z69s=",
       "mscorlib.qiu3j3msqk.wasm": "sha256-QvztpxTOEw4aMIl7zP3QtsPLNv/IWaK5wq22J4ReGrA=",
       "netstandard.lp03u0xxi4.wasm": "sha256-WVQsxULiAiEbyXLKolS7txnWVT82SsvsuMe4jJ+SqqI=",
-      "CleanzorApp.sfx4fxkby7.wasm": "sha256-uOrUk63MeqP9YLK0kANPQoEeKRBEdJN1chbCS6i45zI="
+      "CleanzorApp.iq4b9z3w23.wasm": "sha256-Rs65TN+lpQXEb7GfyB4CNKzJkXUTpMvZT/71kkbM3JQ="
     },
     "pdb": {
-      "CleanzorApp.5klljy7pqq.pdb": "sha256-Zctvum70tJFa15zDgG+JtTfOVE47LRoT6fz20u5Gzr4="
+      "CleanzorApp.4kfcqhpfle.pdb": "sha256-PJhcQMJhteuAq4QIDfpy+oAbQOMKR4oH9E8mN1WNY9M="
     }
   },
   "cacheBootResources": true,

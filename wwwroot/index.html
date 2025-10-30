@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
 
+  <!-- ApexCharts CDN (loads globally for your dashboard's <script> block) -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
   <style>
     html, body {
       height: 100%;
@@ -29,6 +32,7 @@
     }
   </style>
 
+  <!-- Firebase initialization (unchanged) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 
@@ -45,12 +49,22 @@
     window.firebaseApp = initializeApp(firebaseConfig);
   </script>
 
+  <!-- Your custom interOperation.js (unchanged) -->
   <script type="module" src="js/interOperation.js"></script>
+
 </head>
 
-<body>
+<body> 
+  <div class="container">
+    <div class="chart"></div>
+    <div class="table"></div>
+  </div>
   <div id="app"></div>
 
+  <!-- Chart.js (unchanged, for other charts if needed) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+
+  <!-- Blazor WebAssembly script (must be last) -->
   <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>
