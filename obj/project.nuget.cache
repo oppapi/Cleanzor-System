@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "f/fezGdkoyo=",
+  "dgSpecHash": "gp8SxKuiwew=",
   "success": true,
-  "projectFilePath": "C:\\Users\\John Carl\\ukinam naman oh\\Cleanzor-System\\CleanzorApp.csproj",
+  "projectFilePath": "C:\\Users\\John Carl\\gg folder\\Cleanzor-System\\CleanzorApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\John Carl\\.nuget\\packages\\blazor-apexcharts\\6.0.2\\blazor-apexcharts.6.0.2.nupkg.sha512",
     "C:\\Users\\John Carl\\.nuget\\packages\\firebaseadmin\\3.4.0\\firebaseadmin.3.4.0.nupkg.sha512",

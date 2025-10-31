@@ -13,37 +13,37 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = CleanzorApp
 build_property.RootNamespace = CleanzorApp
-build_property.ProjectDir = C:\Users\John Carl\ukinam naman oh\Cleanzor-System\
+build_property.ProjectDir = C:\Users\John Carl\gg folder\Cleanzor-System\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\John Carl\ukinam naman oh\Cleanzor-System
+build_property.MSBuildProjectDirectory = C:\Users\John Carl\gg folder\Cleanzor-System
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/John Carl/ukinam naman oh/Cleanzor-System/App.razor]
+[C:/Users/John Carl/gg folder/Cleanzor-System/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/ukinam naman oh/Cleanzor-System/Pages/Dashboard.razor]
+[C:/Users/John Carl/gg folder/Cleanzor-System/Pages/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/ukinam naman oh/Cleanzor-System/Pages/Dashiboard.razor]
+[C:/Users/John Carl/gg folder/Cleanzor-System/Pages/Dashiboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGlib2FyZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/ukinam naman oh/Cleanzor-System/Pages/Login.razor]
+[C:/Users/John Carl/gg folder/Cleanzor-System/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/ukinam naman oh/Cleanzor-System/Pages/Signup.razor]
+[C:/Users/John Carl/gg folder/Cleanzor-System/Pages/Signup.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnbnVwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/John Carl/ukinam naman oh/Cleanzor-System/_Imports.razor]
+[C:/Users/John Carl/gg folder/Cleanzor-System/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

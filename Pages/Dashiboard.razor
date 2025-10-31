@@ -174,9 +174,7 @@
         </div>
     </div>
 
-<div class="pie-graph">
-                    <canvas id="revenuePieChart"></canvas>
-                </div>
+    <div class="pie-graph" id="pieChartContainer"></div>
 
         </div>
     </div>
@@ -313,6 +311,44 @@ let barOptions = {
 let chart = new ApexCharts(
     document.querySelector(".area-chart"), barOptions
 );
+
+let pieOptions = {
+        ...defaultOptions,  // Inherits shared defaults
+        chart: {
+            ...defaultOptions.chart,
+            type: 'pie',
+            height: '300px'
+        },
+        series: [300, 50, 100, 80],  // Sample data; replace with actual values
+        labels: ['Product A', 'Product B', 'Product C', 'Product D'],  // Sample labels
+        colors: ['#FF4560', '#00E396', '#FEB019', '#775DD0'],  // Custom colors
+        legend: {
+            position: 'bottom',
+            labels: {
+                colors: colorLabel,
+                fontFamily: fontFamily
+            }
+        },
+        title: {
+            text: 'Revenue Breakdown',
+            align: 'center',
+            style: {
+                fontFamily: fontFamily,
+                color: colorLabel
+            }
+        },
+        tooltip: {
+            style: {
+                fontFamily: fontFamily
+            }
+        }
+    };
+
+    // Initialize pie chart (same pattern as area chart)
+    let pieChart = new ApexCharts(
+        document.querySelector("#pieChartContainer"), pieOptions
+    );
+    pieChart.render();
 
 chart.render();
 </script>
