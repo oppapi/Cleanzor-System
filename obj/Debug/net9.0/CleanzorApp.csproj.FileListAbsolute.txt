@@ -8152,10 +8152,10 @@ C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.dll
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\refint\CleanzorApp.dll
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.m9jb7quy51.wasm
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.spcs34cee0.pdb
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.m9jb7quy51.wasm.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.spcs34cee0.pdb.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-m9jb7quy51.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-spcs34cee0.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-5j1rz81m8n.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.4ecwt7u7ye.wasm
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.zamou0widr.pdb
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.4ecwt7u7ye.wasm.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.zamou0widr.pdb.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-4ecwt7u7ye.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-zamou0widr.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-k76mojdycw.gz
