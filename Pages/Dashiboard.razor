@@ -178,7 +178,6 @@
 
 
     @code {
-    // ... (Your existing properties) ...
     private string status = "Cleaning";
     private int load = 69;
     private string schedule = "10:30 AM";
@@ -196,13 +195,13 @@
         {
             await LoadCharts();
             chartsLoaded = true;
+            await JSRuntime.InvokeVoidAsync("listenToSensorData");
+            await PeriodicUpdate();
         }
     }
 
     private async Task LoadCharts()
     {
-        // 🚀 This is the clean JS Interop call! 
-        // We tell Blazor to call the 'loadCharts' function defined in chart-interop.js
         await JSRuntime.InvokeVoidAsync("loadCharts");
     }
     
@@ -222,6 +221,48 @@
         // The toggleDarkMode function is also now called from the external file
         await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
     }
+
+private async Task PeriodicUpdate()
+{
+    while (true)
+    {
+        try
+        {
+            // ✅ Read robotData directly from localStorage
+            var dataJson = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "robotData");
+
+            if (!string.IsNullOrEmpty(dataJson))
+            {
+                var parsed = System.Text.Json.JsonDocument.Parse(dataJson).RootElement;
+
+                status = parsed.TryGetProperty("status", out var s) ? s.GetString() ?? status : status;
+                battery = parsed.TryGetProperty("battery", out var b) ? b.GetString() ?? battery : battery;
+                schedule = parsed.TryGetProperty("schedule", out var sch) ? sch.GetString() ?? schedule : schedule;
+
+                if (parsed.TryGetProperty("load", out var l) && l.TryGetInt32(out var loadVal))
+                    load = loadVal;
+
+                if (parsed.TryGetProperty("wheelSpeed", out var ws) && ws.TryGetInt32(out var wheelVal))
+                    wheelSpeed = wheelVal;
+
+                if (parsed.TryGetProperty("sweeperSpeed", out var ss) && ss.TryGetInt32(out var sweepVal))
+                    sweeperSpeed = sweepVal;
+
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                Console.WriteLine("⚠️ No robotData found in localStorage.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"⚠️ Error reading sensor data: {ex.Message}");
+        }
+
+        await Task.Delay(2000); // check every 2 seconds
+    }
+}
 }
 
     <script>

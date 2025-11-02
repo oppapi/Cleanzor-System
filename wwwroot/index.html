@@ -6,10 +6,12 @@
   <title>CleanzorApp</title>
   <base href="/" />
 
+  <!-- Fonts & Bootstrap -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
-->
+
+  <!-- ApexCharts -->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="js/interChart.js"></script>
 
@@ -31,9 +33,10 @@
     }
   </style>
 
-  <!-- Firebase initialization (unchanged) -->
+  <!-- ✅ Firebase Initialization -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCiBFlPxGa3tlLwPQJSssl3Bai2psbqwJY",
@@ -42,28 +45,40 @@
       storageBucket: "cleanzorv6.firebasestorage.app",
       messagingSenderId: "466216817805",
       appId: "1:466216817805:web:a04b203b55e9b609c97ec4",
-      measurementId: "G-T83KMEBWE2"
+      measurementId: "G-T83KMEBWE2",
+      // ✅ Use correct database URL
+      databaseURL: "https://cleanzorv6-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
+    // ✅ Initialize Firebase
     window.firebaseApp = initializeApp(firebaseConfig);
+
+    // ✅ Define fetchSensorDataOnce for Blazor
+    window.fetchSensorDataOnce = async function () {
+      const db = getDatabase(window.firebaseApp);
+      const sensorRef = ref(db, "RobotSensors/status");
+      try {
+        const snapshot = await get(sensorRef);
+        return snapshot.exists() ? snapshot.val() : null;
+      } catch (error) {
+        console.error("Error fetching sensor data:", error);
+        return null;
+      }
+    };
   </script>
 
-  <!-- Your custom interOperation.js (unchanged) -->
+  <!-- ✅ Custom Firebase operations -->
   <script type="module" src="js/interOperation.js"></script>
 
 </head>
 
-<body> 
-  <div class="container">
-    <div class="chart"></div>
-    <div class="table"></div>
-  </div>
+<body>
   <div id="app"></div>
 
-  <!-- Chart.js (unchanged, for other charts if needed) -->
+  <!-- Optional Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 
-  <!-- Blazor WebAssembly script (must be last) -->
+  <!-- ✅ Blazor WebAssembly (must be last) -->
   <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>
