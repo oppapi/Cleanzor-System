@@ -1,0 +1,498 @@
+@page "/signup"
+@inject IJSRuntime JS  
+@inject NavigationManager Navigation
+<!--kill local -->
+<!--netstat -ano | findstr :5209 | ForEach-Object { taskkill /PID ($_.Split()[4]) /F }-->
+
+<body class="body">
+  <header class="main-header">
+    <div class="flex">
+      <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" />
+      <span>Cleanzor</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="rounded-rectangle">
+      <div class="main-logo-container">
+        <img src="images/Cleanzorlogo.png" alt="Cleanzor Logo" class="main-logo" />
+      </div>
+
+      <h2 class="main-title">Sign Up</h2>
+
+      <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="main-form"> <DataAnnotationsValidator /> <ValidationSummary />
+
+        <div class="main-form-group">
+          <label class="labelBox" for="full-name">Full Name</label>
+          <InputText @bind-Value="txtfullname" id="full-name" class="inputBox" placeholder="Enter your full name" />
+        </div>
+
+        <div class="main-form-group">
+          <label class="labelBox" for="email">Email</label>
+          <InputText @bind-Value="txtemail" id="email" class="inputBox" placeholder="Enter your email" />
+        </div>
+
+        <div class="main-form-group">
+          <label class="labelBox" for="username">Username</label>
+          <InputText @bind-Value="txtusername" id="username" class="inputBox" placeholder="Enter your username" />
+        </div>
+
+        <div class="main-form-group">
+          <label class="labelBox" for="password">Password</label>
+          <div class="password-wrapper">
+            <InputText @bind-Value="txtpassword" type="password" id="password" class="inputBox" placeholder="Create a password" />
+            <button type="button" onclick="toggler1(this)" class="toggle-btn">Show</button>
+          </div>
+        </div>
+
+        <div class="main-form-group">
+          <label class="labelBox" for="confirmPassword">Confirm Password</label>
+          <div class="password-wrapper">
+            <InputText @bind-Value="txtcpassword" type="password" id="confirmPassword" class="inputBox" placeholder="Re-enter your password" />
+            <button type="button" onclick="toggler2(this)" class="toggle-btn">Show</button>
+          </div>
+        </div>
+
+        <div class="remember-me-container">
+          <input type="checkbox" id="remember_me" name="remember_me">
+          <label for="remember_me">Remember me</label>
+        </div>
+
+        <button type="submit" class="main-button">Create Account</button>
+      </EditForm>
+
+      <p class="main-text">
+        Already have an account?
+        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a> 
+      </p>
+    </section>
+  </main>
+</body>
+
+<script>
+    function showAlert(message) {
+        if (message && message.trim() !== "") {
+            window.alert(message);
+        }
+    }
+</script>
+
+@code {
+    public class JsAuthResponse
+    {
+        public bool Success { get; set; }
+        public string? ErrorCode { get; set; }
+    }
+
+    private string txtfullname { get; set; } = "";
+    private string txtemail { get; set; } = "";
+    private string txtusername { get; set; } = "";
+    private string txtpassword { get; set; } = "";
+    private string txtcpassword { get; set; } = "";
+
+    private async Task HandleValidSubmit()
+    {
+        if (inputValidation())
+        {  
+            try
+            {
+                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(identifier: "signupUser", txtemail, txtpassword);
+                if (result.Success)
+                {
+                    await JS.InvokeVoidAsync("storeSignupData", txtfullname, txtemail, txtusername, null);
+                    callToaster("success", "Account created! Please verify your email and then log in.");
+                    await JS.InvokeVoidAsync("signOutFirebase");
+                    Navigation.NavigateTo("/"); 
+                }
+                else if (result.ErrorCode == "auth/email-already-in-use")
+                {
+                    callToaster("error", "Error: The email address is already in use by another account.");
+                }
+                else if (result.ErrorCode == "auth/invalid-email")
+                {
+                    callToaster("error", "Error: The email address is not valid.");
+                }
+                else
+                {
+                    callToaster("error", $"Error: Signup Failed. {result.ErrorCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                callToaster("error", $"Error: An unexpected error occurred during signup. {ex.Message}");
+            }
+        }
+    }
+    //Requirements
+private bool inputValidation()
+{
+    //general
+    if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword) || string.IsNullOrWhiteSpace(txtcpassword))
+    {
+        callToaster("error", "Error: All fields are required.");
+        return false;
+    }
+    //fullname
+    
+    if (!Regex.IsMatch(txtfullname, @"^[A-Za-z ]+$"))
+    {
+        callToaster("error", "Error: Full Name must only contain letters and spaces.");
+        return false;
+    }
+
+    if (txtfullname.Length < 8 || txtfullname.Length > 36)
+    {
+        callToaster("error", "Error: Full Name must be between 8 and 36 characters long.");
+        return false;
+    }
+
+    //username
+    if (txtusername.Length < 8 || txtusername.Length > 15)
+    {
+        callToaster("error", "Error: Username must be between 8 and 15 characters long.");
+        return false;
+    }
+
+    //password
+    if (txtpassword != txtcpassword)
+    {
+        callToaster("error", "Error: Passwords do not match.");
+        return false;
+    }
+
+    if (txtpassword.Length < 8)
+    {
+        callToaster("error", "Error: Password must be at least 8 characters.");
+        return false;
+    }
+
+    if (!txtpassword.Any(char.IsUpper))
+    {
+        callToaster("error", "Error: Password must contain at least one uppercase letter.");
+        return false;
+    }
+
+    if (!txtpassword.Any(char.IsLower))
+    {
+        callToaster("error", "Error: Password must contain at least one lowercase letter.");
+        return false;
+    }
+
+    if (!txtpassword.Any(char.IsDigit))
+    {
+        callToaster("error", "Error: Password must contain at least one numeric digit.");
+        return false;
+    }
+
+    if (Regex.IsMatch(txtpassword, @"^[A-Za-z ]+$"))
+    {
+        callToaster("error", "Error: Password must contain at least one special character.");
+        return false;
+    }
+    return true;
+}
+    private void callToaster(string type, string message)
+    {
+        JS.InvokeVoidAsync("showAlert", message);
+    }
+
+    private void GoToLogin()
+    {
+        Navigation.NavigateTo("/");
+    }
+}
+
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: #00A887;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    height: clamp(50px, 12vw, 65px);
+    padding: 0 clamp(0.5rem, 3vw, 1rem);
+}
+
+.main-header .flex {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+.main-header img {
+  width: clamp(2rem, 6vw, 3rem);
+  height: auto;
+  margin-left: 0;
+}
+.main-header span {
+  font-weight: 700;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  margin-left: 0;
+  position: static;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(1rem, 4vw, 2rem);
+  margin: 50px 0;
+  box-sizing: border-box;
+  min-height: calc(100vh - 100px);
+}
+
+.rounded-rectangle {
+  width: clamp(300px, 90vw, 600px);
+  min-width: 280px;
+  max-width: none;
+  height: auto;
+  background-color: #ffffff;
+  border-radius: clamp(15px, 4vw, 20px) clamp(15px, 4vw, 20px) clamp(10px, 2vw, 15px) clamp(10px, 2vw, 15px);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  padding: clamp(2rem, 5vw, 2.5rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+  margin: 1rem auto;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.main-logo-container img,
+.main-logo {
+  width: clamp(80px, 20vw, 110px);
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.main-title {
+  font-size: clamp(1.5rem, 5vw, 1.875rem);
+  font-weight: 700;
+  text-align: center;
+  color: #00745E;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+  width: 100%;
+}
+
+.main-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 1.5vw, 0.75rem);
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+}
+
+.main-form label {
+  color: #374151;
+  margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+  display: block;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  font-weight: 600;
+}
+
+.main-form input,
+.main-form select {
+  width: 100%;
+  padding: clamp(0.75rem, 3vw, 1rem) clamp(1rem, 4vw, 1.5rem);
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  box-sizing: border-box;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  min-height: clamp(40px, 8vw, 50px);
+}
+
+.main-form input:focus,
+.main-form select:focus {
+  border-color: #00A887;
+  box-shadow: 0 0 0 2px rgba(0, 168, 135, 0.3);
+}
+
+.main-form-group {
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.labelBox {
+  display: block;
+  color: #603b2f;
+  font-family: Montserrat;
+  font-weight: 600;
+  line-height: 1.25;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  margin-bottom: 0.2rem;
+}
+
+.inputBox {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1rem;
+  width: 100%;
+  padding: clamp(0.75rem, 4vw, 1rem);
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-height: 40px;
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper .inputBox {
+  padding-right: 60px;
+}
+
+.toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #00A887;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0;
+  min-height: auto;
+}
+
+.toggle-btn:hover {
+  text-decoration: underline;
+}
+
+.remember-me-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.remember-me-container input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.remember-me-container label {
+  margin: 0;
+  color: #374151;
+  font-weight: 600;
+}
+
+.main-button {
+  width: 100%;
+  background-color: #00A887;
+  color: white;
+  font-weight: 600;
+  padding: clamp(0.75rem, 3vw, 1rem) 0;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  min-height: 44px;
+  margin-top: 0.5rem;
+}
+
+.main-button:hover {
+  background-color: #008f70;
+  transform: scale(1.02);
+}
+
+.main-button:active {
+  transform: scale(0.98);
+}
+
+.main-text {
+  text-align: center;
+  font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+  color: #4b5563;
+  font-weight: 600;
+  margin-top: 0;
+  width: 100%;
+  padding: 0;
+}
+
+.login-link {
+  color: #00A887;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+</style>
+
+<script>
+function toggler1(e) {
+  const passwordField = document.getElementById('password');
+  if (e.innerHTML === 'Show') {
+    e.innerHTML = 'Hide';
+    passwordField.type = 'text';
+  } else {
+    e.innerHTML = 'Show';
+    passwordField.type = 'password';
+  }
+}
+
+function toggler2(e) {
+  const confirmField = document.getElementById('confirmPassword');
+  if (e.innerHTML === 'Show') {
+    e.innerHTML = 'Hide';
+    confirmField.type = 'text';
+  } else {
+    e.innerHTML = 'Show';
+    confirmField.type = 'password';
+  }
+}
+</script>
+
+@code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+
+
+}

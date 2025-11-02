@@ -1,0 +1,31 @@
+@page "/dashboard"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavManager
+@inject CustomAuthStateProvider AuthProvider
+@inject IJSRuntime JS
+
+<h3>Dashboard</h3>
+
+<button @onclick="Logout" class="btn btn-danger">Logout</button>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (!user.Identity?.IsAuthenticated ?? true)
+        {
+            NavManager.NavigateTo("/", true);
+        }
+    }
+
+private async Task Logout()
+{
+    await JS.InvokeVoidAsync("signOutFirebase");
+    NavManager.NavigateTo("/", true);
+    await Task.Delay(300);
+    AuthProvider.NotifyUserChanged(null);
+}
+}

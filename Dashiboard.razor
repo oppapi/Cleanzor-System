@@ -1,0 +1,1267 @@
+@page "/dashiboard"
+
+<!-- ===================== PAGE CONTAINER ===================== -->
+<div class="page-container">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <nav class="sidebar @(isSidebarOpen ? "" : "close")">
+
+        <!-- Sidebar Header -->
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="images/CleanzorLogo.png" alt="Cleanzor-Logo">
+                </span>
+                <div class="text logo-text">
+                    <span class="name">Stella Army</span>
+                    <span class="profession">Web developer</span>
+                </div>
+            </div>
+
+            <!-- Sidebar Toggle -->
+            <i class='bx bx-chevron-right toggle' @onclick="ToggleSidebar"></i>
+        </header>
+
+        <!-- Sidebar Menu -->
+        <div class="menu-bar">
+            <div class="menu">
+
+                <!-- Search Box -->
+                <li class="search-box" @onclick="OpenSidebar">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Search...">
+                </li>
+
+                <!-- Navigation Links -->
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-home-alt icon'></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-bar-chart-alt-2 icon'></i>
+                            <span class="text nav-text">Revenue</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-bell icon'></i>
+                            <span class="text nav-text">Notifications</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-pie-chart-alt icon'></i>
+                            <span class="text nav-text">Analytics</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-heart icon'></i>
+                            <span class="text nav-text">Likes</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-wallet icon'></i>
+                            <span class="text nav-text">Wallets</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Bottom Sidebar Content -->
+            <div class="bottom-content">
+
+                <!-- Logout -->
+                <li>
+                    <a href="#">
+                        <i class='bx bx-log-out icon'></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+
+                <!-- Dark/Light Mode Toggle -->
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">@(isDarkMode ? "Light mode" : "Dark mode")</span>
+                    <div class="toggle-switch" @onclick="ToggleDarkMode">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </nav>
+    <!-- ===================== END SIDEBAR ===================== -->
+
+
+    <!-- ===================== HOME SECTION ===================== -->
+    <section class="home">
+
+        <!-- Header -->
+        <div class="header">
+            <i class='bx bx-menu menu-icon' @onclick="ToggleSidebar"></i>
+            <span>Header</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- INFO BOXES -->
+            <div class="info">
+
+                <!-- Status Box -->
+                <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+                    <div class="inner">
+                        <h3>@(status)</h3>
+                        <p>Status</p>
+                    </div>
+                    <img src="images/status.svg" alt="Status Icon" class="small-box-icon"
+                         style="width: auto; height: 60px; filter: brightness(0) invert(1);" />
+                    <div class="small-box-footer" style="height: 7px;"></div>
+                </div>
+
+                <!-- Load Box -->
+                <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+                    <div class="inner">
+                        <h3>@(load + " gram/s")</h3>
+                        <p>Load</p>
+                    </div>
+                    <img src="images/load.svg" alt="Load Icon" class="small-box-icon"
+                         style="width: auto; height: 60px; filter: brightness(0) invert(1);" />
+                    <div class="small-box-footer" style="height: 7px;"></div>
+                </div>
+
+                <!-- Schedule Box -->
+                <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+                    <div class="inner">
+                        <h3>@(schedule)</h3>
+                        <p>Schedule</p>
+                    </div>
+                    <img src="images/time.svg" alt="Schedule Icon" class="small-box-icon"
+                         style="width: auto; height: 60px; filter: brightness(0) invert(1);" />
+                    <div class="small-box-footer" style="height: 7px;"></div>
+                </div>
+
+                <!-- Battery Box -->
+                <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+                    <div class="inner">
+                        <h3>@(battery)</h3>
+                        <p>Battery</p>
+                    </div>
+                    <img src="images/battery.svg" alt="Battery Icon" class="small-box-icon"
+                         style="width: auto; height: 60px; filter: brightness(0) invert(1);" />
+                    <div class="small-box-footer" style="height: 7px;"></div>
+                </div>
+
+                <!-- Wheel Speed Box -->
+                <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+                    <div class="inner">
+                        <h3>@(wheelSpeed + "%")</h3>
+                        <p>Wheel Speed</p>
+                    </div>
+                    <img src="images/wheel.svg" alt="Wheel Icon" class="small-box-icon"
+                         style="width: auto; height: 60px; filter: brightness(0) invert(1);" />
+                    <div class="small-box-footer" style="height: 7px;"></div>
+                </div>
+
+                <!-- Sweeper Speed Box -->
+                <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+                    <div class="inner">
+                        <h3>@(sweeperSpeed + "%")</h3>
+                        <p>Sweeper Speed</p>
+                    </div>
+                    <img src="images/sweeper.svg" alt="Sweeper Icon" class="small-box-icon"
+                         style="width: auto; height: 60px; filter: brightness(0) invert(1);" />
+                    <div class="small-box-footer" style="height: 7px;"></div>
+                </div>
+            </div>
+            <!-- END INFO BOXES -->
+
+
+            <!-- Charts -->
+            <div class="card">
+                <div class="area-chart">
+                    <div class="grid"></div>
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="pie-graph" id="pieChartContainer"></div>
+
+        </div> <!-- END MAIN CONTENT -->
+
+    </section>
+    <!-- ===================== END HOME SECTION ===================== -->
+
+</div>
+<!-- ===================== END PAGE CONTAINER ===================== -->
+
+<script>
+const colorPrimary = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-primary")
+    .trim();
+
+const colorLabel = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-label")
+    .trim();
+
+const fontFamily = getComputedStyle(document.documentElement)
+    .getPropertyValue("--font-family")
+    .trim();
+
+const defaultOptions = {
+
+    chart: {
+        toolbar: {
+            show: false
+        },
+        zoom: {
+            enabled: false
+        },
+        width: '100%',
+        height: 180,
+        offsetY: 18
+    },
+
+    dataLabels: {
+        enabled: false
+    }
+
+}
+
+let barOptions = {
+
+    ...defaultOptions,
+
+    chart: {
+        ...defaultOptions.chart,
+        type: "area"
+    },
+
+    tooltip: {
+        enabled: true,
+        style: {
+            fontFamily: fontFamily
+        },
+        y: {
+            formatter: value => `${value}K`
+        }
+    },
+
+    series: [
+        {
+            name: "Views",
+            data: [15, 50, 18, 90, 30, 65]
+        }
+    ],
+
+    colors: [colorPrimary],
+
+    fill: {
+        type: "gradient",
+        gradient: {
+            type: "vertical",
+            opacityFrom: 1,
+            opacityTo: 0,
+            stops: [0, 100],
+            colorStops: [
+                {
+                    offset: 0,
+                    opacity: .2,
+                    color: "#ffffff"
+                },
+                {
+                    offset: 100,
+                    opacity: 0,
+                    color: "#ffffff"
+                }
+            ]
+        }
+    },
+
+    stroke: { colors: [colorPrimary], lineCap: "round" },
+
+    grid: {
+        borderColor: "rgba(0, 0, 0, 0)",
+        padding: {
+            top: -30,
+            right: 0,
+            bottom: -8,
+            left: 12
+        }
+    },
+
+    markers: {
+        strokeColors: colorPrimary
+    },
+
+    yaxis: {
+        show: false
+    },
+
+    xaxis: {
+
+        labels: {
+            show: true,
+            floating: true,
+            style: {
+                colors: colorLabel,
+                fontFamily: fontFamily
+            }
+        },
+
+        axisBorder: {
+            show: false
+        },
+
+        crosshairs: {
+            show: false
+        },
+
+        categories: ["Jan", "Mar", "May", "Jul", "Sep", "Nov"]
+
+    }
+
+};
+
+let chart = new ApexCharts(
+    document.querySelector(".area-chart"), barOptions
+);
+
+let pieOptions = {
+        ...defaultOptions,  // Inherits shared defaults
+        chart: {
+            ...defaultOptions.chart,
+            type: 'pie',
+            height: 300  // Adjusted for pie chart
+        },
+        series: [300, 50, 100, 80],  // Sample data; replace with actual values
+        labels: ['Product A', 'Product B', 'Product C', 'Product D'],  // Sample labels
+        colors: ['#FF4560', '#00E396', '#FEB019', '#775DD0'],  // Custom colors
+        legend: {
+            position: 'bottom',
+            labels: {
+                colors: colorLabel,
+                fontFamily: fontFamily
+            }
+        },
+        title: {
+            text: 'Revenue Breakdown',
+            align: 'center',
+            style: {
+                fontFamily: fontFamily,
+                color: colorLabel
+            }
+        },
+        tooltip: {
+            style: {
+                fontFamily: fontFamily
+            }
+        }
+    };
+
+    // Initialize pie chart (same pattern as area chart)
+    let pieChart = new ApexCharts(
+        document.querySelector("#pieChartContainer"), pieOptions
+    );
+    pieChart.render();
+
+chart.render();
+</script>
+@code {
+    private string status = "Cleaning";
+    private int load = 69;
+    private string schedule = "10:30 AM";
+    private string battery = "Online";
+    private int wheelSpeed = 59;
+    private int sweeperSpeed = 45;
+    private bool isSidebarOpen = false;
+
+    private bool isDarkMode = false;
+
+    @inject IJSRuntime? JSRuntime
+
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
+    }
+
+    private void OpenSidebar()
+    {
+        isSidebarOpen = true;
+    }
+
+    private async Task ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+        await JSRuntime!.InvokeVoidAsync("toggleDarkMode", isDarkMode);
+    }
+}
+
+<script>
+    function toggleDarkMode(isDark) {
+        if (isDark) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }
+</script>
+
+<style>
+    @@import url('https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css');
+
+:root {
+    --color-primary: #44d4fd;
+    --color-label: #a7a7a7;
+    --color-text: #e2dede;
+    --font-family: "Montserrat";
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Body styles - Centers content and sets background */
+body {
+    height: 100vh;  /* Full viewport height - adjust if needed for different layouts */
+    display: grid;
+    place-items: center;  /* Centers the content - change to 'start' or 'end' for different alignment */
+    background: var(--color-primary);  /* Uses CSS variable for primary color - modify --color-primary in :root if needed */
+    font-family: var(--font-family);  /* Uses CSS variable for font - adjust --font-family in :root */
+}
+
+/* Card container for the chart - made responsive to fit grid */
+.card {
+    position: relative;
+    width: 100%;  /* Changed from fixed 360px to 100% for responsiveness - adjust to a percentage or fixed value if needed */
+    max-width: 100%;  /* Prevents overflow in smaller containers - can be set to a specific max-width like 400px */
+    padding: 20px;  /* Reduced from 30px for better fit - increase/decrease for more/less spacing inside */
+    border-radius: 10px;  /* Rounded corners - adjust for sharper or rounder edges */
+    background: #1b1b1b;  /* Dark background - change to a lighter color like #ffffff for light theme */
+    box-shadow: 0 50px 100px rgba(0, 0, 0, .08);  /* Shadow effect - adjust blur or opacity for subtlety */
+    display: flex;  /* Added flex for centering content */
+    flex-direction: column;
+    justify-content: center;
+    height: auto;  /* Adjusts height based on content - change to fixed height if needed */
+    align-items: center;
+    min-height: 250px;  /* Minimum height to ensure content fits - increase for taller cards */
+    overflow: hidden;  /* Prevents content from spilling out - remove if content should be visible outside */
+}
+
+/* Card title - optional if not used in HTML */
+.card h2 {
+    color: #f9f9f9;  /* Light text color - change to #000000 for dark theme */
+    font-size: 26px;  /* Title size - adjust for larger/smaller text */
+    font-weight: 500;  /* Font weight - increase to 700 for bolder */
+    letter-spacing: .5px;  /* Letter spacing - adjust for tighter/looser */
+    margin: 0 0 2px;  /* Margin below title - increase for more space */
+}
+
+/* Card description - optional if not used in HTML */
+.card p {
+    color: var(--color-text);  /* Uses CSS variable - adjust --color-text in :root */
+    font-size: 14px;  /* Description size - adjust for readability */
+    margin: 0 0 16px;  /* Margin below description - increase for more space */
+}
+
+/* Area chart container */
+.card .area-chart {
+    position: relative;
+    width: 100%;  /* Full width of card - adjust to a percentage if needed */
+    height: 100%;  /* Fixed height for chart - increase for taller charts */
+}
+
+/* Grid background for chart */
+.card .area-chart .grid {
+    position: absolute;
+    z-index: 0;  /* Behind chart - no need to adjust */
+    top: 0;  /* Starts at top - no need to adjust */
+    left: 0;  /* Starts at left - no need to adjust */
+    width: 100%;  /* Full width - no need to adjust */
+    height: 80%;  /* Height of grid - adjust percentage for more/less coverage */
+    background-image: repeating-linear-gradient(
+        to right,
+        transparent 0% 3%,  /* Transparent start - adjust percentages for grid spacing */
+        #f9f9f9 3% 3.5%,    /* Grid line color and width - change #f9f9f9 for different color */
+        transparent 3% 18.65%  /* Transparent end - adjust for spacing */
+    );
+}
+
+/* Gradient overlay on grid */
+.card .area-chart .grid::after {
+    content: '';
+    position: inherit;  /* Inherits position - no need to adjust */
+    z-index: 1;  /* Above grid, below chart - no need to adjust */
+    top: inherit;  /* Inherits top - no need to adjust */
+    bottom: inherit;  /* Inherits bottom - no need to adjust */
+    width: inherit;  /* Inherits width - no need to adjust */
+    height: 100%;  /* Full height - no need to adjust */
+    background: linear-gradient(
+        180deg,  /* Direction of gradient - change to 90deg for horizontal */
+        rgba(27, 27, 27, 1),    /* Top color - adjust RGBA for opacity/color */
+        rgba(27, 27, 27, .9),   /* Middle color - adjust for fade */
+        rgba(27, 27, 27, 1)     /* Bottom color - adjust RGBA */
+    );
+}
+
+
+body .apexcharts-tooltip.apexcharts-theme-light {
+    color: var(--color-text);
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(10px);
+    box-shadow: none;
+    padding: 8px 6px 4px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    border: 0;
+}
+
+.apexcharts-tooltip-title,
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-light {
+    display: none;
+}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    :root {
+        --body-color: #e4e9f7;
+        --sidebar-color: #fff;
+        --primary-color: #dc143c;
+        --primary-color-light: #f6f5ff;
+        --toggle-color: #ddd;
+        --text-color: #707070;
+
+        --tran-02: all 0.2s ease;
+        --tran-03: all 0.3s ease;
+        --tran-04: all 0.4s ease;
+        --tran-05: all 0.5s ease;
+    }
+
+    body {
+        min-height: 100vh;
+        background-color: var(--body-color);
+        transition: var(--tran-05);
+    }
+
+    ::selection {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    body.dark {
+        --body-color: #18191a;
+        --sidebar-color: #242526;
+        --primary-color: #3a3b3c;
+        --primary-color-light: #3a3b3c;
+        --toggle-color: #fff;
+        --text-color: #ccc;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        padding: 10px 14px;
+        background: var(--sidebar-color);
+        transition: var(--tran-05);
+        z-index: 100;
+    }
+
+    .sidebar.close {
+        width: 88px;
+    }
+
+    .sidebar.close:hover {
+        width: 250px;
+    }
+    .sidebar.close:hover .text {
+        opacity: 1;
+    }
+
+    .sidebar li {
+        height: 50px;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .sidebar header .image,
+    .sidebar .icon {
+        min-width: 60px;
+        border-radius: 6px;
+    }
+
+    .sidebar .icon {
+        min-width: 60px;
+        border-radius: 6px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .sidebar .text,
+    .sidebar .icon {
+        color: var(--text-color);
+        transition: var(--tran-03);
+    }
+
+    .sidebar .text {
+        font-size: 17px;
+        font-weight: 500;
+        white-space: nowrap;
+        opacity: 1;
+    }
+    .sidebar.close .text {
+        opacity: 0;
+    }
+
+    .sidebar header {
+        position: relative;
+    }
+
+    .sidebar header .image-text {
+        display: flex;
+        align-items: center;
+    }
+    .sidebar header .logo-text {
+        display: flex;
+        flex-direction: column;
+    }
+    header .image-text .name {
+        margin-top: 2px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    header .image-text .profession {
+        font-size: 16px;
+        margin-top: -2px;
+        display: block;
+    }
+
+    .sidebar header .image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar header .image img {
+        width: 40px;
+        border-radius: 6px;
+    }
+
+    .sidebar header .toggle {
+        position: absolute;
+        top: 50%;
+        right: -30px;
+        transform: translateY(-50%) rotate(180deg);
+        height: 25px;
+        width: 25px;
+        background-color: var(--primary-color);
+        color: var(--sidebar-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        cursor: pointer;
+        transition: var(--tran-05);
+    }
+
+    body.dark .sidebar header .toggle {
+        color: var(--text-color);
+    }
+
+    .sidebar.close .toggle {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    @@media (min-width: 1101px) {
+        .sidebar header .toggle {
+            display: none;
+        }
+        .card {
+            margin-left: 10px;
+            grid-column: span 4;
+            height: auto;
+            width: 99%;
+        }
+    }
+
+    .sidebar .menu {
+        margin-top: 40px;
+    }
+
+    .sidebar li.search-box {
+        border-radius: 6px;
+        background-color: var(--primary-color-light);
+        cursor: pointer;
+        transition: var(--tran-05);
+    }
+
+    .sidebar li.search-box input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        border: none;
+        background-color: var(--primary-color-light);
+        color: var(--text-color);
+        border-radius: 6px;
+        font-size: 17px;
+        font-weight: 500;
+        transition: var(--tran-05);
+    }
+
+    .menu-links {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .sidebar li a {
+        list-style: none;
+        height: 100%;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: var(--tran-03);
+    }
+
+    .sidebar li a:hover {
+        background-color: var(--primary-color);
+    }
+    .sidebar li a:hover .icon,
+    .sidebar li a:hover .text {
+        color: var(--sidebar-color);
+    }
+    body.dark .sidebar li a:hover .icon,
+    body.dark .sidebar li a:hover .text {
+        color: var(--text-color);
+    }
+
+    .sidebar .menu-bar {
+        height: calc(100% - 55px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: scroll;
+    }
+    .menu-bar::-webkit-scrollbar {
+        display: none;
+    }
+    .sidebar .menu-bar .mode {
+        border-radius: 6px;
+        background-color: var(--primary-color-light);
+        position: relative;
+        transition: var(--tran-05);
+    }
+
+    .menu-bar .mode .sun-moon {
+        height: 50px;
+        width: 60px;
+    }
+
+    .mode .sun-moon i {
+        position: absolute;
+    }
+    .mode .sun-moon i.sun {
+        opacity: 0;
+    }
+    body.dark .mode .sun-moon i.sun {
+        opacity: 1;
+    }
+    body.dark .mode .sun-moon i.moon {
+        opacity: 0;
+    }
+
+    .menu-bar .bottom-content .toggle-switch {
+        position: absolute;
+        right: 0;
+        height: 100%;
+        min-width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .toggle-switch .switch {
+        position: relative;
+        height: 22px;
+        width: 40px;
+        border-radius: 25px;
+        background-color: var(--toggle-color);
+        transition: var(--tran-05);
+    }
+
+    .switch::before {
+        content: "";
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        background-color: var(--sidebar-color);
+        transition: var(--tran-04);
+    }
+
+    body.dark .switch::before {
+        left: 20px;
+    }
+
+.home {
+    position: fixed;            /* Fixes the container like sidebar */
+    top: 0;
+    left: 250px;                /* Adjust for sidebar width */
+    width: calc(100% - 250px);
+    height: 100%;              /* Full viewport height */
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+    overflow: hidden;           /* Outer container hides overflow */
+    box-sizing: border-box;     /* Ensures padding doesn't exceed width/height */
+}
+
+
+    .home .text {
+        font-size: 30px;
+        font-weight: 500;
+        color: var(--text-color);
+        padding: 12px 60px;
+    }
+
+    .sidebar.close ~ .home {
+        left: 78px;
+        width: calc(100% - 78px);
+    }
+
+    .sidebar.close:hover ~ .home {
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+
+    body.dark .home .text {
+        color: var(--text-color);
+    }
+
+    .menu-icon {
+        display: none;
+    }
+
+    .page-container {
+        display: grid;
+        height: 100vh;
+        width: 100%;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 60px 1fr;
+        overflow: hidden;
+    }
+
+    .header {
+        grid-column: span 6;
+        height: 60px;
+        background-color: #00A887;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .menu-icon {
+        font-size: 26px;
+        cursor: pointer;
+        margin-right: 15px;
+    }
+
+.main-content {
+    height: calc(100% - 60px);
+    grid-column: span 6;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto 2fr;
+    gap: 15px;          /* Spacing between containers */
+    padding: 15px;      /* Spacing between containers */
+    overflow: hidden;
+}
+
+    .info {
+        grid-column: span 6;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 15px;
+        background-color: transparent;
+        height: auto;
+        margin-left: 10px;
+    }
+
+    .info-box {
+        background-color: white;
+        color: black;
+        border-radius: 10px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.2rem;
+        transition: 0.3s ease;
+    }
+
+    .info-box:hover {
+        transform: translateY(-5px);
+        background-color: #f1f1f1;
+    }
+
+    body.dark .info-box {
+        background-color: var(--sidebar-color);
+        color: var(--text-color);
+    }
+
+    body.dark .info-box:hover {
+        background-color: var(--primary-color-light);
+    }
+
+    .line-graph {
+        grid-column: span 4;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        font-size: 1.2rem;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .pie-graph {
+        grid-column: span 2;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        height: auto;
+        align-items: center;
+        font-size: 1.2rem;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    body.dark .line-graph,
+    body.dark .pie-graph {
+        background-color: var(--sidebar-color);
+        color: var(--text-color);
+    }
+
+.small-box {
+    position: relative;
+    display: flex; /* Keep flex */
+    align-items: center; /* Keep center alignment vertically */
+    justify-content: flex-start; /* Aligns content to the start (left) */
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    height: auto;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    transition: 0.3s ease;
+    overflow: hidden;
+    padding-right: 100px;
+}
+
+    .small-box:hover {
+        transform: translateY(-5px);
+    }
+
+.inner {
+    padding: 30px; /* Add more left/right padding */
+    text-align: left; /* Aligns text within the inner box to the left */
+    flex-grow: 1; /* Allows it to take up available space before the icon */
+    z-index: 10; /* Make sure text is above the icon if they overlap */
+}
+
+    .inner h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .inner p {
+        font-size: 1rem;
+        margin: 5px 0 0 0;
+    }
+
+.small-box-icon {
+    position: absolute;
+    right: 35px; /* original 15px + 20px padding */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none; /* prevents accidental overlap interaction */
+}
+
+
+
+    .small-box-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: px 0;
+        color: rgba(255,255,255,.8);
+        display: block;
+        z-index: 5;
+        background: rgba(0,0,0,.1);
+        text-decoration: none;
+        transition: background-color .15s linear;
+    }
+
+    .small-box-footer:hover {
+        color: #fff;
+        background: rgba(0,0,0,.15);
+    }
+   
+
+    @@media (max-width: 1100px) {
+        .small-box icon{
+            height: 50px;
+        }
+        .inner h3{
+            font-size: 1.5rem;
+        }
+        .inner p{
+            font-size: 0.9rem;
+        }
+        .small-box {
+            justify-content: center;
+            text-align: center;
+            padding-right: 20px;
+            height: 90px;
+            font-size: 14px;
+        }
+
+        .sidebar header .toggle {   
+            right: 10px;
+            background-color: transparent;
+            color: var(--text-color);
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .sidebar.close {
+            display: none;
+        }
+
+        .menu-icon {
+            display: block;
+        }
+
+        .page-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: 60px 1fr;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            grid-column: span 1;
+            height: 60px;
+        }
+
+        .main-content {
+            grid-column: span 1;
+            display: grid;
+            grid-template-columns: 1fr; /* Single column for mobile */
+            grid-template-rows: auto 250px 250px; /* Three rows: info, line-graph, pie-graph */
+            gap: 15px;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .info {
+            grid-column: span 1; /* Spans the single column */
+            grid-template-columns: repeat(2, 1fr); /* 2 per row (3 rows) on smaller screens */
+            grid-template-rows: repeat(3, 1fr); /* Explicit 3 rows on smaller screens */
+            margin-left: 0px;
+            gap: 10px;
+        }
+
+        .line-graph {
+            grid-column: span 1; /* Spans the single column */
+            height: 250px;
+            margin-left: 0px;
+        }
+
+        .pie-graph {
+            grid-column: span 1; /* Spans the single column */
+            height: 250px;
+        }
+
+        .home {
+            left: 0;
+            width: 100%;
+        }
+
+        .sidebar.close ~ .home {
+            left: 0;
+            width: 100%;
+        }
+    }
+
+    @@media (max-width: 650px) {
+        .{
+            height: 50px
+        }
+    /* Adjust small-box icon size for smaller screens */
+    .small-box-icon {
+        height: 30px;  /* Reduced from 50px for better fit in smaller boxes */
+        width: 30px;   /* Added for consistency */
+    }
+
+    /* Scale down text in inner elements for readability */
+    .inner h3 {
+        font-size: 1.3rem;  /* Slightly smaller than 1.3rem for better mobile fit */
+    }
+    .inner p {
+        font-size: 0.8rem;  /* Kept as-is, but ensure it doesn't overflow */
+    }
+
+    /* Adjust small-box layout and sizing */
+    .small-box {
+        justify-content: center;
+        text-align: center;
+        padding-right: 15px;  /* Reduced from 20px for tighter fit */
+        height: auto;         /* Changed from 40px to auto for flexible height based on content */
+        font-size: 14px;
+        flex-wrap: wrap;      /* Allows content to wrap if needed */
+    }
+
+    /* Reduce inner padding to fit smaller height */
+    .inner {
+        padding: 15px;  /* Reduced from 30px to prevent overflow in auto-height boxes */
+    }
+
+    /* Sidebar toggle adjustments */
+    .sidebar header .toggle {
+        right: 10px;
+        background-color: transparent;
+        color: var(--text-color);
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    /* Hide closed sidebar on small screens */
+    .sidebar.close {
+        display: none;
+    }
+
+    /* Show menu icon for mobile navigation */
+    .menu-icon {
+        display: block;
+    }
+
+    /* Page container: Single column, full height with scrolling */
+    .page-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 1fr;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    /* Header spans full width */
+    .header {
+        grid-column: 1 / -1;
+        height: 60px;
+    }
+
+    /* Main content: Single column with auto rows and scrolling */
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;  /* Allows rows to size based on content */
+        gap: 15px;
+        padding: 15px;
+        overflow-y: auto;  /* Enables scrolling for long content */
+    }
+
+    /* Info section: Single column, stacked vertically */
+    .info {
+        grid-column: 1 / -1;
+        margin-left: 0;
+        height: auto;  /* Flexible height */
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;  /* Stacks items vertically with auto height */
+        padding-bottom: 15px;  /* Maintains bottom spacing from earlier fix */
+    }
+
+    /* Line graph (area chart): Full width, responsive height */
+    .line-graph, .card {
+        grid-column: 1 / -1;
+        margin-left: 0;
+        height: 200px;  /* Reduced from default for mobile; adjust as needed */
+        width: 100%;
+    }
+
+    /* Pie graph: Full width, responsive height */
+    .pie-graph {
+        grid-column: 1 / -1;
+        height: 200px;  /* Reduced for mobile */
+        width: 100%;
+    }
+
+    /* Home section: Full width on mobile */
+    .home {
+        left: 0;
+        width: 100%;
+    }
+
+    /* Ensure home adjusts when sidebar is closed */
+    .sidebar.close ~ .home {
+        left: 0;
+        width: 100%;
+    }
+}
+
+/* Hide webkit scrollbar globally (consider removing if scrolling is needed) */
+::-webkit-scrollbar {
+    display: none;
+}
+
+</style>

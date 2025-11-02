@@ -1,0 +1,404 @@
+@page "/"
+@inject IJSRuntime JS
+@inject CustomAuthStateProvider AuthProvider
+
+@using System.Text.RegularExpressions
+<html>
+<body class="body">
+  <div class="login-header">
+    <span class="title">Welcome Back!</span>
+    <span class="subtitle">Login to your account.</span>
+  </div>
+
+  <div class="center-screen">
+    <div class="logo-container">
+      <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" />
+    </div>
+    <h2 class="centered-title">CLEANZOR</h2>
+  </div>
+
+  <div class="centered-div">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="login-form">
+      <DataAnnotationsValidator />
+      <ValidationSummary />
+
+      <div class="form-group">
+        <label for="email" class="labelBox">Email</label>
+        <InputText @bind-Value="txtemail" id="email" class="inputBox" placeholder="Enter your email" />
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="labelBox">Password</label>
+        <InputText @bind-Value="txtpassword" type="@(ShowPassword ? "text" : "password")" id="password" class="inputBox" placeholder="Enter your password" />
+      </div>
+
+      <div class="form-group show-password-group">
+        <div class="show-password-left">
+          <input type="checkbox" @bind="ShowPassword" class="checkbox" id="showPassword" />
+          <label for="showPassword">Show Password</label>
+        </div>
+        <a class="forgot-password">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn-login">LOGIN</button>
+      <p class="text-center-white">
+        Don’t have an account?
+        <a @onclick="GoToSignup" class="signupButton" id="signupBtn">Signup</a>
+      </p>
+    </EditForm>
+  </div>
+</body>
+</html>
+
+@code {
+
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender)
+    {
+        var signupData = await JS.InvokeAsync<SignupData?>("getSignupData");
+
+        if (!string.IsNullOrEmpty(signupData?.Email))
+        {
+            txtemail = signupData.Email;
+            StateHasChanged();
+        }
+
+        await JS.InvokeVoidAsync("signOutFirebase");
+    }
+}
+
+    public class JsAuthResponse
+    {
+      public bool Success { get; set; }
+      public string? ErrorCode { get; set; }
+    }
+
+    private string txtemail { get; set; } = "";
+    private string txtpassword { get; set; } = "";
+    private bool ShowPassword { get; set; } = false;
+
+private async Task HandleValidSubmit()
+    {
+        if (inputValidation())
+        {
+            try
+            {
+                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>("loginUser", txtemail, txtpassword);
+
+                if (result.Success)
+                {
+                    AuthProvider.NotifyUserChanged(txtemail);
+                    callToaster("success", "User Logged In Successfully!");
+
+                    // Retrieve stored signup data and register user profile
+                    var signupData = await JS.InvokeAsync<SignupData?>("getSignupData");
+                    if (signupData != null)
+                    {
+                        JsAuthResponse? registerResult = await JS.InvokeAsync<JsAuthResponse>("registerUser", signupData.Fullname, signupData.Email, signupData.Username);
+                        if (registerResult.Success)
+                        {
+                            await JS.InvokeVoidAsync("clearSignupData");  // Clean up
+                        }
+                        else
+                        {
+                            callToaster("error", $"Profile setup failed: {registerResult.ErrorCode}");
+                        }
+                    }
+
+                    NavManager.NavigateTo("/dashboard");
+                }
+                else if (result.ErrorCode == "auth/user-not-found")
+                {
+                    callToaster("error", "Error: No account found with that email.");
+                }
+                else if (result.ErrorCode == "auth/wrong-password")
+                {
+                    callToaster("error", "Error: Incorrect password.");
+                }
+                else if (result.ErrorCode == "auth/invalid-email")
+                {
+                    callToaster("error", "Error: The email address is not valid.");
+                }
+                else if (result.ErrorCode == "auth/email-not-verified")
+                {
+                    callToaster("error", "Please verify your email before logging in.");
+                }
+                else
+                {
+                    callToaster("error", "Error: Login failed. Please try again.");
+                }
+            }
+            catch (Exception ex)
+            {
+                callToaster("error", $"Error: An unexpected error occurred during login. {ex.Message}");
+            }
+        }
+    }
+
+public class SignupData
+{
+  public string? Fullname { get; set; }
+  public string? Email { get; set; }
+  public string? Username { get; set; }
+}
+
+private bool inputValidation()
+{
+    if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword))
+    {
+        callToaster("error", "Error: All fields are required.");
+        return false;
+    }
+
+    if (!Regex.IsMatch(txtemail, @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
+    {
+        callToaster("error", "Error: Please enter a valid email address.");
+    }
+    if (txtemail.Length > 50)
+    {
+        callToaster("error", "Error: Email address is too long.");
+        return false;
+    }
+    if (txtpassword.Length < 8)
+    {
+        callToaster("error", $"Error: Password must be at least 8 characters long.");
+        return false;
+    }
+    return true;
+}
+
+    private void callToaster(string type, string message)
+    {
+        Console.WriteLine(message);
+    }
+
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+
+    private void GoToSignup()
+    {
+        NavManager.NavigateTo("/signup");
+    }
+}
+
+<style>
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.title {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-family: Montserrat;
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  margin-top: -2px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.login-header {
+  position: absolute;
+  top: clamp(2.75rem, 4vw, 2.75rem);
+  left: 0;
+  width: 100%;
+  height: clamp(50px, 12vw, 65px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fbd197;
+  gap: 0.1rem;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  padding: 0 clamp(0.5rem, 3vw, 1rem);
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center; 
+  width: 100%;
+  margin-top: clamp(8rem, 8vw, 5rem);
+}
+
+.logo-container img {
+  width: clamp(120px, 40vw, 160px);
+  height: auto;
+  object-fit: contain;
+  max-height: clamp(100px, 25vh, 140px);
+}
+
+.centered-title {
+  position: relative;
+  text-align: center;
+  font-family: 'Toonish', sans-serif;
+  font-size: clamp(3rem, 10vw, 3rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: clamp(1px, 0.5vw, 2px);
+  text-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  margin: clamp(0.75rem, 3vw, 1.25rem) 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  width: 100%;
+  z-index: 1;
+  flex-shrink: 0;
+  padding: 0 clamp(0.5rem, 2vw, 1rem);
+  line-height: 1.1;
+  hyphens: auto;
+  word-break: break-word;
+}
+
+.centered-div {
+  position: relative;
+  width: 100%;
+  max-width: clamp(450px, 95vw, 600px);
+  padding: 0 clamp(1rem, 4vw, 1.5rem) clamp(1rem, 3.5vw, 1.5rem);
+  margin-top: clamp(3rem, 5vw, 5rem);
+  z-index: 1;
+  min-height: clamp(350px, 48vh, 450px);
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto 0 auto;
+  align-items: center;
+}
+
+.labelBox {
+  display: block;
+  color: #603b2f;
+  font-family: Montserrat;
+  font-weight: 600;
+  line-height: 1.25;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  margin-bottom: 0.2rem;
+}
+
+.inputBox {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1rem;
+  width: 100%;
+  padding: clamp(0.75rem, 4vw, 1rem);
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-height: 40px;
+}
+
+.inputBox:focus {
+  outline: none;
+  border-color: #B9DA65;
+  box-shadow: 0 0 0 2px rgba(185, 218, 101, 0.3);
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.show-password-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.show-password-left {
+  color: #603b2f;
+  display: flex;
+  font-weight: 500;
+  font-family: Montserrat;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.checkbox {
+  margin: 0;
+  width: 1rem;
+  height: 1rem;
+  min-width: 18px;
+}
+
+.forgot-password {
+  color: #603b2f;
+  font-weight: 500;
+  font-family: Montserrat;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  color: #d1d5db;
+}
+
+.btn-login {
+  width: 100%;
+  background-color: #fbd197;
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 650;
+  padding: clamp(0.7rem, 4vw, 1rem) 0;
+  border-radius: 9999px;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  transition: background-color 0.3s, transform 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  background-color: #fbd197;
+  transform: scale(1.02);
+}
+
+.btn-login:active {
+  transform: scale(0.98);
+}
+
+.text-center-white {
+  margin-top: 0.75rem;
+  text-align: center;
+  color: #603b2f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.text-center-white a {
+  text-decoration: underline;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.text-center-white a:hover {
+  color: #d1d5db;
+}
+
+.signupButton {
+  color: #603b2f;
+}
+</style>
