@@ -6947,15 +6947,6 @@ C:\Users\John Carl\ukinam naman oh\Cleanzor-System\obj\Debug\net9.0\compressed\y
 C:\Users\John Carl\ukinam naman oh\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-4kfcqhpfle.gz
 C:\Users\John Carl\ukinam naman oh\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-yvctdumuht.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.webassembly.js
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.js
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.js.map
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.native.50iqa8w3ys.js
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.native.pk43x8e436.wasm
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.runtime.ew19f13umk.js
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.runtime.js.map
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\Blazor-ApexCharts.kem0c92the.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\FirebaseAdmin.v2pq779ba2.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\Google.Api.Gax.pv4v4cqh7i.wasm
@@ -7163,6 +7154,15 @@ C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\mscorlib.qiu3j3msqk.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\netstandard.lp03u0xxi4.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\System.Private.CoreLib.9ecf2cskpd.wasm
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.js
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.js.map
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.native.50iqa8w3ys.js
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.native.pk43x8e436.wasm
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.runtime.ew19f13umk.js
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\dotnet.runtime.js.map
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.webassembly.js.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\Blazor-ApexCharts.kem0c92the.wasm.gz
@@ -7880,7 +7880,8 @@ C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\o435b0m
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\za341ofve9-ta1u77ynop.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\24dvra1ke2-svl51dis9k.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\j3vetc7572-97txv8c7bv.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\yiiuufhcvk-l1sadqeabj.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\yiiuufhcvk-yhg1m061yu.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\bbjt5ihbcc-lr0oor0aq7.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\bs0k186akq-vuaiv1d7zx.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\o4xfcaky1e-t1cqhe9u97.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\fkv0d8eyia-c2jlpeoesf.gz
@@ -8152,10 +8153,10 @@ C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.dll
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\refint\CleanzorApp.dll
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.srx3bntq1f.wasm
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.e295djkzpx.pdb
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.srx3bntq1f.wasm.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.e295djkzpx.pdb.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-srx3bntq1f.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-e295djkzpx.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-o9aq5360bw.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.vvwuo22x1n.wasm
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.6ux9xze5nj.pdb
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.vvwuo22x1n.wasm.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.6ux9xze5nj.pdb.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-vvwuo22x1n.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-6ux9xze5nj.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-1w6maidr3u.gz

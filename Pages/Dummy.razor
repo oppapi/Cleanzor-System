@@ -1,4 +1,4 @@
-    @page "/dashiboard"
+    @page "/doneui"
     @inject IJSRuntime JSRuntime
 
     <div class="page-container">
@@ -176,6 +176,9 @@
         </section>
     </div>
 
+    <script>
+    
+    </script>
 
     @code {
     // ... (Your existing properties) ...
@@ -259,7 +262,8 @@
 
     .card {
         position: relative;
-        height: 100%;
+        width: 100%;
+        max-width: 100%;
         padding: 20px;
         border-radius: 10px;
         background: #1b1b1b;
@@ -267,9 +271,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        min-height: 250px;
         overflow: hidden;
-        min-height: 0px;
-        transition: all 0.3s ease;
+        height: auto;
     }
 
     .card h2 {
@@ -361,6 +365,7 @@
         }
 
         body {
+            min-height: 100vh;
             background-color: var(--body-color);
             transition: var(--tran-05);
         }
@@ -398,11 +403,6 @@
         .sidebar.close:hover {
             width: 250px;
         }
-
-        .sidebar.close:hover ~ .home .info,
-.sidebar.close:hover ~ .home .card {
-  margin-left: 0px;
-}
         .sidebar.close:hover .text {
             opacity: 1;
         }
@@ -516,9 +516,6 @@
                 margin-left: 10px;
                 grid-column: span 4;
                 max-width: 100%;
-                min-width: 0px;
-                height: 100%;
-                transition: margin-left 0.3s ease;
             }
         }
 
@@ -655,7 +652,6 @@
         height: 100vh;
         width: calc(100% - 250px);
         overflow-y: auto;
-        transition: left 0.3s ease, width 0.3s ease;
     }
         .home .text {
             font-size: 30px;
@@ -728,7 +724,6 @@
             background-color: transparent;
             height: auto;
             margin-left: 10px;
-            transition: left 0.3s ease, width 0.3s ease;
         }
 
         .info-box {
@@ -796,7 +791,7 @@
         border-radius: 10px;
         background-color: #007bff;
         color: white;
-        height: 100px;
+        height: 150px;
         box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
         transition: 0.3s ease;
         overflow: hidden;
@@ -888,6 +883,7 @@
             .page-container {
                 grid-template-columns: 1fr;
                 grid-template-rows: 60px 1fr;
+                min-height: 100vh;
                 overflow-y: auto;
             }
 
@@ -922,7 +918,6 @@
             .pie-graph {
                 grid-column: span 1; /* Spans the single column */
                 height: 250px;
-                width: auto;
             }
 
             .home {
@@ -956,6 +951,7 @@
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: 60px 1fr;
+                min-height: 100vh;
                 overflow-y: auto;
             }
 
