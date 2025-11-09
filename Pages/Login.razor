@@ -12,7 +12,7 @@
 
   <div class="center-screen">
     <div class="logo-container">
-      <img src="images/CleanzorLogo.png" alt="Cleanzor Logo" />
+      <img src="images/CleanzorGreenLogo.png" alt="Cleanzor Logo" />
     </div>
     <h2 class="centered-title">CLEANZOR</h2>
   </div>
@@ -124,7 +124,6 @@ private async Task HandleValidSubmit()
                             callToaster("error", $"Profile setup failed: {registerResult.ErrorCode}");
                         }
                     }
-
                 }
                 else if (result.ErrorCode == "auth/user-not-found")
                 {
@@ -248,7 +247,7 @@ private bool inputValidation()
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #fbd197;
+  background-color: var(--element-accent);
   gap: 0.1rem;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
   z-index: 5;
@@ -327,7 +326,7 @@ private bool inputValidation()
 
 .labelBox {
   display: block;
-  color: #603b2f;
+  color: var(--element-label);
   font-family: Montserrat;
   font-weight: 600;
   line-height: 1.25;
@@ -348,8 +347,8 @@ private bool inputValidation()
 
 .inputBox:focus {
   outline: none;
-  border-color: #B9DA65;
-  box-shadow: 0 0 0 2px rgba(185, 218, 101, 0.3);
+  border-color: var(--element-supporting);
+  box-shadow: 0 0 0 1.5px var(--element-focus);
 }
 
 .login-form {
@@ -373,7 +372,7 @@ private bool inputValidation()
 }
 
 .show-password-left {
-  color: #603b2f;
+  color: var(--element-label);
   display: flex;
   font-weight: 500;
   font-family: Montserrat;
@@ -390,8 +389,16 @@ private bool inputValidation()
   min-width: 18px;
 }
 
+.checkbox {
+  margin: 0;
+  width: 1rem;
+  height: 1rem;
+  min-width: 18px;
+  color: #010100;
+}
+
 .forgot-password {
-  color: #603b2f;
+  color: var(--element-label);
   font-weight: 500;
   font-family: Montserrat;
   font-size: clamp(0.75rem, 2vw, 0.875rem);
@@ -400,13 +407,13 @@ private bool inputValidation()
 }
 
 .forgot-password:hover {
-  color: #d1d5db;
+  color: var(--element-accent-hover);
 }
 
 .btn-login {
   width: 100%;
-  background-color: #fbd197;
-  color: black;
+  background-color: var(--element-accent);
+  color: var(--element-text);
   font-family: 'Montserrat', sans-serif;
   font-weight: 650;
   padding: clamp(0.7rem, 4vw, 1rem) 0;
@@ -420,7 +427,7 @@ private bool inputValidation()
 
 .btn-login:hover,
 .btn-login:focus {
-  background-color: #fbd197;
+  background-color: var(--element-accent-hover);
   transform: scale(1.02);
 }
 
@@ -431,7 +438,7 @@ private bool inputValidation()
 .text-center-white {
   margin-top: 0.75rem;
   text-align: center;
-  color: #603b2f;
+  color: var(--element-label);
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: clamp(0.75rem, 2vw, 0.875rem);
@@ -444,10 +451,10 @@ private bool inputValidation()
 }
 
 .text-center-white a:hover {
-  color: #d1d5db;
+  color: var(--element-accent-hover);
 }
 
 .signupButton {
-  color: #603b2f;
+  color: var(--element-text);
 }
 </style>
