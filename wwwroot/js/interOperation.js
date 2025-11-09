@@ -1,26 +1,13 @@
-import { 
-  getAuth, 
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword, 
-  sendEmailVerification,
-  setPersistence,
-  browserLocalPersistence,
-  browserSessionPersistence,  
-  signOut
+import {
+  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, setPersistence, browserLocalPersistence, browserSessionPersistence, signOut
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 import { 
-  getFirestore, 
-  doc, 
-  setDoc
+  getFirestore, doc, setDoc
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 import { 
-  getDatabase, 
-  ref, 
-  onValue, 
-  get, 
-  child 
+  getDatabase, ref, onValue
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
 
@@ -64,6 +51,16 @@ export async function rememberLoginUser(email, password) {
       await signOut(auth);
       return { Success: false, ErrorCode: "auth/email-not-verified" };
     }
+    return { Success: true, ErrorCode: null };
+  } catch (error) {
+    return { Success: false, ErrorCode: error.code || "unknown-error" };
+  }
+}
+
+export async function forgotPassword(email) {
+  const auth = getAuth(window.firebaseApp);
+  try {
+    await sendPasswordResetEmail(auth, email);
     return { Success: true, ErrorCode: null };
   } catch (error) {
     return { Success: false, ErrorCode: error.code || "unknown-error" };
@@ -147,5 +144,6 @@ window.signupUser = signupUser;
 window.loginUser = loginUser;
 window.registerUser = registerUser;
 window.rememberLoginUser = rememberLoginUser;
+window.forgotPassword = forgotPassword;
 window.listenToSensorData = listenToSensorData;
 window.fetchSensorDataOnce = fetchSensorDataOnce;

@@ -1,8 +1,4 @@
 @page "/signup"
-@inject IJSRuntime JS  
-@inject NavigationManager Navigation
-<!--kill local -->
-<!--netstat -ano | findstr :5209 | ForEach-Object { taskkill /PID ($_.Split()[4]) /F }-->
 
 <body class="body">
   <header class="main-header">
@@ -20,7 +16,9 @@
 
       <h2 class="main-title">Sign Up</h2>
 
-      <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="main-form"> <DataAnnotationsValidator /> <ValidationSummary />
+      <EditForm Model="this" OnValidSubmit="HandleValidSubmit" class="main-form">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
         <div class="main-form-group">
           <label class="labelBox" for="full-name">Full Name</label>
@@ -58,14 +56,24 @@
           <label for="remember_me">Remember me</label>
         </div>
 
-        <button type="submit" class="main-button">Create Account</button>
+        <button type="submit" class="main-button" disabled="@isLoading">Create Account</button>
       </EditForm>
 
       <p class="main-text">
         Already have an account?
-        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a> 
+        <a @onclick="GoToLogin" id="loginBtn" class="login-link">Login</a>
       </p>
     </section>
+
+    @if (isLoading)
+    {
+        <div class="loading-overlay">
+            <div class="loader">
+                CLEANZOR LOADING...
+            </div>
+        </div>
+    }
+
   </main>
 </body>
 
@@ -78,10 +86,38 @@
 </script>
 
 @code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+    [Inject] IJSRuntime JS { get; set; } = default!;
+
+    private bool isLoading { get; set; } = false;
+
     public class JsAuthResponse
     {
         public bool Success { get; set; }
         public string? ErrorCode { get; set; }
+    }
+
+    private async Task ShowLoadingAndRedirect(string url, int delayMs)
+    {
+        await Task.Delay(delayMs);
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo(url);
+    }
+
+    private async Task ShowLoadingAndRedirect(int delayMs)
+    {
+        await Task.Delay(delayMs);
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("signOutFirebase");
+        }
     }
 
     private string txtfullname { get; set; } = "";
@@ -92,113 +128,129 @@
 
     private async Task HandleValidSubmit()
     {
-        if (inputValidation())
-        {  
-            try
+        if (isLoading) return;
+
+        if (!inputValidation())
+        {
+            return;
+        }
+
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(identifier: "signupUser", txtemail, txtpassword);
+            if (result.Success)
             {
-                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(identifier: "signupUser", txtemail, txtpassword);
-                if (result.Success)
-                {
-                    await JS.InvokeVoidAsync("storeSignupData", txtfullname, txtemail, txtusername, null);
-                    callToaster("success", "Account created! Please verify your email and then log in.");
-                    await JS.InvokeVoidAsync("signOutFirebase");
-                    Navigation.NavigateTo("/"); 
-                }
-                else if (result.ErrorCode == "auth/email-already-in-use")
-                {
-                    callToaster("error", "Error: The email address is already in use by another account.");
-                }
-                else if (result.ErrorCode == "auth/invalid-email")
-                {
-                    callToaster("error", "Error: The email address is not valid.");
-                }
-                else
-                {
-                    callToaster("error", $"Error: Signup Failed. {result.ErrorCode}");
-                }
+                await JS.InvokeVoidAsync("storeSignupData", txtfullname, txtemail, txtusername, null);
+                callToaster("success", "Account created! Please verify your email and then log in.");
+                await JS.InvokeVoidAsync("signOutFirebase");
             }
-            catch (Exception ex)
+            else if (result.ErrorCode == "auth/email-already-in-use")
             {
-                callToaster("error", $"Error: An unexpected error occurred during signup. {ex.Message}");
+                callToaster("error", "Error: The email address is already in use by another account.");
+                isLoading = false;
+                StateHasChanged();
+            }
+            else if (result.ErrorCode == "auth/invalid-email")
+            {
+                callToaster("error", "Error: The email address is not valid.");
+                isLoading = false;
+                StateHasChanged();
+            }
+            else
+            {
+                callToaster("error", $"Error: Signup Failed. {result.ErrorCode}");
+                isLoading = false;
+                StateHasChanged();
             }
         }
-    }
-    //Requirements
-private bool inputValidation()
-{
-    //general
-    if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword) || string.IsNullOrWhiteSpace(txtcpassword))
-    {
-        callToaster("error", "Error: All fields are required.");
-        return false;
-    }
-    //fullname
-    
-    if (!Regex.IsMatch(txtfullname, @"^[A-Za-z ]+$"))
-    {
-        callToaster("error", "Error: Full Name must only contain letters and spaces.");
-        return false;
+        catch (Exception ex)
+        {
+            callToaster("error", $"Error: An unexpected error occurred during signup. {ex.Message}");
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
-    if (txtfullname.Length < 8 || txtfullname.Length > 36)
+    private bool inputValidation()
     {
-        callToaster("error", "Error: Full Name must be between 8 and 36 characters long.");
-        return false;
+        // General
+        if (string.IsNullOrWhiteSpace(txtemail) || string.IsNullOrWhiteSpace(txtpassword) || string.IsNullOrWhiteSpace(txtcpassword))
+        {
+            callToaster("error", "Error: All fields are required.");
+            return false;
+        }
+
+        // Fullname
+        if (!Regex.IsMatch(txtfullname, @"^[A-Za-z ]+$"))
+        {
+            callToaster("error", "Error: Full Name must only contain letters and spaces.");
+            return false;
+        }
+
+        if (txtfullname.Length < 8 || txtfullname.Length > 36)
+        {
+            callToaster("error", "Error: Full Name must be between 8 and 36 characters long.");
+            return false;
+        }
+
+        // Username
+        if (txtusername.Length < 8 || txtusername.Length > 15)
+        {
+            callToaster("error", "Error: Username must be between 8 and 15 characters long.");
+            return false;
+        }
+
+        // Password
+        if (txtpassword != txtcpassword)
+        {
+            callToaster("error", "Error: Passwords do not match.");
+            return false;
+        }
+
+        if (txtpassword.Length < 8)
+        {
+            callToaster("error", "Error: Password must be at least 8 characters.");
+            return false;
+        }
+
+        if (!txtpassword.Any(char.IsUpper))
+        {
+            callToaster("error", "Error: Password must contain at least one uppercase letter.");
+            return false;
+        }
+
+        if (!txtpassword.Any(char.IsLower))
+        {
+            callToaster("error", "Error: Password must contain at least one lowercase letter.");
+            return false;
+        }
+
+        if (!txtpassword.Any(char.IsDigit))
+        {
+            callToaster("error", "Error: Password must contain at least one numeric digit.");
+            return false;
+        }
+
+        if (Regex.IsMatch(txtpassword, @"^[A-Za-z ]+$"))
+        {
+            callToaster("error", "Error: Password must contain at least one special character.");
+            return false;
+        }
+
+        return true;
     }
 
-    //username
-    if (txtusername.Length < 8 || txtusername.Length > 15)
-    {
-        callToaster("error", "Error: Username must be between 8 and 15 characters long.");
-        return false;
-    }
-
-    //password
-    if (txtpassword != txtcpassword)
-    {
-        callToaster("error", "Error: Passwords do not match.");
-        return false;
-    }
-
-    if (txtpassword.Length < 8)
-    {
-        callToaster("error", "Error: Password must be at least 8 characters.");
-        return false;
-    }
-
-    if (!txtpassword.Any(char.IsUpper))
-    {
-        callToaster("error", "Error: Password must contain at least one uppercase letter.");
-        return false;
-    }
-
-    if (!txtpassword.Any(char.IsLower))
-    {
-        callToaster("error", "Error: Password must contain at least one lowercase letter.");
-        return false;
-    }
-
-    if (!txtpassword.Any(char.IsDigit))
-    {
-        callToaster("error", "Error: Password must contain at least one numeric digit.");
-        return false;
-    }
-
-    if (Regex.IsMatch(txtpassword, @"^[A-Za-z ]+$"))
-    {
-        callToaster("error", "Error: Password must contain at least one special character.");
-        return false;
-    }
-    return true;
-}
     private void callToaster(string type, string message)
     {
         JS.InvokeVoidAsync("showAlert", message);
     }
 
-    private void GoToLogin()
+    private async void GoToLogin()
     {
-        Navigation.NavigateTo("/");
+      NavManager.NavigateTo("/l");
     }
 }
 
@@ -215,6 +267,26 @@ html, body {
     justify-content: center;
     min-height: 100vh;
     overflow-y: auto;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.80);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader {
+  color: #fff;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-family: 'Montserrat';
+  font-weight: 700;
 }
 
 .main-header {
@@ -428,13 +500,19 @@ main {
   margin-top: 0.5rem;
 }
 
-.main-button:hover {
+.main-button:hover:not(:disabled) {
   background-color: #008f70;
   transform: scale(1.02);
 }
 
-.main-button:active {
+.main-button:active:not(:disabled) {
   transform: scale(0.98);
+}
+
+.main-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .main-text {
@@ -490,9 +568,3 @@ function toggler2(e) {
   }
 }
 </script>
-
-@code {
-    [Inject] NavigationManager NavManager { get; set; } = default!;
-
-
-}

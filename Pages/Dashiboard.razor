@@ -20,10 +20,6 @@
 
             <div class="menu-bar">
                 <div class="menu">
-                    <li class="search-box" @onclick="OpenSidebar">
-                        <i class='bx bx-search icon'></i>
-                        <input type="text" placeholder="Search...">
-                    </li>
 
                     <ul class="menu-links">
                         <li class="nav-link">
@@ -36,37 +32,17 @@
                         <li class="nav-link">
                             <a href="#">
                                 <i class='bx bx-bar-chart-alt-2 icon'></i>
-                                <span class="text nav-text">Revenue</span>
+                                <span class="text nav-text">Profile</span>
                             </a>
                         </li>
 
                         <li class="nav-link">
                             <a href="#">
                                 <i class='bx bx-bell icon'></i>
-                                <span class="text nav-text">Notifications</span>
+                                <span class="text nav-text">About Us</span>
                             </a>
                         </li>
 
-                        <li class="nav-link">
-                            <a href="#">
-                                <i class='bx bx-pie-chart-alt icon'></i>
-                                <span class="text nav-text">Analytics</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-link">
-                            <a href="#">
-                                <i class='bx bx-heart icon'></i>
-                                <span class="text nav-text">Likes</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-link">
-                            <a href="#">
-                                <i class='bx bx-wallet icon'></i>
-                                <span class="text nav-text">Wallets</span>
-                            </a>
-                        </li>
                     </ul>
                 </div>
 
@@ -74,7 +50,7 @@
                     <li class="">
                         <a href="#">
                             <i class='bx bx-log-out icon'></i>
-                            <span class="text nav-text">Logout</span>
+                            <span class="text nav-text" @onclick="Signout">Logout</span>
                         </a>
                     </li>
 
@@ -117,7 +93,7 @@
         <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
             <div class="inner">
                 <h3>@(load + " gram/s")</h3>
-                <p>Load</p>
+                <p>Location</p>
             </div>
             <img src="images/load.svg" alt="Load Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
             <div class="small-box-footer" style="height: 7px;"></div>
@@ -127,7 +103,7 @@
         <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
             <div class="inner">
                 <h3>@(schedule)</h3>
-                <p>Schedule</p>
+                <p>???</p>
             </div>
             <img src="images/time.svg" alt="Schedule Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
             <div class="small-box-footer" style="height: 7px;"></div>
@@ -178,6 +154,7 @@
 
 
     @code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
     private string status = "Cleaning";
     private int load = 69;
     private string schedule = "10:30 AM";
@@ -218,9 +195,13 @@
     private async Task ToggleDarkMode()
     {
         isDarkMode = !isDarkMode;
-        // The toggleDarkMode function is also now called from the external file
         await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
     }
+private async Task Signout()
+{
+    await JSRuntime.InvokeVoidAsync("signOutFirebase");
+    NavManager.NavigateTo("/");
+}
 
 private async Task PeriodicUpdate()
 {
@@ -228,7 +209,6 @@ private async Task PeriodicUpdate()
     {
         try
         {
-            // ✅ Read robotData directly from localStorage
             var dataJson = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "robotData");
 
             if (!string.IsNullOrEmpty(dataJson))
@@ -260,7 +240,7 @@ private async Task PeriodicUpdate()
             Console.WriteLine($"⚠️ Error reading sensor data: {ex.Message}");
         }
 
-        await Task.Delay(2000); // check every 2 seconds
+        await Task.Delay(2000);
     }
 }
 }

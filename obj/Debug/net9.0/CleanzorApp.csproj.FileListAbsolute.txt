@@ -6946,6 +6946,14 @@ C:\Users\John Carl\ukinam naman oh\Cleanzor-System\bin\Debug\net9.0\wwwroot\_fra
 C:\Users\John Carl\ukinam naman oh\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-iq4b9z3w23.gz
 C:\Users\John Carl\ukinam naman oh\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-4kfcqhpfle.gz
 C:\Users\John Carl\ukinam naman oh\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-yvctdumuht.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.csproj.AssemblyReference.cache
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.AssemblyInfoInputs.cache
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.AssemblyInfo.cs
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.csproj.CoreCompileInputs.cache
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.sourcelink.json
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\blazor.webassembly.js
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\Blazor-ApexCharts.kem0c92the.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\FirebaseAdmin.v2pq779ba2.wasm
@@ -7604,14 +7612,6 @@ C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\dotnet.runtime.js.
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\icudt_CJK.dat
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\icudt_EFIGS.dat
 C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\icudt_no_CJK.dat
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.csproj.AssemblyReference.cache
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.AssemblyInfoInputs.cache
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.AssemblyInfo.cs
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.csproj.CoreCompileInputs.cache
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.sourcelink.json
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\webcil\Blazor-ApexCharts.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\webcil\FirebaseAdmin.wasm
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\webcil\Google.Api.Gax.wasm
@@ -7880,7 +7880,9 @@ C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\o435b0m
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\za341ofve9-ta1u77ynop.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\24dvra1ke2-svl51dis9k.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\j3vetc7572-97txv8c7bv.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\yiiuufhcvk-f3jbq4nbdm.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\bbjt5ihbcc-lr0oor0aq7.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\bs0k186akq-p7kh191i49.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\o4xfcaky1e-t1cqhe9u97.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\fkv0d8eyia-c2jlpeoesf.gz
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\mh8ua1guf0-sejl45xvog.gz
@@ -8151,12 +8153,10 @@ C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.dll
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\refint\CleanzorApp.dll
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\yiiuufhcvk-f3jbq4nbdm.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.8uwir6ckm9.wasm
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.86hizayxe1.pdb
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.8uwir6ckm9.wasm.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.86hizayxe1.pdb.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-8uwir6ckm9.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-86hizayxe1.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-qtz8ago5ey.gz
-C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\bs0k186akq-7sbocrkbke.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.rned2c56hi.wasm
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.qwc6rdiepx.pdb
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.rned2c56hi.wasm.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.qwc6rdiepx.pdb.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-rned2c56hi.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-qwc6rdiepx.gz
+C:\Users\John Carl\gg folder\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-kaude8quxp.gz

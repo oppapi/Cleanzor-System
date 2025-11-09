@@ -1,31 +1,1069 @@
 @page "/dashboard"
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization
-@inject NavigationManager NavManager
 @inject CustomAuthStateProvider AuthProvider
-@inject IJSRuntime JS
+@inject IJSRuntime JSRuntime
 
-<h3>Dashboard</h3>
+    <div class="page-container">
+        <nav class="sidebar @(isSidebarOpen ? "" : "close")">
+            <header>
+                <div class="image-text">
+                    <span class="image">
+                        <img src="images/CleanzorLogo.png" alt="Cleanzor-Logo">
+                    </span>
 
-<button @onclick="Logout" class="btn btn-danger">Logout</button>
+                    <div class="text logo-text">
+                        <span class="name">Stella Army</span>
+                        <span class="profession">Web developer</span>
+                    </div>
+                </div>
 
-@code {
-    protected override async Task OnInitializedAsync()
+                <i class='bx bx-chevron-right toggle' @onclick="ToggleSidebar"></i>
+            </header>
+
+            <div class="menu-bar">
+                <div class="menu">
+
+                    <ul class="menu-links">
+                        <li class="nav-link">
+                            <a href="#">
+                                <i class='bx bx-home-alt icon'></i>
+                                <span class="text nav-text">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link">
+                            <a href="#">
+                                <i class='bx bx-bar-chart-alt-2 icon'></i>
+                                <span class="text nav-text">Profile</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link">
+                            <a href="#">
+                                <i class='bx bx-bell icon'></i>
+                                <span class="text nav-text">About Us</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="bottom-content">
+                    <li class="">
+                        <a>
+                            <i class='bx bx-log-out icon'></i>
+                            <span class="text nav-text" @onclick="Signout">Logout</span>
+                        </a>
+                    </li>
+
+                    <li class="mode">
+                        <div class="sun-moon">
+                            <i class='bx bx-moon icon moon'></i>
+                            <i class='bx bx-sun icon sun'></i>
+                        </div>
+                        <span class="mode-text text">@(isDarkMode ? "Light mode" : "Dark mode")</span>
+
+                        <div class="toggle-switch" @onclick="ToggleDarkMode">
+                            <span class="switch"></span>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </nav>
+
+    <section class="home">
+        <div class="page-container">
+            <div class="header">
+                <i class='bx bx-menu menu-icon' @onclick="ToggleSidebar"></i>
+                <span>Header</span>
+            </div>
+
+            <div class="main-content">
+        <div class="info">
+
+        <!-- Status Box -->
+        <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+            <div class="inner">
+                <h3>@(status)</h3>
+                <p>Status</p>
+            </div>
+            <img src="images/status.svg" alt="Status Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+            <div class="small-box-footer" style="height: 7px;"></div>
+        </div>
+
+        <!-- Load Box -->
+        <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+            <div class="inner">
+                <h3>@(load + " gram/s")</h3>
+                <p>Location</p>
+            </div>
+            <img src="images/load.svg" alt="Load Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+            <div class="small-box-footer" style="height: 7px;"></div>
+        </div>
+
+        <!-- Schedule Box -->
+        <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+            <div class="inner">
+                <h3>@(schedule)</h3>
+                <p>???</p>
+            </div>
+            <img src="images/time.svg" alt="Schedule Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+            <div class="small-box-footer" style="height: 7px;"></div>
+        </div>
+
+        <!-- Battery Box -->
+        <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+            <div class="inner">
+                <h3>@(battery)</h3>
+                <p>Battery</p>
+            </div>
+            <img src="images/battery.svg" alt="Battery Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+            <div class="small-box-footer" style="height: 7px;"></div>
+        </div>
+
+        <!-- Wheel Speed Box -->
+        <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+            <div class="inner">
+                <h3>@(wheelSpeed + "%")</h3>
+                <p>Wheel Speed</p>
+            </div>
+            <img src="images/wheel.svg" alt="Wheel Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+            <div class="small-box-footer" style="height: 7px;"></div>
+        </div>
+
+        <!-- Sweeper Speed Box -->
+        <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
+            <div class="inner">
+                <h3>@(sweeperSpeed + "%")</h3>
+                <p>Sweeper Speed</p>
+            </div>
+            <img src="images/sweeper.svg" alt="Sweeper Icon" class="small-box-icon" style="width: 80px; height: 80px; filter: brightness(0) invert(1);" />
+            <div class="small-box-footer" style="height: 7px;"></div>
+        </div>
+
+        </div>
+            <div class="card">
+                <div class="area-chart">
+                    <div class="grid"></div>
+                </div>
+            </div>
+            <div class="pie-graph" id="pieChartContainer"></div>
+            </div>
+            
+            </div>
+        </section>
+    </div>
+
+    @if (isLoading)
     {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
+        <div class="loading-overlay">
+            <div class="loader">
+                CLEANZOR LOADING...
+            </div>
+        </div>
+    }
 
-        if (!user.Identity?.IsAuthenticated ?? true)
+
+    @code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+    private bool isLoading { get; set; } = false;
+    private string status = "Cleaning";
+    private int load = 69;
+    private string schedule = "10:30 AM";
+    private string battery = "Online";
+    private int wheelSpeed = 59;
+    private int sweeperSpeed = 45;
+    private bool isSidebarOpen = false;
+
+    private bool isDarkMode = false;
+    private bool chartsLoaded = false; 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !chartsLoaded)
         {
-            NavManager.NavigateTo("/", true);
+            await LoadCharts();
+            chartsLoaded = true;
+            await JSRuntime.InvokeVoidAsync("listenToSensorData");
+            await PeriodicUpdate();
         }
     }
 
-private async Task Logout()
+    private async Task LoadCharts()
+    {
+        await JSRuntime.InvokeVoidAsync("loadCharts");
+    }
+    
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
+    }
+
+    private void OpenSidebar()
+    {
+        isSidebarOpen = true;
+    }
+
+    private async Task ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+        await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
+    }
+private async Task Signout()
 {
-    await JS.InvokeVoidAsync("signOutFirebase");
-    NavManager.NavigateTo("/", true);
-    await Task.Delay(300);
-    AuthProvider.NotifyUserChanged(null);
+    isLoading = true;
+    StateHasChanged();
+    await ShowLoadingAndRedirect("/", 1000);
+}
+
+private async Task ShowLoadingAndRedirect(string url, int delayMs)
+    {
+        await Task.Delay(delayMs);
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo(url);
+    }
+
+private async Task PeriodicUpdate()
+{
+    while (true)
+    {
+        try
+        {
+            var dataJson = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "robotData");
+
+            if (!string.IsNullOrEmpty(dataJson))
+            {
+                var parsed = System.Text.Json.JsonDocument.Parse(dataJson).RootElement;
+
+                status = parsed.TryGetProperty("status", out var s) ? s.GetString() ?? status : status;
+                battery = parsed.TryGetProperty("battery", out var b) ? b.GetString() ?? battery : battery;
+                schedule = parsed.TryGetProperty("schedule", out var sch) ? sch.GetString() ?? schedule : schedule;
+
+                if (parsed.TryGetProperty("load", out var l) && l.TryGetInt32(out var loadVal))
+                    load = loadVal;
+
+                if (parsed.TryGetProperty("wheelSpeed", out var ws) && ws.TryGetInt32(out var wheelVal))
+                    wheelSpeed = wheelVal;
+
+                if (parsed.TryGetProperty("sweeperSpeed", out var ss) && ss.TryGetInt32(out var sweepVal))
+                    sweeperSpeed = sweepVal;
+
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                Console.WriteLine("⚠️ No robotData found in localStorage.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"⚠️ Error reading sensor data: {ex.Message}");
+        }
+
+        await Task.Delay(2000);
+    }
 }
 }
+
+    <script>
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        }
+    </script>
+
+    <style>
+        @@import url('https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css');
+
+    :root {
+        --color-primary: #00a887;
+        --color-label: #a7a7a7;
+        --color-text: #e2dede;
+        --font-family: "Montserrat";
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary);
+        font-family: var(--font-family);
+    }
+
+    .card {
+        position: relative;
+        height: 100%;
+        padding: 20px;
+        border-radius: 10px;
+        background: #1b1b1b;
+        box-shadow: 0 50px 100px rgba(0, 0, 0, .08);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        min-height: 0px;
+        transition: all 0.3s ease;
+    }
+
+    .card h2 {
+        color: #f9f9f9;
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: .5px;
+        margin: 0 0 2px;
+    }
+
+    .card p {
+        color: var(--color-text);
+        font-size: 14px;
+        margin: 0 0 16px;
+    }
+
+    .card .area-chart {
+        position: relative;
+        width: 100%;
+        height: 180px;
+    }
+
+    .card .area-chart .grid {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        background-image: repeating-linear-gradient(
+            to right,
+            transparent 0% 3%,
+            #f9f9f9 3% 3.5%,
+            transparent 3% 18.65%
+        );
+    }
+
+    .card .area-chart .grid::after {
+        content: '';
+        position: inherit;
+        z-index: 1;
+        top: inherit;
+        bottom: inherit;
+        width: inherit;
+        height: 100%;
+        background: linear-gradient(
+            180deg,
+            rgba(27, 27, 27, 1),
+            rgba(27, 27, 27, .9),
+            rgba(27, 27, 27, 1)
+        );
+    }
+
+    body .apexcharts-tooltip.apexcharts-theme-light {
+        color: var(--color-text);
+        background: rgba(0, 0, 0, .5);
+        backdrop-filter: blur(10px);
+        box-shadow: none;
+        padding: 8px 6px 4px;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: .5px;
+        border: 0;
+    }
+
+    .apexcharts-tooltip-title,
+    .apexcharts-xaxistooltip-bottom.apexcharts-theme-light {
+        display: none;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        :root {
+            --body-color: #e4e9f7;
+            --sidebar-color: #fff;
+            --primary-color: #dc143c;
+            --primary-color-light: #f6f5ff;
+            --toggle-color: #ddd;
+            --text-color: #707070;
+
+            --tran-02: all 0.2s ease;
+            --tran-03: all 0.3s ease;
+            --tran-04: all 0.4s ease;
+            --tran-05: all 0.5s ease;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.80);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader {
+            color: #fff;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-family: 'Montserrat';
+            font-weight: 700;
+        }
+
+        body {
+            background-color: var(--body-color);
+            transition: var(--tran-05);
+        }
+
+        ::selection {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        body.dark {
+            --body-color: #18191a;
+            --sidebar-color: #242526;
+            --primary-color: #3a3b3c;
+            --primary-color-light: #3a3b3c;
+            --toggle-color: #fff;
+            --text-color: #ccc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            padding: 10px 14px;
+            background: var(--sidebar-color);
+            transition: var(--tran-05);
+            z-index: 100;
+        }
+
+        .sidebar.close {
+            width: 88px;
+        }
+
+        .sidebar.close:hover {
+            width: 250px;
+        }
+
+        .sidebar.close:hover ~ .home .info,
+.sidebar.close:hover ~ .home .card {
+  margin-left: 0px;
+}
+        .sidebar.close:hover .text {
+            opacity: 1;
+        }
+
+        .sidebar li {
+            height: 50px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .sidebar header .image,
+        .sidebar .icon {
+            min-width: 60px;
+            border-radius: 6px;
+        }
+
+        .sidebar .icon {
+            min-width: 60px;
+            border-radius: 6px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .sidebar .text,
+        .sidebar .icon {
+            color: var(--text-color);
+            transition: var(--tran-03);
+        }
+
+        .sidebar .text {
+            font-size: 17px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 1;
+        }
+        .sidebar.close .text {
+            opacity: 0;
+        }
+
+        .sidebar header {
+            position: relative;
+        }
+
+        .sidebar header .image-text {
+            display: flex;
+            align-items: center;
+        }
+        .sidebar header .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        header .image-text .name {
+            margin-top: 2px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        header .image-text .profession {
+            font-size: 16px;
+            margin-top: -2px;
+            display: block;
+        }
+
+        .sidebar header .image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar header .image img {
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        .sidebar header .toggle {
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            transform: translateY(-50%) rotate(180deg);
+            height: 25px;
+            width: 25px;
+            background-color: var(--primary-color);
+            color: var(--sidebar-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: var(--tran-05);
+        }
+
+        body.dark .sidebar header .toggle {
+            color: var(--text-color);
+        }
+
+        .sidebar.close .toggle {
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        @@media (min-width: 1101px) {
+            .sidebar header .toggle {
+                display: none;
+            }
+            .card {
+                margin-left: 10px;
+                grid-column: span 4;
+                max-width: 100%;
+                min-width: 0px;
+                height: 100%;
+                transition: margin-left 0.3s ease;
+            }
+        }
+
+        .sidebar .menu {
+            margin-top: 40px;
+        }
+
+        .sidebar li.search-box {
+            border-radius: 6px;
+            background-color: var(--primary-color-light);
+            cursor: pointer;
+            transition: var(--tran-05);
+        }
+
+        .sidebar li.search-box input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            border: none;
+            background-color: var(--primary-color-light);
+            color: var(--text-color);
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 500;
+            transition: var(--tran-05);
+        }
+
+        .menu-links {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .sidebar li a {
+            list-style: none;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: var(--tran-03);
+        }
+
+        .sidebar li a:hover {
+            background-color: var(--primary-color);
+        }
+        .sidebar li a:hover .icon,
+        .sidebar li a:hover .text {
+            color: var(--sidebar-color);
+        }
+        body.dark .sidebar li a:hover .icon,
+        body.dark .sidebar li a:hover .text {
+            color: var(--text-color);
+        }
+
+        .sidebar .menu-bar {
+            height: calc(100% - 55px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: scroll;
+        }
+        .menu-bar::-webkit-scrollbar {
+            display: none;
+        }
+        .sidebar .menu-bar .mode {
+            border-radius: 6px;
+            background-color: var(--primary-color-light);
+            position: relative;
+            transition: var(--tran-05);
+        }
+
+        .menu-bar .mode .sun-moon {
+            height: 50px;
+            width: 60px;
+        }
+
+        .mode .sun-moon i {
+            position: absolute;
+        }
+        .mode .sun-moon i.sun {
+            opacity: 0;
+        }
+        body.dark .mode .sun-moon i.sun {
+            opacity: 1;
+        }
+        body.dark .mode .sun-moon i.moon {
+            opacity: 0;
+        }
+
+        .menu-bar .bottom-content .toggle-switch {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .toggle-switch .switch {
+            position: relative;
+            height: 22px;
+            width: 40px;
+            border-radius: 25px;
+            background-color: var(--toggle-color);
+            transition: var(--tran-05);
+        }
+
+        .switch::before {
+            content: "";
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            background-color: var(--sidebar-color);
+            transition: var(--tran-04);
+        }
+
+        body.dark .switch::before {
+            left: 20px;
+        }
+
+    .home {
+        position: absolute;
+        top: 0;
+        left: 250px;
+        height: 100vh;
+        width: calc(100% - 250px);
+        overflow-y: auto;
+        transition: left 0.3s ease, width 0.3s ease;
+    }
+        .home .text {
+            font-size: 30px;
+            font-weight: 500;
+            color: var(--text-color);
+            padding: 12px 60px;
+        }
+
+        .sidebar.close ~ .home {
+            left: 78px;
+            width: calc(100% - 78px);
+        }
+
+        .sidebar.close:hover ~ .home {
+            left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        body.dark .home .text {
+            color: var(--text-color);
+        }
+
+        .menu-icon {
+            display: none;
+        }
+
+        .page-container {
+            display: grid;
+            height: 100vh;
+            width: 100%;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 60px 1fr;
+            overflow: hidden;
+        }
+
+        .header {
+            grid-column: span 6;
+            height: 60px;
+            background-color: #00A887;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .menu-icon {
+            font-size: 26px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .main-content {
+            grid-column: span 6;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: auto 2fr;
+            gap: 15px;          /* Spacing between containers */
+            padding: 15px;      /* Spacing between containers */
+            overflow: hidden;
+        }
+
+        .info {
+            grid-column: span 6;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            background-color: transparent;
+            height: auto;
+            margin-left: 10px;
+            transition: left 0.3s ease, width 0.3s ease;
+        }
+
+        .info-box {
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            background-color: #f1f1f1;
+        }
+
+        body.dark .info-box {
+            background-color: var(--sidebar-color);
+            color: var(--text-color);
+        }
+
+        body.dark .info-box:hover {
+            background-color: var(--primary-color-light);
+        }
+
+        .line-graph {
+            grid-column: span 4;
+            background-color: white;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+            font-size: 1.2rem;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .pie-graph {
+            grid-column: span 2;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        body.dark .line-graph,
+        body.dark .pie-graph {
+            background-color: var(--sidebar-color);
+            color: var(--text-color);
+        }
+
+    .small-box {
+        position: relative;
+        display: flex; /* Keep flex */
+        align-items: center; /* Keep center alignment vertically */
+        justify-content: flex-start; /* Aligns content to the start (left) */
+        border-radius: 10px;
+        background-color: #007bff;
+        color: white;
+        height: 100px;
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        transition: 0.3s ease;
+        overflow: hidden;
+        padding-right: 100px;
+    }
+
+        .small-box:hover {
+            transform: translateY(-5px);
+        }
+
+    .inner {
+        padding: 30px; /* Add more left/right padding */
+        text-align: left; /* Aligns text within the inner box to the left */
+        flex-grow: 1; /* Allows it to take up available space before the icon */
+        z-index: 10; /* Make sure text is above the icon if they overlap */
+    }
+
+        .inner h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .inner p {
+            font-size: 1rem;
+            margin: 5px 0 0 0;
+        }
+
+    .small-box-icon {
+        position: absolute;
+        right: 35px; /* original 15px + 20px padding */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 70px;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.3);
+        pointer-events: none; /* prevents accidental overlap interaction */
+    }
+
+
+
+        .small-box-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: px 0;
+            color: rgba(255,255,255,.8);
+            display: block;
+            z-index: 5;
+            background: rgba(0,0,0,.1);
+            text-decoration: none;
+            transition: background-color .15s linear;
+        }
+
+        .small-box-footer:hover {
+            color: #fff;
+            background: rgba(0,0,0,.15);
+        }
+    
+
+        @@media (max-width: 1100px) {
+            .small-box {
+                justify-content: center;
+                text-align: center;
+                padding-right: 20px;
+                height: 110px;
+            }
+
+            .sidebar header .toggle {   
+                right: 10px;
+                background-color: transparent;
+                color: var(--text-color);
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            .sidebar.close {
+                display: none;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .page-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr;
+                overflow-y: auto;
+            }
+
+            .header {
+                grid-column: span 1;
+                height: 60px;
+            }
+
+            .main-content {
+                grid-column: span 1;
+                display: grid;
+                grid-template-columns: 1fr; /* Single column for mobile */
+                grid-template-rows: auto 250px 250px; /* Three rows: info, line-graph, pie-graph */
+                gap: 15px;
+                padding: 15px;
+                overflow-y: auto;
+            }
+
+            .info {
+                grid-column: span 1; /* Spans the single column */
+                grid-template-columns: repeat(2, 1fr); /* 2 per row (3 rows) on smaller screens */
+                grid-template-rows: repeat(3, 1fr); /* Explicit 3 rows on smaller screens */
+                margin-left: 0px;
+            }
+
+            .line-graph {
+                grid-column: span 1; /* Spans the single column */
+                height: 250px;
+                margin-left: 0px;
+            }
+
+            .pie-graph {
+                grid-column: span 1; /* Spans the single column */
+                height: 250px;
+                width: auto;
+            }
+
+            .home {
+                left: 0;
+                width: 100%;
+            }
+
+            .sidebar.close ~ .home {
+                left: 0;
+                width: 100%;
+            }
+        }
+
+        @@media (max-width: 450px) {
+            .sidebar header .toggle {
+                right: 10px;
+                background-color: transparent;
+                color: var(--text-color);
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            .sidebar.close {
+                display: none;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .page-container {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr;
+                overflow-y: auto;
+            }
+
+            .header {
+                grid-column: 1 / -1;
+                height: 60px;
+            }
+
+                .main-content {
+                    display: grid;
+                    grid-template-columns: 1fr; /* One column layout */
+                    grid-auto-rows: auto;
+                    gap: 15px;
+                    padding: 15px;
+                    overflow-y: auto;
+                }
+
+                .info,
+                .line-graph,
+                .pie-graph {
+                    grid-column: 1 / -1;
+                    margin-left: 0;
+                    height: auto;
+                }
+
+                .info {
+                    display: grid;
+                    grid-template-columns: 1fr; /* Stack items vertically */
+                    grid-auto-rows: auto;
+                }
+
+                .home {
+                    left: 0;
+                    width: 100%;
+                }
+
+                .sidebar.close ~ .home {
+                    left: 0;
+                    width: 100%;
+                }
+            }
+        }
+        ::-webkit-scrollbar {
+        display: none;
+
+        
+    }
+    </style>
