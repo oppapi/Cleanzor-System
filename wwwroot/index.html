@@ -6,12 +6,13 @@
   <title>CleanzorApp</title>
   <base href="/" />
 
-  <!-- Fonts & Bootstrap -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
-  <!-- ApexCharts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="js/interChart.js"></script>
 
@@ -31,9 +32,20 @@
       overflow: hidden;
       height: 100vh;
     }
+
+    .toast-center-center {
+      top: 5%;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    #toast-container .toast {
+      opacity: 0.9 !important;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
   </style>
 
-  <!-- ✅ Firebase Initialization -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
@@ -46,14 +58,11 @@
       messagingSenderId: "466216817805",
       appId: "1:466216817805:web:a04b203b55e9b609c97ec4",
       measurementId: "G-T83KMEBWE2",
-      // ✅ Use correct database URL
       databaseURL: "https://cleanzorv6-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
-    // ✅ Initialize Firebase
     window.firebaseApp = initializeApp(firebaseConfig);
 
-    // ✅ Define fetchSensorDataOnce for Blazor
     window.fetchSensorDataOnce = async function () {
       const db = getDatabase(window.firebaseApp);
       const sensorRef = ref(db, "RobotSensors/status");
@@ -67,18 +76,56 @@
     };
   </script>
 
-  <!-- ✅ Custom Firebase operations -->
   <script type="module" src="js/interOperation.js"></script>
-
 </head>
 
 <body>
   <div id="app"></div>
 
-  <!-- Optional Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-  <!-- ✅ Blazor WebAssembly (must be last) -->
+  <script>
+    function showToastr(type, message) {
+      if (message && message.trim() !== "") {
+      // Remove the oldest toast if there are already 2 visible
+      const existingToasts = document.querySelectorAll('#toast-container .toast');
+      if (existingToasts.length >= 2) {
+        existingToasts[0].remove();
+      }
+        toastr.options = {
+          closeButton: true,
+          progressBar: true,
+          positionClass: "toast-center-center",
+          showDuration: "300",
+          hideDuration: "1000",
+          timeOut: "2500",
+          extendedTimeOut: "1000",
+          showEasing: "swing",
+          hideEasing: "linear",
+          showMethod: "slideDown",
+          hideMethod: "slideUp"
+        };
+
+        switch (type) {
+          case 'success':
+            toastr.success(message, 'Success');
+            break;
+          case 'error':
+            toastr.error(message, 'Error');
+            break;
+          case 'warning':
+            toastr.warning(message, 'Warning');
+            break;
+          default:
+            toastr.info(message, 'Info');
+            break;
+        }
+      }
+    }
+  </script>
+
   <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>
