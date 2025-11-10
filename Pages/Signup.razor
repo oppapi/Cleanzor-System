@@ -20,9 +20,15 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <div class="main-form-group">
-          <label class="labelBox" for="full-name">Full Name</label>
-          <InputText @bind-Value="txtfullname" id="full-name" class="inputBox" placeholder="Enter your full name" />
+        <div class="name-form-group">
+            <div>
+              <label class="labelBox" for="first-name">First Name</label>
+              <InputText @bind-Value="txtfirstname" id="first-name" class="inputBox" placeholder="Enter your first name" />
+            </div>
+            <div>
+            <label class="labelBox" for="last-name">Last Name</label>
+              <InputText @bind-Value="txtfirstname" id="last-name" class="inputBox" placeholder="Enter your last name" />
+            </div>
         </div>
 
         <div class="main-form-group">
@@ -38,10 +44,22 @@
         <div class="main-form-group">
           <label class="labelBox" for="password">Password</label>
           <div class="password-wrapper">
-            <InputText @bind-Value="txtpassword" type="password" id="password" class="inputBox" placeholder="Create a password" />
+            <InputText 
+                @bind-Value="txtpassword" 
+                type="password" 
+                id="password" 
+                class="inputBox" 
+                placeholder="Create a password"
+                @oninput="OnPasswordInput" />
             <button type="button" onclick="toggler1(this)" class="toggle-btn">Show</button>
           </div>
+
+          @if (!string.IsNullOrEmpty(passwordStrength))
+          {
+              <p style="color:@strengthColor; font-family: Montserrat; font-weight: 600; line-height: 1.25; font-size: clamp(0.75rem, 2vw, 0.875rem); margin-bottom: 0; margin-top: 4px;">@strengthText</p>
+          }
         </div>
+
 
         <div class="main-form-group">
           <label class="labelBox" for="confirmPassword">Confirm Password</label>
@@ -78,11 +96,7 @@
 </body>
 
 <script>
-    function showAlert(message) {
-        if (message && message.trim() !== "") {
-            window.alert(message);
-        }
-    }
+
 </script>
 
 @code {
@@ -90,6 +104,9 @@
     [Inject] IJSRuntime JS { get; set; } = default!;
 
     private bool isLoading { get; set; } = false;
+    private string strengthText = string.Empty;
+    private string strengthColor = string.Empty;
+    private string passwordStrength = string.Empty;
 
     public class JsAuthResponse
     {
@@ -105,11 +122,11 @@
         NavManager.NavigateTo(url);
     }
 
-    private async Task ShowLoadingAndRedirect(int delayMs)
+    private async Task ShowLoadingAndRedirect(string url)
     {
-        await Task.Delay(delayMs);
         isLoading = false;
         StateHasChanged();
+        NavManager.NavigateTo(url);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -120,59 +137,77 @@
         }
     }
 
-    private string txtfullname { get; set; } = "";
+    private string txtfirstname { get; set; } = "";
+    private string txtlastname { get; set; } = "";
+    private string txtfullname => $"{txtfirstname} {txtlastname}";
     private string txtemail { get; set; } = "";
     private string txtusername { get; set; } = "";
     private string txtpassword { get; set; } = "";
     private string txtcpassword { get; set; } = "";
 
     private async Task HandleValidSubmit()
+{
+    if (isLoading) return;
+
+    if (!inputValidation())
+        return;
+
+    isLoading = true;
+    StateHasChanged();
+
+    try
     {
-        if (isLoading) return;
-
-        if (!inputValidation())
+        JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>("signupUser", txtemail, txtpassword);
+        if (result.Success)
         {
-            return;
-        }
-
-        isLoading = true;
-        StateHasChanged();
-
-        try
-        {
-            JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>(identifier: "signupUser", txtemail, txtpassword);
-            if (result.Success)
+            var rememberMe = await JS.InvokeAsync<bool>("eval", "document.getElementById('remember_me').checked");
+            if (rememberMe)
             {
-                await JS.InvokeVoidAsync("storeSignupData", txtfullname, txtemail, txtusername, null);
-                callToaster("success", "Account created! Please verify your email and then log in.");
-                await JS.InvokeVoidAsync("signOutFirebase");
-            }
-            else if (result.ErrorCode == "auth/email-already-in-use")
-            {
-                callToaster("error", "Error: The email address is already in use by another account.");
-                isLoading = false;
-                StateHasChanged();
-            }
-            else if (result.ErrorCode == "auth/invalid-email")
-            {
-                callToaster("error", "Error: The email address is not valid.");
-                isLoading = false;
-                StateHasChanged();
+                await JS.InvokeVoidAsync("storeAccountData", txtemail, txtpassword);
             }
             else
             {
-                callToaster("error", $"Error: Signup Failed. {result.ErrorCode}");
-                isLoading = false;
-                StateHasChanged();
+                await JS.InvokeVoidAsync("clearAccountData");
             }
+
+            callToaster("success", "Account created! Please verify your email and then log in.");
+            await JS.InvokeVoidAsync("signOutFirebase");
+
+            isLoading = false;
+            StateHasChanged();
+            await ShowLoadingAndRedirect("/");
         }
-        catch (Exception ex)
+        else
         {
-            callToaster("error", $"Error: An unexpected error occurred during signup. {ex.Message}");
+            string message;
+
+            if (result.ErrorCode == "auth/email-already-in-use")
+            {
+                message = "Error: The email address is already in use by another account.";
+            }
+            else if (result.ErrorCode == "auth/invalid-email")
+            {
+                message = "Error: The email address is not valid.";
+            }
+            else
+            {
+                message = $"Error: Signup Failed. {result.ErrorCode}";
+            }
+
+            callToaster("error", message);
+
             isLoading = false;
             StateHasChanged();
         }
     }
+    catch (Exception ex)
+    {
+        callToaster("error", $"Error: An unexpected error occurred during signup. {ex.Message}");
+        isLoading = false;
+        StateHasChanged();
+    }
+}
+
 
     private bool inputValidation()
     {
@@ -245,13 +280,48 @@
 
     private void callToaster(string type, string message)
     {
-        JS.InvokeVoidAsync("showAlert", message);
+        JS.InvokeVoidAsync("showToastr", type, message);
     }
 
     private async void GoToLogin()
     {
-      NavManager.NavigateTo("/l");
+      NavManager.NavigateTo("/");
     }
+    private void OnPasswordInput(ChangeEventArgs e)
+    {
+        txtpassword = e.Value?.ToString() ?? string.Empty;
+        CheckPasswordStrength(txtpassword);
+    }
+
+    private void CheckPasswordStrength(string password)
+    {
+        int score = 0;
+
+        if (password.Length >= 8) score++;
+        if (System.Text.RegularExpressions.Regex.IsMatch(password, "[A-Z]")) score++;
+        if (System.Text.RegularExpressions.Regex.IsMatch(password, "[0-9]")) score++;
+        if (System.Text.RegularExpressions.Regex.IsMatch(password, "[^a-zA-Z0-9]")) score++;
+
+        if (score <= 2)
+        {
+            strengthText = "Weak";
+            strengthColor = "red";
+        }
+        else if (score == 3)
+        {
+            strengthText = "Medium";
+            strengthColor = "orange";
+        }
+        else
+        {
+            strengthText = "Strong";
+            strengthColor = "green";
+        }
+
+        passwordStrength = strengthText;
+    }
+}
+}
 }
 
 <style>
@@ -261,6 +331,7 @@ html, body {
 }
 
 .body {
+    background-image: url(images/LightBackground.png);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -416,6 +487,14 @@ main {
     margin-bottom: 0.25rem;
 }
 
+.name-form-group {
+    display: grid;
+    width: 100%;
+    column-gap: 1rem;
+    margin-bottom: 0.25rem;
+    grid-template-columns: 6fr 4fr;
+}
+
 .labelBox {
   display: block;
   color: #603b2f;
@@ -538,6 +617,24 @@ main {
 
 * {
   box-sizing: border-box;
+}
+
+@@media (max-width: 700px) {
+.name-form-group {
+    display: grid;
+    width: 100%;
+    column-gap: 1rem;
+    margin-bottom: 0.25rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  .password-strength {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #00A887;
+  font-weight: 600;
+}
 }
 
 ::-webkit-scrollbar {

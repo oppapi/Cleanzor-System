@@ -24,46 +24,50 @@ window.loadCharts = function () {
     };
 
     let barOptions = {
-        ...defaultOptions,
-        chart: { ...defaultOptions.chart, type: 'area' },
-        tooltip: {
-            enabled: true,
-            style: { fontFamily: fontFamily },
-            y: { formatter: value => `${value}K` }
-        },
-        series: [{ name: 'Views', data: [15, 50, 18, 90, 30, 65] }],
-        colors: [colorPrimary],
-        fill: {
-            type: 'gradient',
-            gradient: {
-                type: 'vertical',
-                opacityFrom: 1,
-                opacityTo: 0,
-                stops: [0, 100],
-                colorStops: [
-                    { offset: 0, opacity: .2, color: '#ffffff' },
-                    { offset: 100, opacity: 0, color: '#ffffff' }
-                ]
-            }
-        },
-        stroke: { colors: [colorPrimary], lineCap: 'round' },
-        grid: {
-            borderColor: 'rgba(0, 0, 0, 0)',
-            padding: { top: -30, right: 0, bottom: -8, left: 12 }
-        },
-        markers: { strokeColors: colorPrimary },
-        yaxis: { show: false },
-        xaxis: {
-            labels: {
-                show: true,
-                floating: true,
-                style: { colors: colorLabel, fontFamily: fontFamily }
-            },
-            axisBorder: { show: false },
-            crosshairs: { show: false },
-            categories: ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov']
+    ...defaultOptions,
+    chart: { ...defaultOptions.chart, type: 'area' },
+    tooltip: {
+        enabled: true,
+        style: { fontFamily: fontFamily },
+        y: { formatter: value => `${value}K` }
+    },
+
+    series: [{ name: 'Views', data: [15, 50, 18, 90, 30, 65, 0, 0] }], 
+    colors: [colorPrimary],
+    fill: {
+        type: 'gradient',
+        gradient: {
+            type: 'vertical',
+            opacityFrom: 1,
+            opacityTo: 0,
+            stops: [0, 100],
+            colorStops: [
+                { offset: 0, opacity: .2, color: '#ffffff' },
+                { offset: 100, opacity: 0, color: '#ffffff' }
+            ]
         }
-    };
+    },
+    stroke: { colors: [colorPrimary], lineCap: 'round' },
+    grid: {
+        borderColor: 'rgba(0, 0, 0, 0)',
+        padding: { top: -30, right: 0, bottom: -8, left: 12 }
+    },
+    markers: { strokeColors: colorPrimary },
+    yaxis: { show: false },
+    xaxis: {
+        labels: {
+            show: true,
+            floating: true,
+            style: { colors: colorLabel, fontFamily: fontFamily }
+        },
+        axisBorder: { show: false },
+        crosshairs: { show: false },
+        categories: [
+            '00:00', '03:00', '06:00', '09:00', 
+            '12:00', '15:00', '18:00', '21:00'
+        ]
+    }
+};
 
     let pieOptions = {
         ...defaultOptions,
@@ -73,14 +77,14 @@ window.loadCharts = function () {
             height: 300
         },
         series: [300, 50, 100, 80],
-        labels: ['Product A', 'Product B', 'Product C', 'Product D'],
+        labels: ['Plastic', 'Cardboard', 'Glass', 'Paper'],
         colors: ['#FF4560', '#00E396', '#FEB019', '#775DD0'],
         legend: {
             position: 'bottom',
             labels: { colors: colorLabel, fontFamily: fontFamily }
         },
         title: {
-            text: 'Revenue Breakdown',
+            text: 'Type of Waste Collected',
             align: 'center',
             style: { fontFamily: fontFamily, color: colorLabel }
         },

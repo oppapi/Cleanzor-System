@@ -65,15 +65,17 @@
 
 protected override async Task OnAfterRenderAsync(bool firstRender)
 {
+    await JS.InvokeVoidAsync("clearStorageData");
     if (firstRender)
     {
-        var signupData = await JS.InvokeAsync<SignupData?>("getSignupData");
-
-        if (!string.IsNullOrEmpty(signupData?.Email))
+        var accountData = await JS.InvokeAsync<AccountData?>("getAccountData");
+        if (accountData != null)
         {
-            txtemail = signupData.Email;
+            txtemail = accountData.Email ?? "";
+            txtpassword = accountData.Password ?? "";
             StateHasChanged();
         }
+
         await JS.InvokeVoidAsync("signOutFirebase");
     }
 }
@@ -97,71 +99,56 @@ protected override async Task OnAfterRenderAsync(bool firstRender)
     private bool ShowPassword { get; set; } = false;
 
 private async Task HandleValidSubmit()
+{
+    if (inputValidation())
     {
-        if (inputValidation())
+        try
         {
-            try
+            JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>("loginUser", txtemail, txtpassword);
+
+            if (result.Success)
             {
-                JsAuthResponse? result = await JS.InvokeAsync<JsAuthResponse>("loginUser", txtemail, txtpassword);
-
-                if (result.Success)
-                {
-                    isLoading = true;
-                    StateHasChanged();
-                    await ShowLoadingAndRedirect("/dashboard", 1500);
-                    AuthProvider.NotifyUserChanged(txtemail);
-
-                    var signupData = await JS.InvokeAsync<SignupData?>("getSignupData");
-                    if (signupData != null)
-                    {
-                        JsAuthResponse? registerResult = await JS.InvokeAsync<JsAuthResponse>("registerUser", signupData.Fullname, signupData.Email, signupData.Username);
-                        if (registerResult.Success)
-                        {
-                            await JS.InvokeVoidAsync("clearSignupData");  // Clean up
-                        }
-                        else
-                        {
-                            callToaster("error", $"Profile setup failed: {registerResult.ErrorCode}");
-                        }
-                    }
-                }
-                else if (result.ErrorCode == "auth/user-not-found")
-                {
-                    callToaster("error", "Error: No account found with that email.");
-                }
-                else if (result.ErrorCode == "auth/wrong-password")
-                {
-                    callToaster("error", "Error: Incorrect password.");
-                }
-                else if (result.ErrorCode == "auth/invalid-email")
-                {
-                    callToaster("error", "Error: The email address is not valid.");
-                }
-                else if (result.ErrorCode == "auth/email-not-verified")
-                {
-                    callToaster("error", "Please verify your email before logging in.");
-                }
-                else if (result.ErrorCode == "auth/invalid-login-credentials")
-                {
-                    callToaster("error", "Error: Login failed. Please try again." + result.ErrorCode);
-                }
-                else
-                {
-                    callToaster("error", "Error: Login failed. Please try again.: " + result.ErrorCode);
-                }
+                isLoading = true;
+                StateHasChanged();
+                await ShowLoadingAndRedirect("/dashboard", 1500);
+                AuthProvider.NotifyUserChanged(txtemail);
             }
-            catch (Exception ex)
+            else if (result.ErrorCode == "auth/user-not-found")
             {
-                callToaster("error", $"Error: An unexpected error occurred during login. {ex.Message}");
+                callToaster("error", "Error: No account found with that email.");
+            }
+            else if (result.ErrorCode == "auth/wrong-password")
+            {
+                callToaster("error", "Error: Incorrect password.");
+            }
+            else if (result.ErrorCode == "auth/invalid-email")
+            {
+                callToaster("error", "Error: The email address is not valid.");
+            }
+            else if (result.ErrorCode == "auth/email-not-verified")
+            {
+                callToaster("error", "Please verify your email before logging in.");
+            }
+            else if (result.ErrorCode == "auth/invalid-login-credentials")
+            {
+                callToaster("error", "Error: Login failed. Please try again.");
+            }
+            else
+            {
+                callToaster("error", "Error: Login failed. Please try again.");
             }
         }
+        catch (Exception ex)
+        {
+            callToaster("error", $"Error: An unexpected error occurred during login. {ex.Message}");
+        }
     }
+}
 
-public class SignupData
+public class AccountData
 {
-  public string? Fullname { get; set; }
-  public string? Email { get; set; }
-  public string? Username { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
 }
 
 private bool inputValidation()
@@ -192,7 +179,7 @@ private bool inputValidation()
 
     private void callToaster(string type, string message)
     {
-        Console.WriteLine(message);
+        JS.InvokeVoidAsync("showToastr", type, message);
     }
 
     [Inject] NavigationManager NavManager { get; set; } = default!;

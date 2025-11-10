@@ -54,6 +54,7 @@
       --element-darkslate: #374151;
       --element-text: #08211E;
       --element-label: #ffffff;
+      --element-background: #D5F4EC;
       --element-focus: #215F5C;
     }
 
@@ -102,7 +103,6 @@
   <script>
     function showToastr(type, message) {
       if (message && message.trim() !== "") {
-      // Remove the oldest toast if there are already 2 visible
       const existingToasts = document.querySelectorAll('#toast-container .toast');
       if (existingToasts.length >= 2) {
         existingToasts[0].remove();

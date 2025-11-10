@@ -10,9 +10,6 @@ import {
   getDatabase, ref, onValue
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-
-// --------------------------- AUTH FUNCTIONS ---------------------------
-
 export async function signupUser(email, password) {
   const auth = getAuth(window.firebaseApp);
   try {
@@ -81,9 +78,6 @@ window.getFirebaseUserEmail = () => {
   });
 };
 
-
-// --------------------------- FIRESTORE USER DATA ---------------------------
-
 export async function registerUser(fullname, email, username, password) {
   const auth = getAuth(window.firebaseApp);
   const db = getFirestore(window.firebaseApp);
@@ -111,34 +105,47 @@ export async function registerUser(fullname, email, username, password) {
 window.storeSignupData = (fullname, email, username) => {
   localStorage.setItem("signupData", JSON.stringify({ fullname, email, username }));
 };
+
 window.getSignupData = () => {
   const data = localStorage.getItem("signupData");
   return data ? JSON.parse(data) : null;
 };
-window.clearSignupData = () => {
+
+window.clearStorageData = () => {
   localStorage.removeItem("signupData");
+  localStorage.removeItem("robotData");
+  sessionStorage.clear();
 };
-
-
-// --------------------------- REALTIME DATABASE ---------------------------
 
 window.listenToSensorData = function () {
   const db = getDatabase(window.firebaseApp);
-  const sensorRef = ref(db, "RobotSensors/status");
+  const sensorRef = ref(db, "robotData");
 
   onValue(sensorRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
       console.log("🔥 Firebase Update:", data);
-      window.RobotSensorData = data;               // for Blazor
-      localStorage.setItem("robotData", JSON.stringify(data)); // for manual check
+      window.RobotSensorData = data;
+      localStorage.setItem("robotData", JSON.stringify(data));
     } else {
       console.log("⚠️ No data found at RobotSensors/status");
     }
   });
 };
 
-// --------------------------- EXPORT TO WINDOW ---------------------------
+window.storeAccountData = (email, password) => {
+    localStorage.setItem("accountData", JSON.stringify({ email, password }));
+};
+
+window.getAccountData = () => {
+    const data = localStorage.getItem("accountData");
+    return data ? JSON.parse(data) : null;
+};
+
+window.clearAccountData = () => {
+    localStorage.removeItem("accountData");
+};
+
 
 window.signupUser = signupUser;
 window.loginUser = loginUser;
