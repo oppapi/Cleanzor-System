@@ -9,7 +9,7 @@
             <header>
                 <div class="image-text">
                     <span class="image">
-                        <img src="images/CleanzorLogo.png" alt="Cleanzor-Logo">
+                        <img src="images/CleanzorGreenLogo.png" alt="Cleanzor-Logo">
                     </span>
 
                     <div class="text logo-text">
@@ -76,7 +76,7 @@
         <div class="page-container">
             <div class="header">
                 <i class='bx bx-menu menu-icon' @onclick="ToggleSidebar"></i>
-                <span>Header</span>
+                <span>Dashboard</span>
             </div>
 
             <div class="main-content">
@@ -133,12 +133,14 @@
         </div>
 
         <!-- Sweeper Speed Box -->
+        <!-- Time Box -->
         <div class="small-box" style="background-color: #4db6ac; color: #ffffff;">
             <div class="inner">
-                <h3>@time</h3>
-                <p>Time</p>
+                <h3>@currentTime</h3>
+                <p>@currentDate</p>
             </div>
-            <img src="images/datetime.svg" alt="Sweeper Icon" class="small-box-icon" style="width: 70px; height: auto; filter: brightness(0) invert(1);" />
+            <img src="images/datetime.svg" alt="Sweeper Icon" class="small-box-icon" 
+                style="width: 70px; height: auto; filter: brightness(0) invert(1);" />
             <div class="small-box-footer" style="height: 7px;"></div>
         </div>
 
@@ -167,17 +169,22 @@
 
     @code {
     [Inject] NavigationManager NavManager { get; set; } = default!;
+
     private bool isLoading { get; set; } = false;
     private string status = string.Empty;
     private string uptime = string.Empty;
     private string location = string.Empty;
     private string battery = string.Empty;
-    private int temperature = 0;
+    private string temperature = string.Empty;
     private string time = string.Empty;
-    private bool isSidebarOpen = false;
 
+    private bool isSidebarOpen = false;
     private bool isDarkMode = false;
     private bool chartsLoaded = false; 
+
+    private string currentTime = DateTime.Now.ToString("hh:mm tt");
+    private string currentDate = DateTime.Now.ToString("MMM dd, yyyy");
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -192,7 +199,7 @@
 
     private async Task LoadCharts()
     {
-        await JSRuntime.InvokeVoidAsync("loadCharts");
+        await JSRuntime.InvokeVoidAsync("loadCharts", isDarkMode);
     }
     
     private void ToggleSidebar()
@@ -209,6 +216,7 @@
     {
         isDarkMode = !isDarkMode;
         await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
+        await JSRuntime.InvokeVoidAsync("updateChartColors", isDarkMode);
     }
 private async Task Signout()
 {
@@ -247,8 +255,7 @@ private async Task PeriodicUpdate()
                 uptime = parsed.TryGetProperty("uptime", out var up) ? up.GetString() ?? uptime : uptime;
                 location = parsed.TryGetProperty("location", out var loc) ? loc.GetString() ?? location : location;
                 battery = parsed.TryGetProperty("battery", out var b) ? b.GetString() ?? battery : battery;
-                if (parsed.TryGetProperty("temperature", out var temp) && temp.TryGetInt32(out var tempVal))
-                    temperature = tempVal;
+                temperature = parsed.TryGetProperty("temperature", out var temp) ? temp.GetString() ?? temperature : temperature;
                 
                 time = parsed.TryGetProperty("time", out var t) ? t.GetString() ?? time : time;
                 await InvokeAsync(StateHasChanged);
@@ -306,7 +313,7 @@ private async Task PeriodicUpdate()
         height: 100%;
         padding: 20px;
         border-radius: 10px;
-        background: #1b1b1b;
+        background: white;
         box-shadow: 0 50px 100px rgba(0, 0, 0, .08);
         flex-direction: column;
         justify-content: center;
@@ -846,8 +853,13 @@ private async Task PeriodicUpdate()
             border-radius: 10px;
         }
 
-        body.dark .area-chart,
-        body.dark .pie-graph {
+        body.dark .area-chart
+        {
+            background-color: var(--sidebar-color);
+            color: var(--text-color);
+        }
+        body.dark .pie-graph
+        {
             background-color: var(--sidebar-color);
             color: var(--text-color);
         }
@@ -882,7 +894,7 @@ private async Task PeriodicUpdate()
     }
 
         .inner h3 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin: 0;
         }
@@ -995,6 +1007,10 @@ private async Task PeriodicUpdate()
                 grid-column: span 1;
                 height: 200px; /* Reduced from 250px */
                 margin-left: 0px;
+            }
+
+            .card .area-chart {
+                height: 240px; /* Increased from 180px to fill more of the enlarged card */
             }
 
             .pie-graph {

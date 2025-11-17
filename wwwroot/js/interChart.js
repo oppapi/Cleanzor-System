@@ -1,5 +1,4 @@
-window.loadCharts = function () {
-
+window.loadCharts = function (isDark) {
     const colorPrimary = getComputedStyle(document.documentElement)
         .getPropertyValue('--color-primary')
         .trim();
@@ -12,12 +11,16 @@ window.loadCharts = function () {
         .getPropertyValue('--font-family')
         .trim();
 
+    const chartPrimaryColor = isDark ? '#6ee7b7' : '#2596be';
+    const chartBackgroundColor = isDark ? '#242526' : '#FFFFFF';
+    const chartTextColors = isDark ? '#ccc' : colorLabel;
+
     const defaultOptions = {
         chart: {
             toolbar: { show: false },
             zoom: { enabled: false },
             width: '100%',
-            height: 180,
+            height: 300,
             offsetY: 0
         },
         dataLabels: { enabled: false }
@@ -25,15 +28,32 @@ window.loadCharts = function () {
 
     let barOptions = {
     ...defaultOptions,
-    chart: { ...defaultOptions.chart, type: 'area' },
+    chart: { 
+        ...defaultOptions.chart, 
+        type: 'area', 
+        background: chartBackgroundColor,
+        dropShadow: {
+            enabled: true,
+            top: 5, 
+            left: 0,
+            blur: 5, 
+            opacity: 0.5, 
+            color: chartPrimaryColor
+        }
+    },
+    // Add this title block (based on your pie chart's structure)
+    title: {
+        text: 'Uptime',
+        align: 'center',
+        style: { fontFamily: fontFamily, color: chartTextColors }
+    },
     tooltip: {
         enabled: true,
         style: { fontFamily: fontFamily },
-        y: { formatter: value => `${value}K` }
+        y: { formatter: value => `${value}min` }
     },
-
-    series: [{ name: 'Views', data: [15, 50, 18, 90, 30, 65, 0, 0] }], 
-    colors: [colorPrimary],
+    series: [{ name: 'Uptime (min)', data: [15, 50, 18, 90, 30, 65, 0, 0] }], 
+    colors: [chartPrimaryColor],
     fill: {
         type: 'gradient',
         gradient: {
@@ -42,23 +62,23 @@ window.loadCharts = function () {
             opacityTo: 0,
             stops: [0, 100],
             colorStops: [
-                { offset: 0, opacity: .2, color: '#ffffff' },
-                { offset: 100, opacity: 0, color: '#ffffff' }
+                { offset: 0, opacity: .2, color: chartPrimaryColor },
+                { offset: 100, opacity: 0, color: chartPrimaryColor }
             ]
         }
     },
-    stroke: { colors: [colorPrimary], lineCap: 'round' },
+    stroke: { colors: [chartPrimaryColor], lineCap: 'round' },
     grid: {
         borderColor: 'rgba(0, 0, 0, 0)',
         padding: { top: -30, right: 0, bottom: -8, left: 12 }
     },
-    markers: { strokeColors: colorPrimary },
+    markers: { strokeColors: chartPrimaryColor },
     yaxis: { show: false },
     xaxis: {
         labels: {
             show: true,
             floating: true,
-            style: { colors: colorLabel, fontFamily: fontFamily }
+            style: { colors: chartTextColors, fontFamily: fontFamily }
         },
         axisBorder: { show: false },
         crosshairs: { show: false },
@@ -74,19 +94,20 @@ window.loadCharts = function () {
         chart: {
             ...defaultOptions.chart,
             type: 'pie',
-            height: 300
+            height: 300,
+            background: chartBackgroundColor
         },
         series: [300, 50, 100, 80],
         labels: ['Plastic', 'Cardboard', 'Glass', 'Paper'],
         colors: ['#FF4560', '#00E396', '#FEB019', '#775DD0'],
         legend: {
             position: 'bottom',
-            labels: { colors: colorLabel, fontFamily: fontFamily }
+            labels: { colors: chartTextColors, fontFamily: fontFamily }
         },
         title: {
             text: 'Type of Waste Collected',
             align: 'center',
-            style: { fontFamily: fontFamily, color: colorLabel }
+            style: { fontFamily: fontFamily, color: chartTextColors }
         },
         tooltip: { style: { fontFamily: fontFamily } }
     };
@@ -95,17 +116,76 @@ window.loadCharts = function () {
     const pieChartElement = document.querySelector('#pieChartContainer');
 
     if (areaChartElement) {
-        new ApexCharts(areaChartElement, barOptions).render();
+        areaChartElement.innerHTML = '';
+        // Store the chart instance for later updates
+        window.areaChart = new ApexCharts(areaChartElement, barOptions);
+        window.areaChart.render();
     }
     if (pieChartElement) {
-        new ApexCharts(pieChartElement, pieOptions).render();
+        pieChartElement.innerHTML = '';
+        // Store the chart instance for later updates
+        window.pieChart = new ApexCharts(pieChartElement, pieOptions);
+        window.pieChart.render();
     }
 };
 
+window.updateChartColors = function (isDark) {
+    // Toggle the body class for dark mode
+    if (isDark) {
+        document.body.classList.add('dark');
+    } else {
+        document.body.classList.remove('dark');
+    }
+
+    // Define colors based on dark mode
+    const chartPrimaryColor = isDark ? '#6ee7b7' : '#2596be';  // Green for dark, blue for light
+    const chartBackgroundColor = isDark ? '#242526' : '#FFFFFF';
+    const chartTextColors = isDark ? '#ccc' : '#a7a7a7';
+
+    // Update the area chart colors dynamically (without re-rendering)
+    if (window.areaChart) {
+        window.areaChart.updateOptions({
+    colors: [chartPrimaryColor],
+    fill: {
+        gradient: {
+            colorStops: [
+                { offset: 0, opacity: 0.2, color: chartPrimaryColor },
+                { offset: 100, opacity: 0, color: chartPrimaryColor }
+            ]
+        }
+    },
+    stroke: { colors: [chartPrimaryColor] },
+    markers: { strokeColors: chartPrimaryColor },
+    chart: { background: chartBackgroundColor },
+
+    xaxis: {
+        categories: [
+            '00:00','03:00','06:00','09:00',
+            '12:00','15:00','18:00','21:00'
+        ],
+        labels: { style: { colors: chartTextColors } }
+    }
+});
+
+    }
+
+    // Update the pie chart colors dynamically (for consistency)
+    if (window.pieChart) {
+        window.pieChart.updateOptions({
+            chart: { background: chartBackgroundColor },
+            legend: { labels: { colors: chartTextColors } },
+            title: { style: { color: chartTextColors } }
+        });
+    }
+};
+
+// Keep this for backward compatibility, but note: it's not used in the optimized flow
 window.toggleDarkMode = function (isDark) {
     if (isDark) {
         document.body.classList.add('dark');
     } else {
         document.body.classList.remove('dark');
     }
+    // This re-renders the charts (less efficient); prefer updateChartColors instead
+    window.loadCharts(isDark);
 };
