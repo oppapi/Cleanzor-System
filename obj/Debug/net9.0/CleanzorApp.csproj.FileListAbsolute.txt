@@ -2433,10 +2433,10 @@ C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\refint\Cle
 C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\CleanzorApp.pdb
 C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\ref\CleanzorApp.dll
 C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\bbjt5ihbcc-56cdjv621p.gz
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.tzmtwilgxx.wasm
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.q94h3ht2jj.pdb
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.tzmtwilgxx.wasm.gz
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.q94h3ht2jj.pdb.gz
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-tzmtwilgxx.gz
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-q94h3ht2jj.gz
-C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-kvuhzlv40p.gz
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.xfuhpy1qkk.wasm
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.0e453snt08.pdb
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.xfuhpy1qkk.wasm.gz
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\bin\Debug\net9.0\wwwroot\_framework\CleanzorApp.0e453snt08.pdb.gz
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\y7bjzdi55x-xfuhpy1qkk.gz
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\gkec4u8csv-0e453snt08.gz
+C:\Users\John Carl\Downloads\pak_eat\Cleanzor-System\obj\Debug\net9.0\compressed\ssge8218mn-nnaouvwu3x.gz
