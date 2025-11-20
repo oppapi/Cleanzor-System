@@ -14,7 +14,7 @@
 
                     <div class="text logo-text">
                         <span class="name">Stella Army</span>
-                        <span class="profession">Web developer</span>
+                        <span class="profession">Cleanzor User</span>
                     </div>
                 </div>
 
@@ -26,21 +26,21 @@
 
                     <ul class="menu-links">
                         <li class="nav-link">
-                            <a href="#">
+                            <a href="/dashboard">
                                 <i class='bx bx-home-alt icon'></i>
                                 <span class="text nav-text">Dashboard</span>
                             </a>
                         </li>
 
                         <li class="nav-link">
-                            <a href="#">
+                            <a href="/profile">
                                 <i class='bx bx-bar-chart-alt-2 icon'></i>
                                 <span class="text nav-text">Profile</span>
                             </a>
                         </li>
 
                         <li class="nav-link">
-                            <a href="#">
+                            <a href="/about">
                                 <i class='bx bx-bell icon'></i>
                                 <span class="text nav-text">About Us</span>
                             </a>
@@ -167,112 +167,162 @@
     }
 
 
-    @code {
-    [Inject] NavigationManager NavManager { get; set; } = default!;
-
-    private bool isLoading { get; set; } = false;
-    private string status = string.Empty;
-    private string uptime = string.Empty;
-    private string location = string.Empty;
-    private string battery = string.Empty;
-    private string temperature = string.Empty;
-    private string time = string.Empty;
-
-    private bool isSidebarOpen = false;
-    private bool isDarkMode = false;
-    private bool chartsLoaded = false; 
-
-    private string currentTime = DateTime.Now.ToString("hh:mm tt");
-    private string currentDate = DateTime.Now.ToString("MMM dd, yyyy");
-
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && !chartsLoaded)
-        {
-            await LoadCharts();
-            chartsLoaded = true;
-            await JSRuntime.InvokeVoidAsync("listenToSensorData");
-            await PeriodicUpdate();
-        }
-    }
-
-    private async Task LoadCharts()
-    {
-        await JSRuntime.InvokeVoidAsync("loadCharts", isDarkMode);
-    }
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
     
-    private void ToggleSidebar()
+    // State properties
+    private bool isLoading { get; set; } = false;
+    private string status = "Loading...";
+    private string uptime = "Loading...";
+    private string location = "Loading...";
+    private string battery = "Loading...";
+    private string temperature = "Loading...";
+    private string time = "Loading...";
+
+    private bool isSidebarOpen = false;
+    private bool isDarkMode = false;
+    private bool chartsLoaded = false; 
+
+    private string currentTime = DateTime.Now.ToString("hh:mm:ss tt");
+    private string currentDate = DateTime.Now.ToString("MMM dd, yyyy");
+
+    // CancellationTokenSource for background tasks
+    private CancellationTokenSource cts = new CancellationTokenSource();
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !chartsLoaded)
+        {
+            await LoadCharts();
+            chartsLoaded = true;
+            
+            // Only call JS listener once
+            await JSRuntime.InvokeVoidAsync("listenToSensorData"); 
+
+            // Start the periodic tasks
+            _ = PeriodicUpdate(cts.Token);
+            _ = UpdateClock(cts.Token);
+        }
+    }
+
+    // Dispose of background tasks when the component is removed
+    public void Dispose()
     {
-        isSidebarOpen = !isSidebarOpen;
+        cts.Cancel();
     }
 
-    private void OpenSidebar()
-    {
-        isSidebarOpen = true;
-    }
 
-    private async Task ToggleDarkMode()
-    {
-        isDarkMode = !isDarkMode;
-        await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
-        await JSRuntime.InvokeVoidAsync("updateChartColors", isDarkMode);
-    }
-private async Task Signout()
-{
-    isLoading = true;
-    StateHasChanged();
-    await ShowLoadingAndRedirect("/", 1000);
-}
+    // --- UI/Component Methods ---
 
-private async Task ShowLoadingAndRedirect(string url, int delayMs)
-    {
-        await Task.Delay(delayMs);
-        isLoading = false;
+    private async Task LoadCharts()
+    {
+        await JSRuntime.InvokeVoidAsync("loadCharts", isDarkMode);
+    }
+    
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
+        // Call StateHasChanged if this affects the rendered UI
+        StateHasChanged(); 
+    }
+
+    private void OpenSidebar()
+    {
+        isSidebarOpen = true;
+        // Call StateHasChanged if this affects the rendered UI
         StateHasChanged();
-        NavManager.NavigateTo(url);
+    }
+
+    private async Task ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+        await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
+        await JSRuntime.InvokeVoidAsync("updateChartColors", isDarkMode);
+        StateHasChanged(); // Ensure UI reflects the new dark mode setting
+    }
+
+    private async Task Signout()
+    {
+        isLoading = true;
+        StateHasChanged();
+        await ShowLoadingAndRedirect("/", 1000);
     }
+
+    private async Task ShowLoadingAndRedirect(string url, int delayMs)
+    {
+        await Task.Delay(delayMs);
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo(url);
+    }
     private async Task ShowLoadingAndRedirect(string url)
+    {
+        // Note: Since isLoading is set to false immediately, the loading screen will flash if it was true.
+        // It's generally best to keep the delay version if a transition is needed.
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo(url);
+    }
+
+    // --- Periodic Tasks ---
+
+    private async Task PeriodicUpdate(CancellationToken token)
     {
-        isLoading = false;
-        StateHasChanged();
-        NavManager.NavigateTo(url);
+        while (!token.IsCancellationRequested)
+        {
+            try
+            {
+                // Retrieve data from localStorage
+                var dataJson = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "robotData");
+
+                if (!string.IsNullOrEmpty(dataJson))
+                {
+                    var parsed = System.Text.Json.JsonDocument.Parse(dataJson).RootElement;
+
+                    // Ensure ALL state updates happen before StateHasChanged is called.
+                    // Use InvokeAsync to marshal the state update back to the UI thread.
+                    await InvokeAsync(() =>
+                    {
+                        status = parsed.TryGetProperty("status", out var s) ? s.ToString() : status;
+                        uptime = parsed.TryGetProperty("uptime", out var up) ? up.ToString() : uptime;
+                        location = parsed.TryGetProperty("location", out var loc) ? loc.ToString() : location;
+                        battery = parsed.TryGetProperty("battery", out var b) ? b.ToString() : battery;
+                        temperature = parsed.TryGetProperty("temperature", out var temp) ? temp.ToString() : temperature;
+                        time = parsed.TryGetProperty("time", out var t) ? t.ToString() : time;
+                        
+                        // Call StateHasChanged after all properties are updated.
+                        StateHasChanged();
+                    });
+                }
+                else
+                {
+                    Console.WriteLine("No robotData found in localStorage.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading sensor data: {ex.Message}");
+            }
+
+            // Wait 2 seconds before checking again
+            await Task.Delay(2000, token);
+        }
     }
 
-private async Task PeriodicUpdate()
-{
-    while (true)
+    private async Task UpdateClock(CancellationToken token)
     {
-        try
+        while (!token.IsCancellationRequested)
         {
-            var dataJson = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "robotData");
+            currentTime = DateTime.Now.ToString("hh:mm:ss tt");
+            currentDate = DateTime.Now.ToString("MMM dd, yyyy");
 
-            if (!string.IsNullOrEmpty(dataJson))
-            {
-                var parsed = System.Text.Json.JsonDocument.Parse(dataJson).RootElement;
-
-                status = parsed.TryGetProperty("status", out var s) ? s.GetString() ?? status : status;
-                uptime = parsed.TryGetProperty("uptime", out var up) ? up.GetString() ?? uptime : uptime;
-                location = parsed.TryGetProperty("location", out var loc) ? loc.GetString() ?? location : location;
-                battery = parsed.TryGetProperty("battery", out var b) ? b.GetString() ?? battery : battery;
-                temperature = parsed.TryGetProperty("temperature", out var temp) ? temp.GetString() ?? temperature : temperature;
-                
-                time = parsed.TryGetProperty("time", out var t) ? t.GetString() ?? time : time;
-                await InvokeAsync(StateHasChanged);
-            }
-            else
-            {
-                Console.WriteLine("⚠️ No robotData found in localStorage.");
-            }
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(1000, token);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"⚠️ Error reading sensor data: {ex.Message}");
-        }
-
-        await Task.Delay(2000);
     }
-}
 }
 
     <script>

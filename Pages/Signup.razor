@@ -275,6 +275,12 @@
             return false;
         }
 
+        if (!Regex.IsMatch(txtemail, @"^(?!.*(\.ph\.com|\.com\.com|\.ph\.ph|\.edu\.edu|\.org\.org|\.net\.net))[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.){0,2}(?:com\.ph|com|ph)$"))
+        {
+        callToaster("error", "Error: Please enter a valid email address.");
+        return false;
+        }
+
         return true;
     }
 

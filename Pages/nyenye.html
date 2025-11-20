@@ -1,0 +1,581 @@
+@page "/profile"
+
+@using Microsoft.AspNetCore.Authorization
+@inject CustomAuthStateProvider AuthProvider
+@inject IJSRuntime JSRuntime
+
+<div class="page-container">
+    @* The sidebar will start closed to show only icons, as per the image *@
+    <nav class="sidebar @(isSidebarOpen ? "" : "close")">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="images/CleanzorGreenLogo.png" alt="Cleanzor-Logo">
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">Stella Army</span>
+                    <span class="profession">Web developer</span>
+                </div>
+            </div>
+
+            @* Toggle icon is hidden in the final design but kept for responsiveness *@
+            <i class='bx bx-chevron-right toggle' @onclick="ToggleSidebar"></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="/dashboard">
+                            <i class='bx bx-home-alt icon'></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link active"> @* Added 'active' class *@
+                        <a href="/profile">
+                            @* Using a generic icon from the image for profile/stats *@
+                            <i class='bx bx-bar-chart-alt-2 icon'></i>
+                            <span class="text nav-text">Profile</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="/about">
+                            <i class='bx bx-bell icon'></i>
+                            <span class="text nav-text">About Us</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="nav-link"> @* Added nav-link class here for consistent styling *@
+                    <a @onclick="Signout">
+                        <i class='bx bx-log-out icon'></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">@(isDarkMode ? "Light mode" : "Dark mode")</span>
+
+                    <div class="toggle-switch" @onclick="ToggleDarkMode">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="home">
+        @* TOP GREEN HEADER BAR *@
+        <div class="profile-header-bar">
+            <h1 class="page-title">Profile</h1>
+        </div>
+
+        @* MAIN CONTENT AREA (The white card) *@
+        <div class="main-content">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    @* Avatar from the image is a recycling bin icon *@
+                    <img src="images/CleanzorGreenLogo.png" alt="User Avatar" /> 
+                </div>
+                
+                <h3 class="username">McccNuggets#1069</h3>
+                <p class="user-role">Cleanzor User</p>
+                
+                <div class="profile-details-grid">
+                    <div class="detail-row">
+                        <span class="detail-label">Last name:</span>
+                        <span class="detail-value right-aligned">DOLORITO</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">First name:</span>
+                        <span class="detail-value right-aligned">MC LLOYD</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Email:</span>
+                        <span class="detail-value right-aligned">email@gmail.com</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Account created at:</span>
+                        <span class="detail-value right-aligned">11 November 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+    
+    // Start sidebar closed by default to match the iconic look in the image
+    private bool isSidebarOpen = false; 
+    private bool isDarkMode = false;
+
+    // Use a placeholder image path for the actual avatar used in the design
+    // IMPORTANT: You need to make sure the file "images/RecycleBinAvatar.png" exists
+    // I'm using a placeholder path for the image that shows a green recycle bin.
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // No charts or periodic updates needed
+    }
+
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
+    }
+
+    private async Task ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+        await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
+    }
+
+    private async Task Signout()
+    {
+        // Note: Actual signout logic (AuthService/Provider call) should go here.
+        NavManager.NavigateTo("/", forceLoad: true);
+    }
+}
+
+<script>
+    function toggleDarkMode(isDark) {
+        const body = document.body;
+        if (isDark) {
+            body.classList.add('dark');
+        } else {
+            body.classList.remove('dark');
+        }
+    }
+</script>
+
+<style>
+    @@import url('https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css');
+
+:root {
+    /* Updated Primary Color to match the design's bright green */
+    --body-color: #f0f1f6; /* Lighter background than the original */
+    --sidebar-color: #fff;
+    --primary-color: #00a887; /* Bright green from the image */
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
+    --text-color: #707070;
+
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    /* Removed place-items: center; to allow content to flow naturally */
+    font-family: "Montserrat", sans-serif;
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+
+.profile-avatar {
+    /* Positioning the avatar relative to the header bar */
+    position: absolute;
+    top: -60px; /* Pull it up into the header bar area */
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    /* White background with a white border to make it pop */
+    background-color: var(--sidebar-color); 
+    border: 5px solid var(--sidebar-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 5px; 
+    z-index: 10; /* Ensure it's above everything */
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+::selection {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+body.dark {
+    --body-color: #18191a;
+    --sidebar-color: #242526;
+    --primary-color: #00a887; /* Keep the green */
+    --primary-color-light: #3a3b3c;
+    --toggle-color: #fff;
+    --text-color: #ccc;
+    /* Removed the background image overlay to match the minimal dark mode look */
+    background: var(--body-color); 
+}
+
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text {
+    color: var(--text-color);
+}
+
+.page-container {
+    height: 100vh;
+    width: 100%;
+    display: flex; /* Makes the sidebar and home container align */
+}
+
+/* -------------------- MAIN CONTENT & PROFILE CARD STYLES -------------------- */
+
+.profile-header-bar {
+    /* The large green header strip at the top */
+    width: 100%;
+    height: 150px; 
+    background-color: var(--primary-color); 
+    /* Pattern background added here */
+    background-image: linear-gradient(135deg, rgba(255,255,255,.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.1) 75%, transparent 75%, transparent);
+    background-size: 50px 50px;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+
+.main-content {
+    /* This section is for the white card below the header */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align card to the top */
+    padding: 0 20px 20px 20px; 
+    width: 100%;
+    /* Pushed up to cover the bottom half of the green header */
+    margin-top: -80px; 
+}
+
+.profile-card {
+    width: 100%; 
+    max-width: 600px; /* Reduced max-width to match the image */
+    min-height: 400px;
+    height: fit-content;
+    
+    background-color: var(--sidebar-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+    padding: 80px 40px 40px 40px; /* Increased top padding to account for avatar */
+    box-sizing: border-box; 
+    transition: var(--tran-05);
+    color: var(--text-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-card h3 {
+    margin-top: 10px; 
+}
+
+.profile-details-grid {
+    display: flex; /* Changed to flex column for stacking labels/values */
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 400px; /* Max width for details list */
+    margin-top: 30px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0; /* Increased vertical padding */
+    border-bottom: 1px solid #eee;
+}
+
+/* Last row shouldn't have a border */
+.profile-details-grid .detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 500; /* Slightly less bold */
+    color: var(--text-color);
+}
+
+.detail-value.right-aligned {
+    text-align: right;
+    font-weight: 600; /* Bolded the value as shown in the image */
+    color: var(--text-color);
+}
+
+/* -------------------- END MAIN CONTENT & PROFILE CARD STYLES -------------------- */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
+}
+
+.sidebar.close {
+    width: 50px; /* Smaller width for icon-only mode, as seen in the image */
+    padding: 10px 0; /* Adjust padding for closed state */
+}
+
+.sidebar.close:hover {
+    width: 250px;
+}
+
+.sidebar.close:hover .text {
+    opacity: 1;
+}
+
+.sidebar li {
+    height: 50px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.sidebar header .image,
+.sidebar .icon {
+    min-width: 50px; /* Adjusted icon min-width */
+    border-radius: 6px;
+}
+
+.sidebar .icon {
+    min-width: 50px; /* Adjusted icon min-width */
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.sidebar .text,
+.sidebar .icon {
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.sidebar .text {
+    font-size: 17px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+}
+.sidebar.close .text {
+    opacity: 0;
+}
+
+.sidebar header {
+    position: relative;
+    /* Hide the text/logo header in closed state to match image */
+    height: 0; 
+    overflow: hidden;
+}
+.sidebar.close header {
+    height: 0;
+}
+
+/* Hide the toggle button in the sidebar */
+.sidebar header .toggle {
+    display: none; 
+}
+
+.sidebar .menu {
+    margin-top: 40px;
+}
+
+.menu-links {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebar li a {
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--tran-03);
+}
+
+.sidebar li a:hover,
+.sidebar li.active a { /* Styling for active link */
+    background-color: var(--primary-color);
+}
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text,
+.sidebar li.active a .icon, /* Active link icons and text */
+.sidebar li.active a .text {
+    color: var(--sidebar-color);
+}
+
+.sidebar .menu-bar {
+    height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar .menu-bar .mode {
+    border-radius: 6px;
+    background-color: var(--primary-color-light);
+    position: relative;
+    transition: var(--tran-05);
+}
+
+.menu-bar .mode .sun-moon {
+    height: 50px;
+    width: 50px; /* Adjusted to fit the closed sidebar */
+}
+
+.mode .sun-moon i {
+    position: absolute;
+}
+.mode .sun-moon i.sun {
+    opacity: 0;
+}
+body.dark .mode .sun-moon i.sun {
+    opacity: 1;
+}
+body.dark .mode .sun-moon i.moon {
+    opacity: 0;
+}
+
+.menu-bar .bottom-content .toggle-switch {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    min-width: 50px; /* Adjusted to fit the closed sidebar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.toggle-switch .switch {
+    position: relative;
+    height: 22px;
+    width: 40px;
+    border-radius: 25px;
+    background-color: var(--toggle-color);
+    transition: var(--tran-05);
+}
+
+.switch::before {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background-color: var(--sidebar-color);
+    transition: var(--tran-04);
+}
+
+body.dark .switch::before {
+    left: 20px;
+}
+
+.home {
+    position: relative; /* Use relative positioning */
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: calc(100% - 50px); /* Account for closed sidebar width (50px) */
+    overflow-y: auto;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.sidebar.close ~ .home {
+    left: 50px; /* Pushed to the right by sidebar width */
+    width: calc(100% - 50px);
+}
+
+.sidebar:not(.close) ~ .home {
+    /* When sidebar is open */
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+body.dark .home .text {
+    color: var(--text-color);
+}
+
+.menu-icon {
+    display: none;
+}
+
+/* Media query to handle responsiveness */
+@@media (max-width: 1100px) {
+    .sidebar {
+        width: 50px;
+    }
+    .sidebar.close {
+        /* On small screens, the sidebar is always closed (icon-only) or disappears 
+           if you want a true mobile view, but sticking to the image */
+        width: 50px; 
+    }
+    .sidebar.close:hover {
+        width: 50px; /* Disable hover expansion on small screen */
+    }
+
+    .sidebar:not(.close) {
+        width: 50px; /* Force icon-only on small screen */
+    }
+
+    .sidebar .text {
+        opacity: 0; /* Hide text on small screen */
+    }
+    .home {
+        left: 50px;
+        width: calc(100% - 50px);
+    }
+    .sidebar.close ~ .home {
+        left: 50px;
+        width: calc(100% - 50px);
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+</style>
