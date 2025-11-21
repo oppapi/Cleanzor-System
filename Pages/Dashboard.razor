@@ -170,104 +170,91 @@
 @using Microsoft.JSInterop
 @inject IJSRuntime JSRuntime
 @code {
-    [Inject] NavigationManager NavManager { get; set; } = default!;
+    [Inject] NavigationManager NavManager { get; set; } = default!;
     
-    // State properties
-    private bool isLoading { get; set; } = false;
-    private string status = "Loading...";
-    private string uptime = "Loading...";
-    private string location = "Loading...";
-    private string battery = "Loading...";
-    private string temperature = "Loading...";
-    private string time = "Loading...";
+    private bool isLoading { get; set; } = false;
+    private string status = "Loading...";
+    private string uptime = "Loading...";
+    private string location = "Loading...";
+    private string battery = "Loading...";
+    private string temperature = "Loading...";
+    private string time = "Loading...";
 
-    private bool isSidebarOpen = false;
-    private bool isDarkMode = false;
-    private bool chartsLoaded = false; 
+    private bool isSidebarOpen = false;
+    private bool isDarkMode = false;
+    private bool chartsLoaded = false; 
 
-    private string currentTime = DateTime.Now.ToString("hh:mm:ss tt");
-    private string currentDate = DateTime.Now.ToString("MMM dd, yyyy");
+    private string currentTime = DateTime.Now.ToString("hh:mm:ss tt");
+    private string currentDate = DateTime.Now.ToString("MMM dd, yyyy");
 
-    // CancellationTokenSource for background tasks
     private CancellationTokenSource cts = new CancellationTokenSource();
 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && !chartsLoaded)
-        {
-            await LoadCharts();
-            chartsLoaded = true;
-            
-            // Only call JS listener once
-            await JSRuntime.InvokeVoidAsync("listenToSensorData"); 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !chartsLoaded)
+        {
+            await LoadCharts();
+            chartsLoaded = true;
+            
+            await JSRuntime.InvokeVoidAsync("listenToSensorData"); 
 
-            // Start the periodic tasks
-            _ = PeriodicUpdate(cts.Token);
-            _ = UpdateClock(cts.Token);
-        }
-    }
+            _ = PeriodicUpdate(cts.Token);
+            _ = UpdateClock(cts.Token);
+        }
+    }
 
-    // Dispose of background tasks when the component is removed
     public void Dispose()
     {
         cts.Cancel();
     }
 
 
-    // --- UI/Component Methods ---
-
-    private async Task LoadCharts()
-    {
-        await JSRuntime.InvokeVoidAsync("loadCharts", isDarkMode);
-    }
-    
-    private void ToggleSidebar()
-    {
-        isSidebarOpen = !isSidebarOpen;
-        // Call StateHasChanged if this affects the rendered UI
+    private async Task LoadCharts()
+    {
+        await JSRuntime.InvokeVoidAsync("loadCharts", isDarkMode);
+    }
+    
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
         StateHasChanged(); 
-    }
+    }
 
-    private void OpenSidebar()
-    {
-        isSidebarOpen = true;
-        // Call StateHasChanged if this affects the rendered UI
+    private void OpenSidebar()
+    {
+        isSidebarOpen = true;
         StateHasChanged();
-    }
+    }
 
-    private async Task ToggleDarkMode()
-    {
-        isDarkMode = !isDarkMode;
-        await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
-        await JSRuntime.InvokeVoidAsync("updateChartColors", isDarkMode);
-        StateHasChanged(); // Ensure UI reflects the new dark mode setting
-    }
+    private async Task ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+        await JSRuntime.InvokeVoidAsync("toggleDarkMode", isDarkMode);
+        await JSRuntime.InvokeVoidAsync("updateChartColors", isDarkMode);
+        StateHasChanged(); 
+    }
 
     private async Task Signout()
     {
-        isLoading = true;
-        StateHasChanged();
-        await ShowLoadingAndRedirect("/", 1000);
+        isLoading = true;
+        StateHasChanged();
+        await ShowLoadingAndRedirect("/", 1000);
     }
 
     private async Task ShowLoadingAndRedirect(string url, int delayMs)
-    {
-        await Task.Delay(delayMs);
-        isLoading = false;
-        StateHasChanged();
-        NavManager.NavigateTo(url);
-    }
+    {
+        await Task.Delay(delayMs);
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo(url);
+    }
     private async Task ShowLoadingAndRedirect(string url)
-    {
-        // Note: Since isLoading is set to false immediately, the loading screen will flash if it was true.
-        // It's generally best to keep the delay version if a transition is needed.
-        isLoading = false;
-        StateHasChanged();
-        NavManager.NavigateTo(url);
-    }
-
-    // --- Periodic Tasks ---
+    {
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo(url);
+    }
 
     private async Task PeriodicUpdate(CancellationToken token)
     {
@@ -275,15 +262,11 @@
         {
             try
             {
-                // Retrieve data from localStorage
                 var dataJson = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "robotData");
 
                 if (!string.IsNullOrEmpty(dataJson))
                 {
                     var parsed = System.Text.Json.JsonDocument.Parse(dataJson).RootElement;
-
-                    // Ensure ALL state updates happen before StateHasChanged is called.
-                    // Use InvokeAsync to marshal the state update back to the UI thread.
                     await InvokeAsync(() =>
                     {
                         status = parsed.TryGetProperty("status", out var s) ? s.ToString() : status;
@@ -293,7 +276,6 @@
                         temperature = parsed.TryGetProperty("temperature", out var temp) ? temp.ToString() : temperature;
                         time = parsed.TryGetProperty("time", out var t) ? t.ToString() : time;
                         
-                        // Call StateHasChanged after all properties are updated.
                         StateHasChanged();
                     });
                 }
@@ -307,7 +289,6 @@
                 Console.WriteLine($"Error reading sensor data: {ex.Message}");
             }
 
-            // Wait 2 seconds before checking again
             await Task.Delay(2000, token);
         }
     }

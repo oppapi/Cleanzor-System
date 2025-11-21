@@ -52,7 +52,7 @@ window.loadCharts = function (isDark) {
             style: { fontFamily: fontFamily },
             y: { formatter: value => `${value}min` }
         },
-        series: [{ name: 'Uptime (min)', data: [15, 50, 18, 90, 30, 65, 0, 0] }],
+        series: [{ name: 'Uptime (min)', data: [0, 50, 18, 500, 30, 65, 0, 0] }],
         colors: [chartPrimaryColor],
         fill: {
             type: 'gradient',
